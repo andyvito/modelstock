@@ -56,7 +56,10 @@ angular.module('modelsstockApp').
             },
             deleteAreaByRisk: function(riskid,areaid){
                 return makeAPICall('api/v1/areasByRisk/'+riskid, 'DELETE', {}, {areaid:areaid});   
-            }
+            },
+            updateAreaByRisk: function(updateArea){
+                return makeAPICall('api/v1/areasByRisk/'+updateArea.riskid, 'PUT', {}, {areaid:updateArea.id, name:updateArea.name, lead:updateArea.lead});   
+            },
 
             
 

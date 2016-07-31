@@ -49,13 +49,9 @@ angular.module('modelsstockApp')
             });   
         };
 
-      this.editItem = function (r) {
-            r.editing = true;
-        }
-
-      this.doneEditing = function (riskUpdate) {
+      this.updateRisk = function (riskUpdate) {
         riskService.updateRisk(riskUpdate).then(function(result){
-            riskUpdate.editing = false;
+            //riskUpdate.editing = true; //TODO: what makes when the result is fine
           });
       };
 

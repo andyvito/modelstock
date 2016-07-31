@@ -12,8 +12,11 @@ angular.module('modelsstockApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     this.saveNewArea = function(newArea){
-    	console.log(newArea);
     	   return ApiService.saveNewArea(newArea);
         };
+
+    this.updateArea = function(updateArea){
+    		return ApiService.updateAreaByRisk(updateArea);
+	    };
 
   });

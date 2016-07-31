@@ -1,4 +1,9 @@
 <div class="row" data-ng-controller="RiskCtrl as risks">
+
+
+
+
+
 	<div class="col-lg-4">
 		<rd-widget>
       		<rd-widget-header icon="fa-bolt" title="Riesgos Asociados">
@@ -27,9 +32,8 @@
 						<tbody>
         					<tr id="{{r.id}}" data-ng-repeat="r in risks.listOfRisks"
         							data-ng-class="{riskSelectedItem: r.id == risks.selectedRiskId}">
-        						<td data-ng-click="risks.selectRisk(r)" data-ng-dblclick="risks.editItem(r)">
-									<span data-ng-hide="r.editing">{{r.name}}</span>
-                 					<input show-focus="r.editing" my-enter="risks.doneEditing(r)" data-ng-show="r.editing" data-ng-model="r.name" data-ng-blur="risks.doneEditing(r)" class="form-control">
+        						<td data-ng-click="risks.selectRisk(r)">
+                          <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
         						</td>
         						<td data-ng-click="risks.removeRisk($index)"><span class="text-danger"><i class="fa fa-trash-o"></i></span></td>
         					</tr>
@@ -45,24 +49,24 @@
 				<a data-ng-click="areas.toggleForm(risks.selectedRiskId)" class="btn btn-link" data-ng-class='{disabled:risks.selectedRiskId == null}'>Agregar</a>
 			</rd-widget-header>
 			<form role="form" data-ng-show="areas.showform" class="form"> 
-               <div class="form-group">
-                  <div class="col-lg-12">
-                    <input type="text" class="form-control" placeholder="Área"
-                         data-ng-model="areas.form.name"/>
-                  </div>
-               </div>
-                <div class="form-group">
-                  <div class="col-lg-12">
-                    <input type="text" class="form-control" placeholder="Líder"
-                         data-ng-model="areas.form.lead"/>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.selectedRiskId)">Guardar</button>
-                  <button class="btn btn-default" data-ng-click="areas.cancelForm()">Cancelar</button>
-               </div>
-               <hr />
-            </form>
+         <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Área"
+                   data-ng-model="areas.form.name"/>
+            </div>
+         </div>
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Líder"
+                   data-ng-model="areas.form.lead"/>
+            </div>
+         </div>
+         <div class="form-group">
+            <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.selectedRiskId)">Guardar</button>
+            <button class="btn btn-default" data-ng-click="areas.cancelForm()">Cancelar</button>
+         </div>
+         <hr />
+      </form>
 			<rd-widget-body classes="medium no-padding">
 				<span data-ng-if="risks.selectedRiskId == null">Por favor, seleccione un riesgo.</span>
 				<div class="table-responsive" data-ng-show="risks.selectedRiskId != null">
@@ -72,13 +76,11 @@
 						</thead>
 						<tbody>
 							<tr id="{{a.id}}" data-ng-repeat="a in risks.listOfAreas" data-ng-class="{riskSelectedItem: r.id == risks.selectedRiskId}">
-        						<td data-ng-click="risks.selectRisk(r)" data-ng-dblclick="risks.editItem(r)">
-        							<span data-ng-hide="r.editing">{{a.name}}</span>
-        							<input show-focus="r.editing" my-enter="risks.doneEditing(r)" data-ng-show="r.editing" data-ng-model="r.name" data-ng-blur="risks.doneEditing(r)" class="form-control">
+        						<td>
+                      <text-input-update value-edit="a.name" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
         						</td>
-        						<td data-ng-click="risks.selectRisk(r)" data-ng-dblclick="risks.editItem(r)">
-        							<span data-ng-hide="r.editing">{{a.lead}}</span>
-        							<input show-focus="r.editing" my-enter="risks.doneEditing(r)" data-ng-show="r.editing" data-ng-model="r.name" data-ng-blur="risks.doneEditing(r)" class="form-control">
+        						<td>
+        							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
         						</td>
         						<td data-ng-click="risks.removeArea($index)"><span class="text-danger"><i class="fa fa-trash-o"></i></span></td>
         					</tr>
@@ -89,5 +91,4 @@
 		<rd-widget>
 	</div>
 </div>
-
 

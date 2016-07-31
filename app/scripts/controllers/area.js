@@ -21,15 +21,14 @@ angular.module('modelsstockApp')
      };
 
 
-
 	this.saveArea = function(riskid) {
 		if(!self.form) return;
 
 		self.form.riskid = riskid;
 		areaService.saveNewArea(self.form).then(function(result){
-		        console.log(result.data.newArea);
-		        //riskController.listOfAreas.push(result.data.newArea); //TODO: how update the parent 
-		        $location.hash(result.data.newArea.id);
+		        //console.log(result);
+		        //riskController.listOfAreas.push(result.data.new_area); //TODO: how update the parent 
+		        $location.hash(result.data.new_area.id);
 		        $anchorScroll();
 		      });   
 
@@ -44,6 +43,13 @@ angular.module('modelsstockApp')
 		   self.form.lead = '';
 		}
 		self.showform = false;
+	};
+
+	this.updateArea = function(riskid, areaUpdate){
+		areaUpdate.riskid = riskid;
+        areaService.updateArea(areaUpdate).then(function(result){
+            //riskUpdate.editing = false;
+          });
 	};
 
 
