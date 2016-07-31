@@ -9,9 +9,13 @@
  */
 angular
     .module('modelsstockApp')
-    .controller('AlertsCtrl', ['$scope', AlertsCtrl]);
+    .controller('AlertsCtrl', ['$scope', 'typeService', AlertsCtrl]);
 
-function AlertsCtrl($scope) {
+function AlertsCtrl($scope, typeService) {
+
+    typeService.getAllTypes();
+
+
     $scope.alerts = [{
         type: 'success',
         msg: 'Thanks for visiting! Feel free to create pull requests to improve the dashboard!'

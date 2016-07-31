@@ -14,8 +14,6 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
         // For unmatched routes
         $urlRouterProvider.otherwise('/');
 
-        console.log('entra');
-
         // Application routes
         $stateProvider
             .state('index', {
@@ -25,6 +23,15 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
             .state('tables', {
                 url: '/tables',
                 templateUrl: 'views/tables.html'
-            });
+            })
+            .state('types', {
+                url: '/types',
+                templateUrl: 'views/types.html'
+            })
+            .state('risks', {
+                url: '/risks',
+                templateUrl: 'views/risks.html'
+            })
+            ;
     }
 ]);

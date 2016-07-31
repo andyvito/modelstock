@@ -2,7 +2,7 @@
 <html lang="en" ng-app="modelsstockApp">
   <head>
     <meta charset="utf-8">
-    <title>Model Stock</title>
+    <title>Models Stock</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -26,16 +26,22 @@
       <ul class="sidebar">
         <li class="sidebar-main">
           <a ng-click="toggleSidebar()">
-            Dashboard
+            Models Stock
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
           </a>
         </li>
-        <li class="sidebar-title"><span>NAVIGATION</span></li>
+        <li class="sidebar-title"><span>MENÚ</span></li>
         <li class="sidebar-list">
           <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+          <a href="#/types">Tipos <span class="menu-icon fa fa-file"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/tables">Clases <span class="menu-icon fa fa-book"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/risks">Riesgos Asociados <span class="menu-icon fa fa-bolt"></span></a>
         </li>
       </ul>
       <div class="sidebar-footer">
@@ -154,6 +160,15 @@
         <script src="scripts/directives/widget-footer.js"></script>
         <script src="scripts/directives/widget-header.js"></script>
         <script src="scripts/directives/widget.js"></script>
+        <script src="scripts/services/riskservice.js"></script>
+        <script src="scripts/services/typeservice.js"></script>
+        <script src="scripts/services/apiservice.js"></script>
+        <script src="scripts/controllers/risk.js"></script>
+
+        <script src="scripts/directives/showfocus.js"></script>
+        <script src="scripts/directives/myenter.js"></script>
+        <script src="scripts/controllers/area.js"></script>
+        <script src="scripts/services/areaservice.js"></script>
         <!-- endbuild -->
 </body>
 </html>
