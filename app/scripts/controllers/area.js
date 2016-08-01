@@ -59,5 +59,4 @@ angular.module('modelsstockApp')
 	  		self.selectedAreaId = null;
 	  	}
 	};
-
-  }]);
+}]);

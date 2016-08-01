@@ -79,7 +79,7 @@
         							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
         						</td>
                     <!-- data-ng-click="risks.removeArea($index)" -->
-        						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="risks.modal()" data-ng-show="a.id == areas.selectedAreaId" cursor-me><i class="fa fa-trash-o"></i></span></td>
+        						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="risks.removeArea($index)" data-ng-show="a.id == areas.selectedAreaId" cursor-me><i class="fa fa-trash-o"></i></span></td>
         					</tr>
 						</tbody>
 					</table>

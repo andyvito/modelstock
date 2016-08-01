@@ -72,7 +72,6 @@ angular.module('modelsstockApp')
         }, function () {
           //TODO: what makes when a user cancel modal?
         });
-        
       };
 
 
@@ -82,13 +81,32 @@ angular.module('modelsstockApp')
           });
       };
 
-      this.removeArea = function(index){
-          self.selectedAreaId = self.listOfAreas[index].id;
-          riskService.deleteAreaByRisk(self.selectedRiskId, self.selectedAreaId).then(function(result){
-              console.log(result);
+
+      this.removeArea = function(index) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          controller: 'AreaModelMontrollerCtrl',
+          templateUrl: 'views/components/types/modalremovearea.html',
+          resolve: {
+            numberModels: function() {
+              return 'XXXXXXX';
+            },
+            nameArea: function(){
+              return self.listOfAreas[index].name;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+            self.selectedAreaId = self.listOfAreas[index].id;
+            riskService.deleteAreaByRisk(self.selectedRiskId, self.selectedAreaId).then(function(result){
               self.listOfAreas.splice(index, 1);
             });   
+        }, function () {
+          //TODO: what makes when a user cancel modal?
+        });
       };
+
 
 
       this.cancelForm = function() {
