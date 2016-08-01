@@ -20,7 +20,7 @@ angular.module('modelsstockApp')
       link: function postLink(scope, element, attrs) {
       	scope.editing = false;
 
-		element.bind('dblclick', function () {
+		    element.bind('dblclick', function () {
                 scope.editing = true;
                 scope.$apply();
         	});
@@ -31,15 +31,9 @@ angular.module('modelsstockApp')
 
       	scope.doneEditing = function(){
         	scope.editing = false;
-			scope.myBlur();
+			     scope.myBlur();
         };
 
-        /*element.bind('mouseenter', function () {
-            element.css('background-color', 'yellow');
-        });
-        element.bind('mouseleave', function () {
-            element.css('background-color', 'white');
-        });*/
 
       }
 

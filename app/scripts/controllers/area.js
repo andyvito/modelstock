@@ -52,5 +52,12 @@ angular.module('modelsstockApp')
           });
 	};
 
+	this.selectArea = function(area){
+		if (self.selectedAreaId != area.id){
+	  		self.selectedAreaId = area.id;
+	  	}else{
+	  		self.selectedAreaId = null;
+	  	}
+	};
 
   }]);

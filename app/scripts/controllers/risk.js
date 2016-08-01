@@ -8,8 +8,8 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', 'riskService', 
-    function ($scope, $location, $anchorScroll, riskService) {
+  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 
+    function ($scope, $location, $anchorScroll, $uibModal, riskService) {
       var self = this;
 
       riskService.getAllRisks().then(function(result){
@@ -35,19 +35,46 @@ angular.module('modelsstockApp')
         };
 
       this.selectRisk = function(risk){
-          self.selectedRiskId = risk.id;
-          riskService.getAllAreasByRisks(self.selectedRiskId).then(function(result){
-              self.listOfAreas = result.data.areas;
-            });     
+          if (self.selectedRiskId != risk.id){
+            self.selectedRiskId = risk.id;
+            riskService.getAllAreasByRisks(self.selectedRiskId).then(function(result){
+                self.listOfAreas = result.data.areas;
+                self.numberAreas = self.listOfAreas.length;
+              });       
+          }else{
+            self.selectedRiskId = null;
+          }
+
+          
         };
 
+      this.removeRisk = function(index) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          controller: 'RiskModalControllerCtrl',
+          templateUrl: 'views/components/risks/modalremoverisk.html',
+          resolve: {
+            numberAreas: function() {
+              return self.numberAreas;
+            },
+            nameRisk: function(){
+              return self.listOfRisks[index].name;
+            }
+          }
+        });
 
-      this.removeRisk = function(index){
-          self.selectedRiskId = self.listOfRisks[index].id;
-          riskService.deleteRisk(self.selectedRiskId).then(function(result){
+        modalInstance.result.then(function () {
+            self.selectedRiskId = self.listOfRisks[index].id;
+            riskService.deleteRisk(self.selectedRiskId).then(function(result){
               self.listOfRisks.splice(index, 1);
-            });   
-        };
+              //TODO: Show a message fade confirm this action resolves correct?
+            });
+        }, function () {
+          //TODO: what makes when a user cancel modal?
+        });
+        
+      };
+
 
       this.updateRisk = function (riskUpdate) {
         riskService.updateRisk(riskUpdate).then(function(result){
