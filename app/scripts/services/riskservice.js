@@ -34,4 +34,8 @@ angular.module('modelsstockApp')
           return ApiService.deleteAreaByRisk(riskid, areaid);
         };
 
+    this.getAllModelsByRisks = function(riskid){
+          return ApiService.getAllModelsByRisks(riskid);
+        };
+
   });

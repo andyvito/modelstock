@@ -78,7 +78,6 @@
         						<td data-ng-click="areas.selectArea(a)">
         							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
         						</td>
-                    <!-- data-ng-click="risks.removeArea($index)" -->
         						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="risks.removeArea($index)" data-ng-show="a.id == areas.selectedAreaId" cursor-me><i class="fa fa-trash-o"></i></span></td>
         					</tr>
 						</tbody>
@@ -89,3 +88,31 @@
 	</div>
 </div>
 
+<div class="row"  data-ng-controller="ModelCtrl as models">
+  <div class="col-lg-12">
+    <rd-widget>
+          <rd-widget-header icon="fa-bolt" title="Modelos">
+        <a data-ng-click="risks.toggleForm()" class="btn btn-link">Agregar</a>
+          </rd-widget-header>
+        <rd-widget-body classes="medium no-padding">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr><th>Modelo</th><th></th></tr>
+              </thead>
+              <tbody>
+                    <tr id="{{m.id}}" data-ng-repeat="m in models.models"
+                        data-ng-class="{riskSelectedItem: m.id == m.selectedModelId}">
+                      <td data-ng-click="models.selectModel(m)">
+                            <text-input-update value-edit="m.name" my-blur="models.updateModel(a)"></text-input-update>
+                      </td>
+                      <!--risks.removeRisk($index)-->
+                      <td data-ng-click="models.selectModel(a)"><span class="text-danger" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                    </tr>
+              </tbody>
+            </table>
+          </div>
+      </rd-widget-body>
+    </rd-widget>
+  </div>
+</div>

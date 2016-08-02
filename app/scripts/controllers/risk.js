@@ -8,8 +8,8 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 
-    function ($scope, $location, $anchorScroll, $uibModal, riskService) {
+  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 'modelsData',
+    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData) {
       var self = this;
 
       riskService.getAllRisks().then(function(result){
@@ -40,7 +40,10 @@ angular.module('modelsstockApp')
             riskService.getAllAreasByRisks(self.selectedRiskId).then(function(result){
                 self.listOfAreas = result.data.areas;
                 self.numberAreas = self.listOfAreas.length;
-              });       
+              });   
+            riskService.getAllModelsByRisks(self.selectedRiskId).then(function(result){
+                modelsData.setModels(result.data.models);
+              });  
           }else{
             self.selectedRiskId = null;
           }
@@ -107,15 +110,10 @@ angular.module('modelsstockApp')
         });
       };
 
-
-
       this.cancelForm = function() {
             if(self.form) {
                self.form.name = '';
             }
             self.showform = false;
          };
-
-
-
     }]);
