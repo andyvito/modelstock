@@ -63,6 +63,9 @@ angular.module('modelsstockApp').
             getAllModelsByRisks: function(id){
                 return makeAPICall('api/v1/modelsByRisk', 'GET', {}, {riskid:id});     
             },
+            getAllModels: function(){
+                return makeAPICall('api/v1/models_data', 'GET', {}, {});     
+            },
 
             
 

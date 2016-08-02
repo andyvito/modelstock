@@ -8,12 +8,13 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 'modelsData',
-    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData) {
+  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 
+    'modelsData', 'areasData', 'risksData',
+    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData, areasData,risksData) {
       var self = this;
 
       riskService.getAllRisks().then(function(result){
-    		self.listOfRisks = result.data.risks;
+        risksData.setRisks(result.data.risks);
     	});
 
 
@@ -35,23 +36,24 @@ angular.module('modelsstockApp')
         };
 
       this.selectRisk = function(risk){
-          if (self.selectedRiskId != risk.id){
-            self.selectedRiskId = risk.id;
-            riskService.getAllAreasByRisks(self.selectedRiskId).then(function(result){
-                self.listOfAreas = result.data.areas;
-                self.numberAreas = self.listOfAreas.length;
-              });   
-            riskService.getAllModelsByRisks(self.selectedRiskId).then(function(result){
-                modelsData.setModels(result.data.models);
-              });  
+          if (self.currentRisk == null || self.currentRisk.id != risk.id){
+              self.currentRisk = risk;
+              risksData.setCurrentRisk(risk);
+              riskService.getAllAreasByRisks(self.currentRisk.id).then(function(result){
+                areasData.setAreas(result.data.areas);
+                self.numberAreas = result.data.areas.length;
+              }); 
+              modelsData.setFilterModelsByRiskAndArea(self.currentRisk.id, null);
           }else{
-            self.selectedRiskId = null;
-          }
-
-          
+            self.currentRisk = null;
+            risksData.setCurrentRisk(null);
+            modelsData.setFilterModelsByRiskAndArea(null, null);
+          }          
         };
 
-      this.removeRisk = function(index) {
+      this.removeRisk = function(index,$event) {
+        if ($event.stopPropagation) $event.stopPropagation();
+        if ($event.preventDefault) $event.preventDefault();
         var modalInstance = $uibModal.open({
           animation: true,
           controller: 'RiskModalControllerCtrl',
@@ -61,14 +63,13 @@ angular.module('modelsstockApp')
               return self.numberAreas;
             },
             nameRisk: function(){
-              return self.listOfRisks[index].name;
+              return self.currentRisk.name;
             }
           }
         });
 
         modalInstance.result.then(function () {
-            self.selectedRiskId = self.listOfRisks[index].id;
-            riskService.deleteRisk(self.selectedRiskId).then(function(result){
+            riskService.deleteRisk(self.currentRisk.id).then(function(result){
               self.listOfRisks.splice(index, 1);
               //TODO: Show a message fade confirm this action resolves correct?
             });
@@ -85,35 +86,19 @@ angular.module('modelsstockApp')
       };
 
 
-      this.removeArea = function(index) {
-        var modalInstance = $uibModal.open({
-          animation: true,
-          controller: 'AreaModelMontrollerCtrl',
-          templateUrl: 'views/components/types/modalremovearea.html',
-          resolve: {
-            numberModels: function() {
-              return 'XXXXXXX';
-            },
-            nameArea: function(){
-              return self.listOfAreas[index].name;
-            }
-          }
-        });
-
-        modalInstance.result.then(function () {
-            self.selectedAreaId = self.listOfAreas[index].id;
-            riskService.deleteAreaByRisk(self.selectedRiskId, self.selectedAreaId).then(function(result){
-              self.listOfAreas.splice(index, 1);
-            });   
-        }, function () {
-          //TODO: what makes when a user cancel modal?
-        });
-      };
-
       this.cancelForm = function() {
             if(self.form) {
                self.form.name = '';
             }
             self.showform = false;
          };
-    }]);
+
+       $scope.$watch(function () { 
+          self.listOfRisks = risksData.getRisks(); 
+        }, function(){
+          $scope.currentRisk = risksData.getCurrentRisk();
+        });
+
+
+
+}]);

@@ -30,10 +30,6 @@ angular.module('modelsstockApp')
           return ApiService.updateRisk(riskUpdate);
         };
 
-    this.deleteAreaByRisk = function(riskid, areaid){
-          return ApiService.deleteAreaByRisk(riskid, areaid);
-        };
-
     this.getAllModelsByRisks = function(riskid){
           return ApiService.getAllModelsByRisks(riskid);
         };

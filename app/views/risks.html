@@ -26,12 +26,11 @@
 						</thead>
 						<tbody>
         					<tr id="{{r.id}}" data-ng-repeat="r in risks.listOfRisks"
-        							data-ng-class="{riskSelectedItem: r.id == risks.selectedRiskId}">
+        							data-ng-class="{riskSelectedItem: r.id == risks.currentRisk.id}">
         						<td data-ng-click="risks.selectRisk(r)">
                           <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
         						</td>
-                    <!--risks.removeRisk($index)-->
-        						<td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index)" data-ng-show="r.id == risks.selectedRiskId" cursor-me><i class="fa fa-trash-o"></i></span></td>
+        						<td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index,$event)" data-ng-show="r.id == risks.currentRisk.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
         					</tr>
 						</tbody>
 					</table>
@@ -42,7 +41,7 @@
 	<div class="col-lg-8" data-ng-controller="AreaCtrl as areas">
 		<rd-widget>
 			<rd-widget-header icon="fa-users" title="Areas">
-				<a data-ng-click="areas.toggleForm(risks.selectedRiskId)" class="btn btn-link" data-ng-class='{disabled:risks.selectedRiskId == null}'>Agregar</a>
+				<a data-ng-click="areas.toggleForm(risks.currentRisk.id)" class="btn btn-link" data-ng-class='{disabled:risks.currentRisk == null}'>Agregar</a>
 			</rd-widget-header>
 			<form role="form" data-ng-show="areas.showform" class="form"> 
          <div class="form-group">
@@ -58,27 +57,27 @@
             </div>
          </div>
          <div class="form-group">
-            <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.selectedRiskId)">Guardar</button>
+            <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.currentRisk.id)">Guardar</button>
             <button class="btn btn-default" data-ng-click="areas.cancelForm()">Cancelar</button>
          </div>
          <hr />
       </form>
 			<rd-widget-body classes="medium no-padding">
-				<span data-ng-if="risks.selectedRiskId == null">Por favor, seleccione un riesgo.</span>
-				<div class="table-responsive" data-ng-show="risks.selectedRiskId != null">
+				<span data-ng-if="risks.currentRisk == null">Por favor, seleccione un riesgo.</span>
+				<div class="table-responsive" data-ng-show="risks.currentRisk != null">
 					<table class="table table-hover">
 						<thead>
 							<tr><th>Area</th><th>Líder</th><th></th></tr>
 						</thead>
 						<tbody>
-							<tr id="{{a.id}}" data-ng-repeat="a in risks.listOfAreas" data-ng-class="{riskSelectedItem: a.id == areas.selectedAreaId}">
+							<tr id="{{a.id}}" data-ng-repeat="a in areas.areas" data-ng-class="{riskSelectedItem: a.id == areas.currentArea.id}">
         						<td data-ng-click="areas.selectArea(a)">
-                      <text-input-update value-edit="a.name" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
+                      <text-input-update value-edit="a.name" my-blur="areas.updateArea(risks.currentRisk.id,a)"></text-input-update>
         						</td>
         						<td data-ng-click="areas.selectArea(a)">
-        							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.selectedRiskId,a)"></text-input-update>
+        							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.currentRisk.id,a)"></text-input-update>
         						</td>
-        						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="risks.removeArea($index)" data-ng-show="a.id == areas.selectedAreaId" cursor-me><i class="fa fa-trash-o"></i></span></td>
+        						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="areas.removeArea($index,$event)" data-ng-show="a.id == areas.currentArea.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
         					</tr>
 						</tbody>
 					</table>
@@ -88,26 +87,44 @@
 	</div>
 </div>
 
-<div class="row"  data-ng-controller="ModelCtrl as models">
+<div class="row"  data-ng-controller="ModelCtrl as modelCtrl">
   <div class="col-lg-12">
     <rd-widget>
           <rd-widget-header icon="fa-bolt" title="Modelos">
-        <a data-ng-click="risks.toggleForm()" class="btn btn-link">Agregar</a>
+            <form>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                  <input type="text" placeholder="Search" ng-model="modelCtrl.filterModels" class="form-control input-sm" />
+                </div>      
+              </div>
+            </form>
           </rd-widget-header>
         <rd-widget-body classes="medium no-padding">
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
-                <tr><th>Modelo</th><th></th></tr>
+                <tr>
+                  <th>
+                    <a ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                      Modelo 
+                      <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                      <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                  </th>
+                  <th>
+                  
+                  </th>
+                </tr>
               </thead>
               <tbody>
-                    <tr id="{{m.id}}" data-ng-repeat="m in models.models"
+                    <tr id="{{m.id}}" data-ng-repeat="m in modelCtrl.models | orderBy:modelCtrl.sortType:modelCtrl.sortReverse | filter:modelCtrl.filterModels"
                         data-ng-class="{riskSelectedItem: m.id == m.selectedModelId}">
-                      <td data-ng-click="models.selectModel(m)">
-                            <text-input-update value-edit="m.name" my-blur="models.updateModel(a)"></text-input-update>
+                      <td data-ng-click="modelCtrl.selectModel(m)">
+                            <text-input-update value-edit="m.name" my-blur="modelCtrl.updateModel(a)"></text-input-update>
                       </td>
                       <!--risks.removeRisk($index)-->
-                      <td data-ng-click="models.selectModel(a)"><span class="text-danger" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                      <td data-ng-click="modelCtrl.selectModel(a)"><span class="text-danger" cursor-me><i class="fa fa-trash-o"></i></span></td>
                     </tr>
               </tbody>
             </table>

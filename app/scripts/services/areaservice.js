@@ -19,4 +19,8 @@ angular.module('modelsstockApp')
     		return ApiService.updateAreaByRisk(updateArea);
 	    };
 
+    this.deleteAreaByRisk = function(riskid, areaid){
+          return ApiService.deleteAreaByRisk(riskid, areaid);
+        };
+
   });
