@@ -48,7 +48,8 @@ angular.module('modelsstockApp')
             self.currentRisk = null;
             risksData.setCurrentRisk(null);
             modelsData.setFilterModelsByRiskAndArea(null, null);
-          }          
+          }       
+          areasData.setCurrentArea(null);   
         };
 
       this.removeRisk = function(index,$event) {
@@ -93,11 +94,19 @@ angular.module('modelsstockApp')
             self.showform = false;
          };
 
-       $scope.$watch(function () { 
-          self.listOfRisks = risksData.getRisks(); 
-        }, function(){
-          $scope.currentRisk = risksData.getCurrentRisk();
-        });
+      $scope.$watch(function(){
+        return risksData.risks;
+        },function(newValue,oldValue){
+            self.listOfRisks = newValue;
+      });
+
+      $scope.$watch(function(){
+        return risksData.currentRisk;
+        },function(newValue,oldValue){
+            self.currentRisk = newValue;
+      });
+
+
 
 
 

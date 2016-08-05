@@ -32,6 +32,9 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 url: '/risks',
                 templateUrl: 'views/risks.html'
             })
-            ;
+            .state('models', {
+                url: '/models',
+                templateUrl: 'views/models.html'
+            });
     }
 ]);

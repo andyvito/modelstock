@@ -115,7 +115,118 @@ body {
 
 
 
+.models-table .model {
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f3f3f3;
+  -moz-box-shadow: 0 0 6px 2px #b0b2ab;
+  -webkit-box-shadow: 0 0 6px 2px #b0b2ab;
+  box-shadow: 0 0 6px 2px #b0b2ab;
+  overflow: hidden;
+}
 
+.models-table .len{
+  text-decoration: underline;
+}
+
+
+.models-table .container{
+  padding: 15px 10px 10px 10px;
+}
+ 
+ .model:hover {
+  background-color: #fff;
+  -moz-box-shadow: 0 0 12px 3px #b0b2ab;
+  -webkit-box-shadow: 0 0 12px 3px #b0b2ab;
+  box-shadow: 0 0 12px 3px #b0b2ab;
+  cursor:pointer;
+}
+
+
+.model {
+  padding: 5px;
+  color: #ff;
+  background-color: #5e5f59;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  
+  height: 406px;
+  max-height: 406px;
+}
+  
+
+ .model-name {
+  padding: 15px 5px 15px 5px;
+  color: #fff;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  height: 90px;
+ }
+
+.model-name.model-name-active {
+  background-color: #0060AF;
+ }
+
+.model-name.model-name-inactive{
+  background-color: #C0C0C0;
+}
+  
+  
+.model-warning {
+  font-size: 20px;
+}
+ 
+.models-table .model ul {
+  list-style: none;
+  margin: 0;
+  -moz-border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+ 
+.btn-model-active {
+  padding: 8px 25px;
+  font-size: 18px;
+}
+
+
+.backtest-title{
+  padding: 15px 10px;
+  border-bottom: 1px solid #c5c8c0;
+}
+
+
+.models-table .model .backtest-dates {
+  padding: 10px 10px;
+  border-bottom: 1px solid #c5c8c0;
+}
+
+
+.backtest-dates i{
+  font-size: 25px;
+}
+
+
+
+
+
+
+ 
+ .pricing-variable-height .model {
+  float: none;
+  margin-left: 2%;
+  vertical-align: bottom;
+  display: inline-block;
+  zoom:1;
+  *display:inline;
+}
+ 
+.plan-mouseover .plan-name {
+  background-color: #4e9a06 !important;
+}
+ 
 
 
 

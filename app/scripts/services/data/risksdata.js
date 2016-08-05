@@ -11,26 +11,24 @@ angular.module('modelsstockApp')
   .factory('risksData', function () {
     // Service logic
     // ...
-
-    var data = {
-      currentRisk: '',
-      risks: ''
+    var factory = {
+      currentRisk: null,
+      risks: null,
+      getRisks: function () {
+        return factory.risks;
+      },
+      setRisks: function (risksCol){
+        factory.risks = risksCol;
+      },
+      getCurrentRisk: function(){
+        return factory.currentRisk;
+      },
+      setCurrentRisk: function(risk){
+        factory.currentRisk = risk;
+      }
     };
 
     // Public API here
-    return {
-      getRisks: function () {
-        return data.risks;
-      },
-      setRisks: function (risksCol){
-        data.risks = risksCol;
-      },
-      getCurrentRisk: function(){
-        return data.currentRisk;
-      },
-      setCurrentRisk: function(risk){
-        data.currentRisk = risk;
-      }
-    };
+    return factory;
 
   });

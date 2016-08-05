@@ -10,26 +10,24 @@
 angular.module('modelsstockApp')
   .factory('areasData', function () {
     // Service logic
-    var data = {
-      areas: '',
-      currentArea: ''
+    var factory = {
+      areas: null,
+      currentArea: null,
+      getAreas: function () {
+        return factory.areas;
+      },
+      setAreas: function (areasCol){
+        factory.areas = areasCol;
+      },
+      getCurrentArea: function(){
+        return factory.currentArea;
+      },
+      setCurrentArea: function(area){
+        factory.currentArea = area;
+      },
     };
 
     // Public API here
-    return {
-      getAreas: function () {
-        return data.areas;
-      },
-      setAreas: function (areasCol){
-        data.areas = areasCol;
-      },
-      getCurrentArea: function(){
-        return data.currentArea;
-      },
-      setCurrentArea: function(area){
-        data.currentArea = area;
-      },
-    };
-
+    return factory;
 
   });

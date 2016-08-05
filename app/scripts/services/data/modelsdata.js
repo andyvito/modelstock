@@ -10,38 +10,36 @@
 angular.module('modelsstockApp')
   .factory('modelsData', function () {
     // Service logic
-    
-    var data = {
-      models: '',
-      filterModelsByRiskAndArea: ''
-    };
-
-    // Public API here
-    return {
+    var factory = {
+      models: null,
+      filterModelsByRiskAndArea: null,
       getModels: function () {
-        return data.models;
+        return factory.models;
       },
       setModels: function (modelsCol){
-        data.models = modelsCol;
-        data.filterModelsByRiskAndArea = modelsCol;
+        factory.models = modelsCol;
+        factory.filterModelsByRiskAndArea = modelsCol;
       },
       getFilterModelsByRiskAndArea: function(){
-        return data.filterModelsByRiskAndArea;
+        return factory.filterModelsByRiskAndArea;
       },
       setFilterModelsByRiskAndArea: function(riskid,areaid){
-        data.filterModelsByRiskAndArea = data.models.filter(function (el) {
+        factory.filterModelsByRiskAndArea = factory.models.filter(function (el) {
                                             if (riskid && areaid){
-                                                return el.risk_model_id == riskid &&
-                                                        el.area_model_id == areaid;
+                                                return el.risk_model.id == riskid &&
+                                                        el.area_model.id == areaid;
                                             }else if (riskid){
-                                                return el.risk_model_id == riskid;
+                                                return el.risk_model.id == riskid;
                                             }else if (areaid){
-                                                return el.area_model_id == areaid;
+                                                return el.area_model.id == areaid;
                                             }else{
-                                                return el.risk_model_id;
+                                                return el;
                                             }
                                           });
       },
 
     };
+    
+    // Public API here
+    return factory;
   });

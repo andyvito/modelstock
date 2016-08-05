@@ -13,8 +13,7 @@ angular.module('modelsstockApp')
   		function ($scope,$location, $anchorScroll,$controller,$uibModal,areaService,modelsData,areasData,risksData) {
 	
 	var self = this;
-	self.parentRisk = risksData.getCurrentRisk();
-  	
+
   	this.toggleForm = function(isSelectedRisk) {
   		if (isSelectedRisk != null){
   			self.showform = !self.showform;	
@@ -48,7 +47,7 @@ angular.module('modelsstockApp')
 	this.updateArea = function(riskid, areaUpdate){
 		areaUpdate.riskid = riskid;
         areaService.updateArea(areaUpdate).then(function(result){
-            //riskUpdate.editing = false;
+            
           });
 	};
 
@@ -56,9 +55,11 @@ angular.module('modelsstockApp')
         self.parentRisk = risksData.getCurrentRisk();
         if (self.currentArea == null || self.currentArea.id != area.id){
               self.currentArea = area;
+              areasData.setCurrentArea(area);
               modelsData.setFilterModelsByRiskAndArea(self.parentRisk.id, self.currentArea.id);
           }else{
             self.currentArea = null;
+            areasData.setCurrentArea(null);
             modelsData.setFilterModelsByRiskAndArea(self.parentRisk.id, null);
           }   
 	};
@@ -75,13 +76,13 @@ angular.module('modelsstockApp')
 		      return 'XXXXXXX';
 		    },
 		    nameArea: function(){
-		      return areasData.getAreas()[index].name;
+		      return self.areas[index].name;
 		    }
 		  }
 		});
 
 		modalInstance.result.then(function () {
-		    self.selectedAreaId = areasData.getAreas()[index].id;
+		    self.selectedAreaId = self.areas[index].id;
 		    areaService.deleteAreaByRisk(self.parentRisk.id, self.selectedAreaId).then(function(result){
 		      self.areas.splice(index, 1);
 		      areasData.setAreas(self.areas)
@@ -91,10 +92,18 @@ angular.module('modelsstockApp')
 		});
 	};
 
+
+	$scope.$watch(function(){
+		return areasData.areas;
+	},function(newValue,oldValue){
+	    self.areas = newValue;
+	});
+
+
     $scope.$watch(function () { 
-       self.areas = areasData.getAreas(); 
-    }, function(){
-    	self.currentArea = areasData.getCurrentArea();
+       return areasData.currentArea;
+    }, function(newValue,oldValue){
+    	self.currentArea = newValue;
     });
 
 

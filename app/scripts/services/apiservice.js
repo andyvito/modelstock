@@ -60,9 +60,9 @@ angular.module('modelsstockApp').
             updateAreaByRisk: function(updateArea){
                 return makeAPICall('api/v1/areasByRisk/'+updateArea.riskid, 'PUT', {}, {areaid:updateArea.id, name:updateArea.name, lead:updateArea.lead});   
             },
-            getAllModelsByRisks: function(id){
+            /*getAllModelsByRisks: function(id){
                 return makeAPICall('api/v1/modelsByRisk', 'GET', {}, {riskid:id});     
-            },
+            },*/
             getAllModels: function(){
                 return makeAPICall('api/v1/models_data', 'GET', {}, {});     
             },
