@@ -112,9 +112,6 @@ body {
 }
 
 
-
-
-
 .models-table .model {
   border-radius: 5px;
   text-align: center;
@@ -142,7 +139,6 @@ body {
   cursor:pointer;
 }
 
-
 .model {
   padding: 5px;
   color: #ff;
@@ -150,84 +146,86 @@ body {
   -moz-border-radius: 5px 5px 0 0;
   -webkit-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
-  
-  height: 406px;
-  max-height: 406px;
+  height: 370px;
+  max-height: 370px;
 }
   
 
- .model-name {
-  padding: 15px 5px 15px 5px;
-  color: #fff;
-  -moz-border-radius: 5px 5px 0 0;
-  -webkit-border-radius: 5px 5px 0 0;
-  border-radius: 5px 5px 0 0;
-  height: 90px;
+.model-name {
+	padding: 15px 5px 15px 5px;
+	color: #fff;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+	height: 90px;
+	position: relative;
+  	padding: 0;
+  	border-radius: 5px 5px 0px 0px;
+    border-style: solid solid none solid;
+    border-width: 1px;
+    border-color: #c5c8c0;
  }
 
 .model-name.model-name-active {
-  background-color: #0060AF;
+ 	background-color: #0060AF;
  }
 
 .model-name.model-name-inactive{
-  background-color: #C0C0C0;
+	background-color: #C0C0C0;
 }
   
   
 .model-warning {
-  font-size: 20px;
+	font-size: 20px;
 }
  
 .models-table .model ul {
-  list-style: none;
-  margin: 0;
-  -moz-border-radius: 0 0 5px 5px;
-  -webkit-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
+	list-style: none;
+	margin: 0;
+	-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
 }
  
 .btn-model-active {
-  padding: 8px 25px;
-  font-size: 18px;
+	padding: 8px 25px;
+	font-size: 18px;
 }
 
 
 .backtest-title{
-  padding: 15px 10px;
-  border-bottom: 1px solid #c5c8c0;
+	padding: 15px 10px;
+	border-bottom: 1px solid #c5c8c0;
 }
 
 
 .models-table .model .backtest-dates {
-  padding: 10px 10px;
-  border-bottom: 1px solid #c5c8c0;
+	padding: 10px 10px;
+	border-bottom: 1px solid #c5c8c0;
 }
 
+.backtest-result{
+	padding: 10px 10px;
+}
 
 .backtest-dates i{
-  font-size: 25px;
+ 	font-size: 25px;
 }
 
-
-
-
-
-
- 
- .pricing-variable-height .model {
-  float: none;
-  margin-left: 2%;
-  vertical-align: bottom;
-  display: inline-block;
-  zoom:1;
-  *display:inline;
+.model-implementation,
+.model-delayed{
+	position: absolute;
+    bottom: 0;
+    width:100%;
 }
- 
-.plan-mouseover .plan-name {
-  background-color: #4e9a06 !important;
+
+.model-name p {
+	padding: 5px 10px;
 }
- 
 
-
-
-
+.last-backtest{
+	-moz-border-radius: 0 0 5px 5px;
+  	-webkit-border-radius: 0 0 5px 5px;
+  	border-radius: 0 0 5px 5px;
+  	border: 1px solid #c5c8c0;
+}

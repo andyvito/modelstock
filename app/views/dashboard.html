@@ -129,3 +129,39 @@
 		</rd-widget>
 	</div>
 </div>
+         <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    <a ng-click="modelCtrl.sortType = 'name'; modelCtrl.sortReverse = !modelCtrl.sortReverse">
+                      Modelo
+                      <span ng-show="modelCtrl.sortType == 'name' && !modelCtrl.sortReverse" class="fa fa-caret-down"></span>
+                      <span ng-show="modelCtrl.sortType == 'name' && modelCtrl.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a ng-click="modelCtrl.sortType = 'len'; modelCtrl.sortReverse = !modelCtrl.sortReverse">
+                      Línea de negocio 
+                      <span ng-show="modelCtrl.sortType == 'len' && !modelCtrl.sortReverse" class="fa fa-caret-down"></span>
+                      <span ng-show="modelCtrl.sortType == 'len' && modelCtrl.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                    <tr id="{{m.id}}" data-ng-repeat="m in modelCtrl.models | orderBy:modelCtrl.sortType:modelCtrl.sortReverse | filter:modelCtrl.filterModels"
+                        data-ng-class="{riskSelectedItem: m.id == m.selectedModelId}">
+                      <td data-ng-click="modelCtrl.selectModel(m)">
+                            <text-input-update value-edit="m.name" my-blur="modelCtrl.updateModel(a)"></text-input-update>
+                      </td>
+                      <td data-ng-click="modelCtrl.selectModel(m)">
+                            <text-input-update value-edit="m.len" my-blur="modelCtrl.updateModel(a)"></text-input-update>
+                      </td>
+                      <!--risks.removeRisk($index)-->
+                      <td data-ng-click="modelCtrl.selectModel(a)"><span class="text-danger" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                    </tr>
+              </tbody>
+            </table>
+          </div>
+         

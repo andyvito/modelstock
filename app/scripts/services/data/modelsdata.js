@@ -26,12 +26,12 @@ angular.module('modelsstockApp')
       setFilterModelsByRiskAndArea: function(riskid,areaid){
         factory.filterModelsByRiskAndArea = factory.models.filter(function (el) {
                                             if (riskid && areaid){
-                                                return el.risk_model.id == riskid &&
-                                                        el.area_model.id == areaid;
+                                                return el.risk.id == riskid &&
+                                                        el.area.id == areaid;
                                             }else if (riskid){
-                                                return el.risk_model.id == riskid;
+                                                return el.risk.id == riskid;
                                             }else if (areaid){
-                                                return el.area_model.id == areaid;
+                                                return el.area.id == areaid;
                                             }else{
                                                 return el;
                                             }
