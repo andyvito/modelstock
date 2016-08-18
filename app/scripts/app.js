@@ -10,5 +10,5 @@
  */
 angular
   .module('modelsstockApp', [
-    'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies'
+    'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages'
   ]);

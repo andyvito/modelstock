@@ -12,17 +12,60 @@
     <link rel="stylesheet" href="bower_components/rdash-ui/dist/css/rdash.min.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-<body ng-controller="MasterCtrl">
-  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+<body ng-controller="MasterCtrl" ng-cloak>
+  <div layout=column layout-fill ng-cloak>
+    <section layout="row">
+      <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop="" md-whiteframe="4">
+        <md-toolbar class="md-theme-indigo">
+          <h1 class="md-toolbar-tools">Menú Principal</h1>
+        </md-toolbar>
+        <md-content layout=column layout-margin>
+          <md-button ng-click="toggleLeft()">
+            Dashboard
+          </md-button>
+          <md-button ng-click="toggleLeft()">
+            Modelos
+          </md-button>
+          <md-button ng-click="toggleLeft()">
+            Backtesting
+          </md-button>
+          <md-button ng-click="toggleLeft()">
+            Reporte
+          </md-button>
+
+
+        </md-content>
+        
+
+      </md-sidenav>
+    </section>
+    <div layout=column layout-fill>
+        <md-toolbar class="md-toolbar-model">
+          <div class="md-toolbar-tools">
+              <md-button data-ng-click="toggleLeft()">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+              </md-button>
+              <h2 class="md-flex">Modelo</h2>
+              
+          </div>
+        </md-toolbar>
+        <md-content layout-padding>
+          <!-- Main Content -->
+          <div ui-view></div>
+        </md-content>
+    </div>
+  
+  </div><!-- End Page Wrapper -->
 
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
+    <!-- div id="sidebar-wrapper">
       <ul class="sidebar">
         <li class="sidebar-main">
           <a ng-click="toggleSidebar()">
@@ -61,14 +104,14 @@
           </a>
         </div>
       </div>
-    </div>
+    </div -->
     <!-- End Sidebar -->
 
-    <div id="content-wrapper">
-      <div class="page-content">
+    
+      <!-- div class="page-content" -->
 
         <!-- Header Bar -->
-        <div class="row header">
+        <!-- div class="row header">
           <div class="col-xs-12">
             <div class="user pull-right">
               <div class="item dropdown" uib-dropdown>
@@ -127,15 +170,13 @@
               </div>
             </div>
           </div>
-        </div>
+        </div -->
         <!-- End Header Bar -->
 
-        <!-- Main Content -->
-        <div ui-view></div>
+        
 
-      </div><!-- End Page Content -->
-    </div><!-- End Content Wrapper -->
-  </div><!-- End Page Wrapper -->
+      <!-- /div --><!-- End Page Content -->
+
 
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -147,6 +188,10 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -181,6 +226,7 @@
         <script src="scripts/filters/ifnull.js"></script>
         <script src="scripts/filters/monthname.js"></script>
         <script src="scripts/controllers/models.js"></script>
+        <script src="scripts/filters/resultbacktest.js"></script>
         <!-- endbuild -->
 </body>
 </html>

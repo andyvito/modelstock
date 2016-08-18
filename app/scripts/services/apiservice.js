@@ -33,8 +33,8 @@ angular.module('modelsstockApp').
         };
 
         return {
-            getAllTypes: function(){
-                return makeAPICall('api/v1/type_model_data', 'GET', {}, {}); 
+            getAllDistinctTypes: function(){
+                return makeAPICall('api/v1/type_distinct', 'GET', {}, {}); 
             },
             getAllRisks: function(){
                 return makeAPICall('api/v1/risk_model_data', 'GET', {}, {});   
@@ -67,7 +67,9 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/models_data', 'GET', {}, {});     
             },
 
-            
+            getModelById: function(modelId){
+                return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});  
+            },
 
         };
     })

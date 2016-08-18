@@ -9,7 +9,7 @@
  */
 angular.module('modelsstockApp')
   .controller('ModelsCtrl', ['$scope', '$state', 'modelsData','modelService', 'risksData', 'areasData', 
-      function ($scope, $state, modelsData, modelService,risksData, areasData) {
+      function ($scope, $state, modelsData, modelService, risksData, areasData) {
     
       	var self = this;
 

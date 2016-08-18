@@ -15,7 +15,7 @@ angular.module('modelsstockApp')
       currentRisk: null,
       risks: null,
       getRisks: function () {
-        return factory.risks;
+          return factory.risks;
       },
       setRisks: function (risksCol){
         factory.risks = risksCol;

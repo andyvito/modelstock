@@ -9,9 +9,10 @@
  */
 angular.module('modelsstockApp')
   .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 
-    'modelsData', 'areasData', 'risksData',
-    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData, areasData,risksData) {
+    'modelsData', 'areasData', 'risksData', '$interval',
+    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData, areasData,risksData,$interval) {
       var self = this;
+
 
       riskService.getAllRisks().then(function(result){
         risksData.setRisks(result.data.risks);
