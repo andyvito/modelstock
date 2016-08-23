@@ -1,0 +1,247 @@
+<div  layout="column" ng-cloak class="contentModel" layout-fill>
+    
+			
+		  	<md-content flex layout-fill>
+				<div flex>
+				    <div layout-gt-xs="row">
+				    	<div flex="20">
+						    <md-input-container class="md-block" flex-gt-xs>
+					        	<label>C&#243;digo</label>
+					        	<input data-ng-model="model.currentModel.code" >
+					      	</md-input-container>
+					    </div>
+					    <div flex>
+						    <md-input-container class="md-block" flex-gt-xs>
+					        	<label>Nombre</label>
+					        	<input data-ng-model="model.currentModel.name">
+					    	</md-input-container>
+					    </div>
+					    <div flex="20">
+						    <md-input-container class="md-block" flex-gt-xs>
+						       	<label>Versi&#243;n</label>
+						       	<input data-ng-model="model.currentModel.version">
+						    </md-input-container>
+						</div>
+				    </div>
+				</div>
+				<div flex>
+					<div layout-gt-xs="row">
+					    <md-input-container class="md-block" flex-gt-sm>
+				            <label>Riesgo Asociado</label>
+				            <md-select ng-model="model.currentModel.risk.id" data-ng-change="model.changeRisk()">
+				              <md-option ng-repeat="risk in model.allRisks" value="{{risk.id}}">
+				                {{risk.name}}
+				              </md-option>
+				            </md-select>
+				        </md-input-container>
+					    <md-input-container class="md-block" flex-gt-sm>
+				            <label>&#193;rea</label>
+				            <md-select ng-model="model.currentModel.area.id">
+				              <md-option ng-repeat="area in model.allAreasByRisk" value="{{area.id}}">
+				                {{area.name}}
+				              </md-option>
+				            </md-select>
+				        </md-input-container>
+				       	<md-input-container class="md-block" flex-gt-xs>
+				        	<label>L&#237;nea de Negocio</label>
+				        	<input data-ng-model="model.currentModel.len">
+				    	</md-input-container>
+				    </div>
+				</div>  
+				<div flex>
+					<md-content>
+			    		<md-tabs  md-dynamic-height>
+			    			<md-tab id="tab1">
+						        <md-tab-label>Informaci&#243;n</md-tab-label>
+						        <md-tab-body>
+						        	<div layout="column" layout-fill class="md-padding">
+						        		<div layout=column>
+						        			<div flex=100 layout=row>
+												<form flex=25 ng-submit="$event.preventDefault()" name="searchForm">
+											        <md-autocomplete required
+											            md-input-name="autocompleteField"
+											            md-input-minlength="2"
+											            md-input-maxlength="18"
+											            md-no-cache="model.noCache"
+											            md-selected-item="model.selectedTypeItem"
+											            md-search-text="model.searchTypeText"
+											            md-items="item in model.queryTypeSearch(model.searchTypeText)"
+											            md-item-text="item.display"
+											            md-floating-label="Categor&#237;a">
+											          	<md-item-template>
+												            <span md-highlight-text="model.searchTypeText">{{item.display}}</span>
+												          </md-item-template>
+											        </md-autocomplete>
+										        </form>
+										    	<md-input-container class="md-block" flex=25>
+										        	<label>Clase</label>
+										        	<input data-ng-model="model.currentModel.kind">
+										    	</md-input-container>
+										    	<md-input-container class="md-block" flex=25>
+										            <label>Hoja de Vida</label>
+										            <md-select ng-model="model.currentModel.curriculum">
+										              <md-option ng-repeat="opt in model.yesNovalues" value="{{opt.v}}">
+										                {{opt.n}}
+										              </md-option>
+										            </md-select>
+										        </md-input-container>
+										        <md-input-container class="md-block" flex=25>
+										            <label>¿Participa Cuantificaci&#243;n?</label>
+										            <md-select ng-model="model.currentModel.is_qua">
+										              <md-option ng-repeat="opt in model.yesNovalues" value="{{opt.v}}">
+										                {{opt.n}}
+										              </md-option>
+										            </md-select>
+										        </md-input-container>
+									        </div>
+									        <div flex>
+											    <md-input-container class="md-block" flex-gt-xs>
+										        	<label>Documentaci&#243;n</label>
+										        	<input data-ng-model="model.currentModel.file_doc">
+										    	</md-input-container>
+										    </div>
+								    	</div>
+										
+								    	<div layout-gt-xs="column" layout-fill>
+									    	<md-input-container class="md-block">
+									        	<label>Descripci&#243;n</label>
+									          	<textarea ng-model="model.currentModel.description" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+									        </md-input-container>
+											<md-input-container class="md-block">
+									        	<label>Comentarios</label>
+									          	<textarea ng-model="model.currentModel.comments" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+									        </md-input-container>
+									        
+								    	</div>
+						        	</div>
+						        </md-tab-body>
+					      	</md-tab>
+					      	<md-tab id="tab2" >
+					        	<md-tab-label>Backtesting</md-tab-label>
+					        	<md-tab-body>
+					        		<div layout="row" class="md-padding">
+						          		<table class="table table-hover">
+							              <thead>
+							                <tr>
+							                  <th>Fecha a Validar</th>
+							                  <th>Fecha Real </th>
+							                  <th>Fecha Pr&#243;ximo</th>
+							                  <th>Resultado</th>
+							                  <th>Comentarios</th>
+							                </tr>
+							              </thead>
+							              <tbody>
+							                    <tr id="{{b.id}}" data-ng-repeat="b in model.currentModel.backtest_historial">
+							                      <td>{{b.validate_year}} - {{b.validate_month | monthName}}</td>
+							                      <td>{{b.real_year}} - {{b.real_month | monthName}}</td>
+							                      <td>{{b.next_year}} - {{b.next_month | monthName}}</td>
+							                      <td>
+							                      	<span data-ng-if="b.result == true" class="text-success"><i class="fa fa-check"></i></span>
+							                      	<span data-ng-if="b.result == false" class="text-danger"><i class="fa fa-warning"></i></span>
+							                      	&#32;{{b.result | resultBacktest}}</td>
+							                      <td>{{b.comentaries}}</td>
+							                    </tr>
+							              </tbody>
+							            </table>
+							        </div>
+					        	</md-tab-body>
+				      		</md-tab>
+				      		<md-tab id="tab3">
+				      			<md-tab-label>Capacidad</md-tab-label>
+				      			<md-tab-body>
+				      				<div layout="row" class="md-padding">
+					      				<md-input-container class="md-block" flex=15>
+								            <label>Frecuencia</label>
+								            <md-select ng-model="model.currentModel.frecuency" data-ng-change="model.recalculateCapacity()">
+								              <md-option ng-repeat="f in model.frecuency" value="{{f.v}}">
+								                {{f.n}}
+								              </md-option>
+								            </md-select>
+								        </md-input-container>
+								       	<md-input-container class="md-block" flex=85>
+								        	<label>Metodolog&#237;a de Validaci&#243;n</label>
+								        	<input data-ng-model="model.currentModel.met_validation">
+								    	</md-input-container>
+									</div>
+									<div layout="row" class="md-padding">
+										<md-input-container class="md-block" flex=20>
+								        	<label>Horas/Hombre Metodolog&#237;a</label>
+								        	<input data-ng-model="model.currentModel.met_hours_man" data-ng-change="model.recalculateCapacity()">
+								    	</md-input-container>
+										<md-input-container class="md-block" flex=20>
+								        	<label>Capacidad &#193;rea (H/H)</label>
+								        	<input data-ng-model="model.currentModel.cap_area" disabled>
+								    	</md-input-container>
+										<md-input-container class="md-block" flex=20>
+								        	<label>Horas/Hombre Cuantificaci&#243;n</label>
+								        	<input data-ng-model="model.currentModel.qua_hours_man" data-ng-change="model.recalculateCapacity()">
+								    	</md-input-container>	
+										<md-input-container class="md-block" flex=20>
+								        	<label>Capacidad Cuantificaci&#243;n (H/H)</label>
+								        	<input data-ng-model="model.currentModel.cap_qua" disabled>
+								    	</md-input-container>						    					    	
+										<md-input-container class="md-block" flex=20>
+								        	<label>Capacidad Total</label>
+								        	<input data-ng-model="model.currentModel.cap_total" disabled>
+								    	</md-input-container>		
+									</div>
+				      			</md-tab-body>
+				      		</md-tab>
+				      		<md-tab id="tab4">
+						        <md-tab-label>Varios</md-tab-label>
+						        <md-tab-body>
+						        	<div layout="row" class="md-padding">
+						        		<div flex="50">
+										<md-input-container class="md-block">
+								        	<label>Fecha Inicial</label>
+								          	<textarea ng-model="model.currentModel.initial_dates" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+								        </md-input-container>
+								        </div>
+								        <div flex="50">
+								        <md-input-container class="md-block">
+								        	<label>Autor Original</label>
+								          	<textarea ng-model="model.currentModel.original_author" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+								        </md-input-container>
+								        </div>
+									</div>
+						        	<div layout="row" class="md-padding">
+						        		<div flex="50">
+										<md-input-container class="md-block">
+								        	<label>Fecha Final</label>
+								          	<textarea ng-model="model.currentModel.final_dates" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+								        </md-input-container>
+								        </div>
+								        <div flex="50">
+								        <md-input-container class="md-block">
+								        	<label>Autor Final</label>
+								          	<textarea ng-model="model.currentModel.final_author" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+								        </md-input-container>
+								        </div>
+									</div>		
+									<div layout="row" class="md-padding">	  
+										<div flex>      		
+											<md-input-container class="md-block"> 
+									        	<label>M&#225;s informaci&#243;n:</label>
+									          	<textarea ng-model="model.currentModel.more_info" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+									        </md-input-container>
+								        </div>
+							        </div>
+						        </md-tab-body>
+						    </md-tab>
+			    	    </md-tabs>
+			  		</md-content>
+				</div>
+			</md-content>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

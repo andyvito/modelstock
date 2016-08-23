@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title">Eliminar Riesgo Asociado</h3>
+</div>
+<div class="modal-body">
+    <p>¿Desea eliminar el riesgo asociado <b>{{ nameRisk }}</b>?</p>
+    <p>Al eliminar este riesgo asociado, se eliminarán todas las gerencias, es decir, 
+    	<b>{{ numberAreas }}</b> gerencias. </p>
+    <p><b>Nota: Esta acción no se puede deshacer.</b></p>
+    <p>No se puede eliminar este riesgo asociado debido a que tiene relación con <b>XXXXXXXXXX</b> modelos.</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="delete()">Eliminar</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancelar</button>
+</div>
