@@ -8,7 +8,7 @@
  * Factory in the modelsstockApp.
  */
 angular.module('modelsstockApp').
-    factory('ApiService', function ($http, $q) {
+    factory('ApiService', function ($http, $q, $httpParamSerializerJQLike) {
 
         var makeAPICall = function(urlSuffix, method, data, params){
             var deferred = $q.defer();
@@ -35,6 +35,9 @@ angular.module('modelsstockApp').
         return {
             getAllDistinctTypes: function(){
                 return makeAPICall('api/v1/type_distinct', 'GET', {}, {}); 
+            },
+            getAllDistinctKinds: function(){
+                return makeAPICall('api/v1/kind_distinct', 'GET', {}, {}); 
             },
             getAllRisks: function(){
                 return makeAPICall('api/v1/risk_model_data', 'GET', {}, {});   
@@ -69,6 +72,17 @@ angular.module('modelsstockApp').
 
             getModelById: function(modelId){
                 return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});  
+            },
+            saveModel: function(model){
+                console.log(model.kind);
+                return makeAPICall('api/v1/model/'+model.id, 'PUT', {}, {code:model.code, name:model.name, description:model.description, len:model.len, cat:model.cat,
+                                                                        kind:model.kind, frecuency:model.frecuency, met_validation:model.met_validation, 
+                                                                        met_hours_man:model.met_hours_man, qua_hours_man:model.qua_hours_man, cap_area:model.cap_area,
+                                                                        cap_qua:model.cap_qua, cap_total:model.cap_total, comments:model.comments, more_info:model.more_info,
+                                                                        curriculum:model.curriculum, file_doc:model.file_doc, active:model.active, is_qua:model.is_qua,
+                                                                        version:model.version, initial_dates:model.initial_dates, original_author:model.original_author,
+                                                                        final_dates:model.final_dates, final_author:model.final_author,risk_id:model.risk.id, 
+                                                                        area_id:model.area.id});  
             },
 
         };

@@ -19,7 +19,7 @@ angular.module('modelsstockApp')
         this.titleTable = "Modelos";
 
         this.selectModel = function(model){
-          	$state.go('models',{'id':model.id});
+          	$state.go('model',{'id':model.id});
           	
         };
 
@@ -52,5 +52,8 @@ angular.module('modelsstockApp')
                 self.titleTable += ' (' + self.models.length + ')'; 
               }
           });
+
+
+
 
   }]);

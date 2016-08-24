@@ -1,247 +1,182 @@
-<div  layout="column" ng-cloak class="contentModel" layout-fill>
-    
-			
-		  	<md-content flex layout-fill>
-				<div flex>
-				    <div layout-gt-xs="row">
-				    	<div flex="20">
-						    <md-input-container class="md-block" flex-gt-xs>
-					        	<label>C&#243;digo</label>
-					        	<input data-ng-model="model.currentModel.code" >
-					      	</md-input-container>
-					    </div>
-					    <div flex>
-						    <md-input-container class="md-block" flex-gt-xs>
-					        	<label>Nombre</label>
-					        	<input data-ng-model="model.currentModel.name">
-					    	</md-input-container>
-					    </div>
-					    <div flex="20">
-						    <md-input-container class="md-block" flex-gt-xs>
-						       	<label>Versi&#243;n</label>
-						       	<input data-ng-model="model.currentModel.version">
-						    </md-input-container>
-						</div>
-				    </div>
-				</div>
-				<div flex>
-					<div layout-gt-xs="row">
-					    <md-input-container class="md-block" flex-gt-sm>
-				            <label>Riesgo Asociado</label>
-				            <md-select ng-model="model.currentModel.risk.id" data-ng-change="model.changeRisk()">
-				              <md-option ng-repeat="risk in model.allRisks" value="{{risk.id}}">
-				                {{risk.name}}
-				              </md-option>
-				            </md-select>
-				        </md-input-container>
-					    <md-input-container class="md-block" flex-gt-sm>
-				            <label>&#193;rea</label>
-				            <md-select ng-model="model.currentModel.area.id">
-				              <md-option ng-repeat="area in model.allAreasByRisk" value="{{area.id}}">
-				                {{area.name}}
-				              </md-option>
-				            </md-select>
-				        </md-input-container>
-				       	<md-input-container class="md-block" flex-gt-xs>
-				        	<label>L&#237;nea de Negocio</label>
-				        	<input data-ng-model="model.currentModel.len">
-				    	</md-input-container>
-				    </div>
-				</div>  
-				<div flex>
-					<md-content>
-			    		<md-tabs  md-dynamic-height>
-			    			<md-tab id="tab1">
-						        <md-tab-label>Informaci&#243;n</md-tab-label>
-						        <md-tab-body>
-						        	<div layout="column" layout-fill class="md-padding">
-						        		<div layout=column>
-						        			<div flex=100 layout=row>
-												<form flex=25 ng-submit="$event.preventDefault()" name="searchForm">
-											        <md-autocomplete required
-											            md-input-name="autocompleteField"
-											            md-input-minlength="2"
-											            md-input-maxlength="18"
-											            md-no-cache="model.noCache"
-											            md-selected-item="model.selectedTypeItem"
-											            md-search-text="model.searchTypeText"
-											            md-items="item in model.queryTypeSearch(model.searchTypeText)"
-											            md-item-text="item.display"
-											            md-floating-label="Categor&#237;a">
-											          	<md-item-template>
-												            <span md-highlight-text="model.searchTypeText">{{item.display}}</span>
-												          </md-item-template>
-											        </md-autocomplete>
-										        </form>
-										    	<md-input-container class="md-block" flex=25>
-										        	<label>Clase</label>
-										        	<input data-ng-model="model.currentModel.kind">
-										    	</md-input-container>
-										    	<md-input-container class="md-block" flex=25>
-										            <label>Hoja de Vida</label>
-										            <md-select ng-model="model.currentModel.curriculum">
-										              <md-option ng-repeat="opt in model.yesNovalues" value="{{opt.v}}">
-										                {{opt.n}}
-										              </md-option>
-										            </md-select>
-										        </md-input-container>
-										        <md-input-container class="md-block" flex=25>
-										            <label>¿Participa Cuantificaci&#243;n?</label>
-										            <md-select ng-model="model.currentModel.is_qua">
-										              <md-option ng-repeat="opt in model.yesNovalues" value="{{opt.v}}">
-										                {{opt.n}}
-										              </md-option>
-										            </md-select>
-										        </md-input-container>
-									        </div>
-									        <div flex>
-											    <md-input-container class="md-block" flex-gt-xs>
-										        	<label>Documentaci&#243;n</label>
-										        	<input data-ng-model="model.currentModel.file_doc">
-										    	</md-input-container>
-										    </div>
-								    	</div>
-										
-								    	<div layout-gt-xs="column" layout-fill>
-									    	<md-input-container class="md-block">
-									        	<label>Descripci&#243;n</label>
-									          	<textarea ng-model="model.currentModel.description" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-									        </md-input-container>
-											<md-input-container class="md-block">
-									        	<label>Comentarios</label>
-									          	<textarea ng-model="model.currentModel.comments" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-									        </md-input-container>
-									        
-								    	</div>
-						        	</div>
-						        </md-tab-body>
-					      	</md-tab>
-					      	<md-tab id="tab2" >
-					        	<md-tab-label>Backtesting</md-tab-label>
-					        	<md-tab-body>
-					        		<div layout="row" class="md-padding">
-						          		<table class="table table-hover">
-							              <thead>
-							                <tr>
-							                  <th>Fecha a Validar</th>
-							                  <th>Fecha Real </th>
-							                  <th>Fecha Pr&#243;ximo</th>
-							                  <th>Resultado</th>
-							                  <th>Comentarios</th>
-							                </tr>
-							              </thead>
-							              <tbody>
-							                    <tr id="{{b.id}}" data-ng-repeat="b in model.currentModel.backtest_historial">
-							                      <td>{{b.validate_year}} - {{b.validate_month | monthName}}</td>
-							                      <td>{{b.real_year}} - {{b.real_month | monthName}}</td>
-							                      <td>{{b.next_year}} - {{b.next_month | monthName}}</td>
-							                      <td>
-							                      	<span data-ng-if="b.result == true" class="text-success"><i class="fa fa-check"></i></span>
-							                      	<span data-ng-if="b.result == false" class="text-danger"><i class="fa fa-warning"></i></span>
-							                      	&#32;{{b.result | resultBacktest}}</td>
-							                      <td>{{b.comentaries}}</td>
-							                    </tr>
-							              </tbody>
-							            </table>
-							        </div>
-					        	</md-tab-body>
-				      		</md-tab>
-				      		<md-tab id="tab3">
-				      			<md-tab-label>Capacidad</md-tab-label>
-				      			<md-tab-body>
-				      				<div layout="row" class="md-padding">
-					      				<md-input-container class="md-block" flex=15>
-								            <label>Frecuencia</label>
-								            <md-select ng-model="model.currentModel.frecuency" data-ng-change="model.recalculateCapacity()">
-								              <md-option ng-repeat="f in model.frecuency" value="{{f.v}}">
-								                {{f.n}}
-								              </md-option>
-								            </md-select>
-								        </md-input-container>
-								       	<md-input-container class="md-block" flex=85>
-								        	<label>Metodolog&#237;a de Validaci&#243;n</label>
-								        	<input data-ng-model="model.currentModel.met_validation">
-								    	</md-input-container>
-									</div>
-									<div layout="row" class="md-padding">
-										<md-input-container class="md-block" flex=20>
-								        	<label>Horas/Hombre Metodolog&#237;a</label>
-								        	<input data-ng-model="model.currentModel.met_hours_man" data-ng-change="model.recalculateCapacity()">
-								    	</md-input-container>
-										<md-input-container class="md-block" flex=20>
-								        	<label>Capacidad &#193;rea (H/H)</label>
-								        	<input data-ng-model="model.currentModel.cap_area" disabled>
-								    	</md-input-container>
-										<md-input-container class="md-block" flex=20>
-								        	<label>Horas/Hombre Cuantificaci&#243;n</label>
-								        	<input data-ng-model="model.currentModel.qua_hours_man" data-ng-change="model.recalculateCapacity()">
-								    	</md-input-container>	
-										<md-input-container class="md-block" flex=20>
-								        	<label>Capacidad Cuantificaci&#243;n (H/H)</label>
-								        	<input data-ng-model="model.currentModel.cap_qua" disabled>
-								    	</md-input-container>						    					    	
-										<md-input-container class="md-block" flex=20>
-								        	<label>Capacidad Total</label>
-								        	<input data-ng-model="model.currentModel.cap_total" disabled>
-								    	</md-input-container>		
-									</div>
-				      			</md-tab-body>
-				      		</md-tab>
-				      		<md-tab id="tab4">
-						        <md-tab-label>Varios</md-tab-label>
-						        <md-tab-body>
-						        	<div layout="row" class="md-padding">
-						        		<div flex="50">
-										<md-input-container class="md-block">
-								        	<label>Fecha Inicial</label>
-								          	<textarea ng-model="model.currentModel.initial_dates" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-								        </md-input-container>
-								        </div>
-								        <div flex="50">
-								        <md-input-container class="md-block">
-								        	<label>Autor Original</label>
-								          	<textarea ng-model="model.currentModel.original_author" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-								        </md-input-container>
-								        </div>
-									</div>
-						        	<div layout="row" class="md-padding">
-						        		<div flex="50">
-										<md-input-container class="md-block">
-								        	<label>Fecha Final</label>
-								          	<textarea ng-model="model.currentModel.final_dates" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-								        </md-input-container>
-								        </div>
-								        <div flex="50">
-								        <md-input-container class="md-block">
-								        	<label>Autor Final</label>
-								          	<textarea ng-model="model.currentModel.final_author" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-								        </md-input-container>
-								        </div>
-									</div>		
-									<div layout="row" class="md-padding">	  
-										<div flex>      		
-											<md-input-container class="md-block"> 
-									        	<label>M&#225;s informaci&#243;n:</label>
-									          	<textarea ng-model="model.currentModel.more_info" md-maxlength="550" rows="5" md-select-on-focus></textarea>
-									        </md-input-container>
-								        </div>
-							        </div>
-						        </md-tab-body>
-						    </md-tab>
-			    	    </md-tabs>
-			  		</md-content>
-				</div>
-			</md-content>
 
+<div class="row" data-ng-controller="RiskCtrl as risks">
+	<div class="col-lg-4">
+		<rd-widget>
+  		<rd-widget-header icon="fa-bolt" title="Riesgos Asociados">
+		    <a data-ng-click="risks.toggleForm()" class="btn btn-link">Agregar</a>
+  		</rd-widget-header>
+
+      <form role="form" data-ng-show="risks.showform" class="form"> 
+        <div class="form-group">
+          <div class="col-lg-12">
+            <input type="text" class="form-control" placeholder="Riesgo Asociado"
+                     data-ng-model="risks.form.name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" data-ng-click="risks.saveRisk()">Guardar</button>
+          <button class="btn btn-default" data-ng-click="risks.cancelForm()">Cancelar</button>
+        </div>
+        <hr />
+      </form>
+      <div layout="column" layout-align="center center" style="height:250px;max-height:250px">
+        <div layout="row" layout-fill layout-align="center center" data-ng-hide="risks.listOfRisks.length > 0">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div layout="column" layout-fill class="table-responsive" data-ng-show="risks.listOfRisks.length > 0">
+          <table class="table table-hover">
+            <thead>
+              <tr><th>Riesgo Asociado</th><th></th></tr>
+            </thead>
+            <tbody>
+                  <tr id="{{r.id}}" data-ng-repeat="r in risks.listOfRisks"
+                      data-ng-class="{riskSelectedItem: r.id == risks.currentRisk.id}">
+                    <td data-ng-click="risks.selectRisk(r)">
+                          <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
+                    </td>
+                    <td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index,$event)" data-ng-show="r.id == risks.currentRisk.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                  </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+       
+
+
+				
+			
+		</rd-widget>
+	</div>
+	<div class="col-lg-8" data-ng-controller="AreaCtrl as areas">
+		<rd-widget>
+			<rd-widget-header icon="fa-users" title="Areas">
+				<a data-ng-click="areas.toggleForm(risks.currentRisk.id)" class="btn btn-link" data-ng-class='{disabled:risks.currentRisk == null}'>Agregar</a>
+			</rd-widget-header>
+			<form role="form" data-ng-show="areas.showform" class="form"> 
+         <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Área"
+                   data-ng-model="areas.form.name"/>
+            </div>
+         </div>
+          <div class="form-group">
+            <div class="col-lg-12">
+              <input type="text" class="form-control" placeholder="Líder"
+                   data-ng-model="areas.form.lead"/>
+            </div>
+         </div>
+         <div class="form-group">
+            <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.currentRisk.id)">Guardar</button>
+            <button class="btn btn-default" data-ng-click="areas.cancelForm()">Cancelar</button>
+         </div>
+         <hr />
+      </form>
+			<rd-widget-body classes="medium no-padding">
+				<span data-ng-if="risks.currentRisk == null">Por favor, seleccione un riesgo.</span>
+				<div class="table-responsive" data-ng-show="risks.currentRisk != null">
+					<table class="table table-hover">
+						<thead>
+							<tr><th>Area</th><th>Líder</th><th></th></tr>
+						</thead>
+						<tbody>
+							<tr id="{{a.id}}" data-ng-repeat="a in areas.areas" data-ng-class="{riskSelectedItem: a.id == areas.currentArea.id}">
+        						<td data-ng-click="areas.selectArea(a)">
+                      <text-input-update value-edit="a.name" my-blur="areas.updateArea(risks.currentRisk.id,a)"></text-input-update>
+        						</td>
+        						<td data-ng-click="areas.selectArea(a)">
+        							<text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.currentRisk.id,a)"></text-input-update>
+        						</td>
+        						<td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="areas.removeArea($index,$event)" data-ng-show="a.id == areas.currentArea.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
+        					</tr>
+						</tbody>
+					</table>
+        		</div>
+			</rd-widget-body>
+		<rd-widget>
+	</div>
 </div>
 
+<div class="row"  data-ng-controller="ModelsCtrl as modelCtrl">
+  <div class="col-lg-12">
+    <rd-widget>
+      <rd-widget-header icon="fa-object-group" title="{{modelCtrl.titleTable}}">
+        <form>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+              <input type="text" placeholder="Search" data-ng-model="modelCtrl.filterModels" class="form-control input-sm" />
+            </div>      
+          </div>
+        </form>
+      </rd-widget-header>
+      <div class="models-table">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
+          <div class="col-lg-4 container" data-ng-repeat="m in modelCtrl.models | orderBy:modelCtrl.sortType:modelCtrl.sortReverse | filter:modelCtrl.filterModels" data-ng-click="modelCtrl.selectModel(m)">
+            <div class="model" data-ng-class="{'model-inactive':m.active != true}">
+              <div>
+                <p data-ng-if="modelCtrl.currentRisk == null" ><i class="fa fa-bolt"></i>&#32;{{m.risk.name | limitTo: 80}}<span data-ng-if="m.risk_model.name.length > 80">...</span></p>
+                <p data-ng-if="modelCtrl.currentArea == null"><i class="fa fa-users"></i>&#32;{{m.area.name | limitTo: 80}}<span data-ng-if="m.area_model.name.length > 80">...</span></p>
+                <p class="len">{{m.len | limitTo: 80}}<span data-ng-if="m.len.length > 80">...</span></p>
+              </div>
+              <div class="model-name model-name-active" data-ng-class="{'model-name-inactive':m.active != true}">
+                <p class="title">{{m.name | limitTo: 80}}<span data-ng-if="m.name.length > 80">...</span></p>
+                <div class="model-implementation">  
+                	<span data-ng-show="m.last_backtest == null"><i class="model-warning fa fa-cogs" aria-hidden="true"></i>
+                	&#32;En Implementaci&#243;n</span>
+                </div>
+				<div class="model-delayed alert-danger" data-ng-if="m.current_backtest.is_delayed != null && m.active == true">
+				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				  <span class="sr-only">Precauci&#243;n:</span>
+				  Actualmente atrasado&#32;
+  					<ng-pluralize count="m.current_backtest.is_delayed"
+                				  when="{'0': 'ningún mes.',
+                       				   'one': '1 mes.',
+                       				   'other': '{} meses.'}">
+				</div>
+              </div>
+				<div class="last-backtest col-xs-12 col-sm-12 col-md-12 col-lg-12" data-ng-show="m.last_backtest != null"> 
+					<div class="backtest-title col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<span><b>&#218;ltimo Backtesting</b></span>
+					</div>
+					<div class="backtest-dates col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				  			<i class="fa fa-calendar-minus-o"></i><br>{{m.last_backtest.validate_year}}/{{m.last_backtest.validate_month|monthName}}
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				  			<i class="fa fa-calendar-check-o"></i><br>{{m.last_backtest.real_year | ifNull }}/{{m.last_backtest.real_month | monthName}}
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					  		<i class="fa fa-calendar-plus-o"></i><br>
+					  		{{m.last_backtest.next_year}}/{{m.last_backtest.next_month | monthName}}
+						</div>
+					</div>               
+	                <div class="backtest-result col-xs-12 col-sm-12 col-md-12 col-lg-12">                  
+	                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
+	                    <div data-ng-if="m.last_backtest.result == true">
+	                      <i class="model-warning fa fa-check"></i>
+	                      <div>Cumpli&#243;</div>
+	                     </div>
+	                    <div data-ng-if="m.last_backtest.result == false">
+	                      <i class="model-warning fa fa-times"></i>
+	                      <div>No Cumpli&#243;</div>
+	                     </div>
+	                     
+	                  </div>
+	                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                  	  	<ng-pluralize count="m.last_backtest.months_delayed"
+                						  when="{'0': 'No tuvo atraso.',
+                       						   'one': 'Tuvo 1 mes de atraso.',
+                       				   			'other': 'Tuvo {} meses de atraso.'}">
 
-
-
-
-
-
-
-
-
+	                  </div>
+	                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </rd-widget>
+  </div>
+</div>

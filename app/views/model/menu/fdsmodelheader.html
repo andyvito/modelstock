@@ -1,0 +1,27 @@
+<md-fab-speed-dial md-open="false" md-direction="left" class="md-scale" layout-align="end left">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab">
+      <span class="menu-icon fa fa-object-group"></span>
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions data-ng-hide="editMode">
+    <md-button aria-label="Edit" class="md-fab md-raised md-mini" data-ng-click="clickEdit()">
+      <md-tooltip md-direction="bottom">Editar</md-tooltip>
+      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </md-button>
+    <md-button aria-label="Clone" class="md-fab md-raised md-mini" data-ng-click="openCloneModal($event, item)" >
+    <md-tooltip md-direction="bottom">Clonar</md-tooltip>
+      <span class="menu-icon fa fa-clone"></span>
+    </md-button>
+  </md-fab-actions>
+  <md-fab-actions data-ng-show="editMode">
+    <md-button aria-label="Cancel" class="md-fab md-raised md-mini" data-ng-click="clickCancel()">
+    <md-tooltip md-direction="bottom">Cancelar</md-tooltip>
+      <span class="menu-icon fa fa-times"></span>
+    </md-button>
+    <md-button aria-label="Save" class="md-fab md-raised md-mini" data-ng-click="clickSave()">
+    <md-tooltip md-direction="bottom">Guardar</md-tooltip>
+      <span class="menu-icon fa fa-floppy-o"></span>
+    </md-button>
+  </md-fab-actions>
+ </md-fab-speed-dial>

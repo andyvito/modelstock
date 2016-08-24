@@ -9,16 +9,28 @@
  */
 
 angular.module('modelsstockApp')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$mdSidenav', MasterCtrl]);
-function MasterCtrl($scope, $cookieStore, $mdSidenav) {
+    .controller('MasterCtrl', ['$rootScope','$scope', '$cookieStore', '$mdSidenav',  '$state', '$uibModal', MasterCtrl]);
+function MasterCtrl($rootScope, $scope, $cookieStore, $mdSidenav,  $state, $uibModal) {
     
+    $scope.$state = $state;
+
     $scope.toggleLeft = buildToggler('left');
-    $scope.toggleRight = buildToggler('right');
+    
 
     function buildToggler(componentId) {
       return function() {
         $mdSidenav(componentId).toggle();
       }
     }
+
+    this.optionSelect = function(opt){
+    	$mdSidenav('left').close();
+      	$state.go(opt);
+      	
+    };
+
+
+
+
     
 }

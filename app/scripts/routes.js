@@ -20,21 +20,13 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 url: '/',
                 templateUrl: 'views/dashboard.html'
             })
-            .state('tables', {
-                url: '/tables',
-                templateUrl: 'views/tables.html'
-            })
-            .state('types', {
-                url: '/types',
-                templateUrl: 'views/types.html'
-            })
-            .state('risks', {
-                url: '/risks',
-                templateUrl: 'views/risks.html'
-            })
             .state('models', {
-                url: '/models/:id',
-                templateUrl: 'views/models.html',
+                url: '/models',
+                templateUrl: 'views/models.html'
+            })
+            .state('model', {
+                url: '/model/:id',
+                templateUrl: 'views/model.html',
                 controller: 'ModelCtrl',
                 controllerAs: "model"
             });

@@ -18,6 +18,9 @@ angular.module('modelsstockApp')
     		return ApiService.getModelById(modelId);
     	};
 
+    this.saveModel = function(model){
+    	return ApiService.saveModel(model);
+    };
 
     
   });

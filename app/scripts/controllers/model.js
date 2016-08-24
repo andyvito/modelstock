@@ -8,18 +8,42 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelCtrl',['$scope','$stateParams','$state', '$q', '$timeout', 'modelService', 'typeService', 'risksData', 
-     'riskService', 'areasData', 'areaService', 
-  		function($scope, $stateParams, $state, $q, $timeout, modelService, typeService, risksData, riskService, areasData, 
-              areaService){
+  .controller('ModelCtrl',['$scope','$stateParams','$state', '$q', '$timeout', 'modelService', 'typeService', 'kindService', 
+      'risksData', 'riskService', 'areasData', 'areaService', 
+  		function($scope, $stateParams, $state, $q, $timeout, modelService, typeService, kindService, risksData, 
+              riskService, areasData, areaService){
   	
     var self = this;
+    
+ 
+    $scope.$on('btnEditModelClickEvent', function () {
+      self.disabled = false;
+    });
+
+    $scope.$on('btnCancelModelClickEvent', function(){
+      //reload model without changes
+      self.currentModel = angular.copy(self.currentModelInitial);
+      self.disabled = true;
+    });
+
+    $scope.$on('btnSaveModelClickEvent', function(){
+      modelService.saveModel(self.currentModel).then(function(result){
+        self.disabled = true;  
+      });
+    });
+
+
     var modelId = $stateParams.id;
+    self.disabled = true;
     self.allRisks = risksData.getRisks();
     self.selectedTypeItem  = null;
     self.searchTypeText    = null;
     self.queryTypeSearch   = queryTypeSearch;
 
+    self.selectedKindItem  = null;
+    self.searchKindText    = null;
+    self.queryKindSearch   = queryKindSearch;
+    
 
 
     if (self.allRisks == null){
@@ -34,10 +58,11 @@ angular.module('modelsstockApp')
                       {n:'Cuatrimestral', v:4}, {n:'Semestral', v:6}, {n:'Anual', v:12}, {n:'Bianual', v:24}];
     
 
-
    	modelService.getModelById(modelId).then(function(result){
    			  self.currentModel = result.data.model;
           console.log(self.currentModel);
+          //Copy the model because the user could cancel edit action, so restore to initial model state
+          self.currentModelInitial = angular.copy(self.currentModel);
           riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
             self.allAreasByRisk = result.data.areas;
           }); 
@@ -48,7 +73,16 @@ angular.module('modelsstockApp')
                 display: type
               }
             });
-            self.selectedTypeItem = self.currentModel.cat;
+             self.selectedTypeItem = self.currentModel.cat;
+          });
+          kindService.getAllKinds().then(function(result){
+            self.kinds = result.data.kinds.map( function (kind) {
+              return {
+                value: kind.toLowerCase(),
+                display: kind
+              }
+            });
+            self.selectedKindItem = self.currentModel.kind;
           });
     });  
 
@@ -74,9 +108,16 @@ angular.module('modelsstockApp')
           if (self.currentModel != null){
             self.currentModel.cat = newValue;  
           }
-
       });    
 
+
+    $scope.$watch(function(){
+      return self.searchKindText;
+      },function(newValue,oldValue){
+          if (self.currentModel != null){
+            self.currentModel.kind = newValue;  
+          }
+      });    
 
     // ******************************
     // Internal methods
@@ -95,6 +136,28 @@ angular.module('modelsstockApp')
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(types) {
         return (types.value.indexOf(lowercaseQuery) === 0);
+      };
+    };
+
+   function queryKindSearch (query) {
+      //var results = query ? self.kinds.filter( createFilterForKind(query) ) : self.kinds;
+      var results = self.kinds;
+      results = self.kinds.filter( createFilterForKind(query) );
+      if (results.length <= 0) {
+       results = self.kinds; 
+      }
+      var deferred = $q.defer();
+      $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+      return deferred.promise;
+    };
+
+    /**
+     * Create filter function for a query string
+     */
+    function createFilterForKind(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(kinds) {
+        return (kinds.value.indexOf(lowercaseQuery) === 0);
       };
     };
 
