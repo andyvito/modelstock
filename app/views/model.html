@@ -190,19 +190,22 @@
 							                  <th>Fecha a Validar</th>
 							                  <th>Fecha Real </th>
 							                  <th>Fecha Pr&#243;ximo</th>
+							                  <th>Meses de atraso</th>
 							                  <th>Resultado</th>
 							                  <th>Comentarios</th>
 							                </tr>
 							              </thead>
 							              <tbody>
-							                    <tr id="{{b.id}}" data-ng-repeat="b in model.currentModel.backtest_historial">
-							                      <td>{{b.validate_year}} - {{b.validate_month | monthName}}</td>
-							                      <td>{{b.real_year}} - {{b.real_month | monthName}}</td>
-							                      <td>{{b.next_year}} - {{b.next_month | monthName}}</td>
+							                    <tr id="{{b.modelid}}" data-ng-repeat="b in model.currentModel.backtest_historial">
+							                      <td>{{b.last_backtest.validate_year}} - {{b.last_backtest.validate_month | monthName}}</td>
+							                      <td>{{b.last_backtest.real_year}} - {{b.last_backtest.real_month | monthName}}</td>
+							                      <td>{{b.last_backtest.next_year}} - {{b.last_backtest.next_month | monthName}}</td>
+												  <td>{{b.last_backtest.months_delayed}}</td>
 							                      <td>
 							                      	<span data-ng-if="b.result == true" class="text-success"><i class="fa fa-check"></i></span>
 							                      	<span data-ng-if="b.result == false" class="text-danger"><i class="fa fa-warning"></i></span>
-							                      	&#32;{{b.result | resultBacktest}}</td>
+							                      	&#32;{{b.result | resultBacktest}}
+							                      </td>
 							                      <td>{{b.comentaries}}</td>
 							                    </tr>
 							              </tbody>

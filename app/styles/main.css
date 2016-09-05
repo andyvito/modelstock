@@ -294,26 +294,60 @@ md-toolbar.md-toolbar-model{
 
 
 
-
-
-
-/* USER PROFILE PAGE */
- .card {
-    margin-top: 20px;
-    padding: 30px;
-    background-color: rgba(214, 224, 226, 0.2);
-    -webkit-border-top-left-radius:5px;
-    -moz-border-top-left-radius:5px;
-    border-top-left-radius:5px;
-    -webkit-border-top-right-radius:5px;
-    -moz-border-top-right-radius:5px;
-    border-top-right-radius:5px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.vrDates{
+  min-width: 200px; 
 }
 
-.btn-pref .btn {
-    -webkit-border-radius:0 !important;
+
+.vrDates .wrapper {
+  width: 100%;
+  max-width: 200px; 
 }
 
+
+.vrDates #vertical-container {
+  height: 200px;
+  width: 100%;
+  max-width: 200px; 
+}
+
+
+.vrDates #vertical-container .repeated-item {
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px; 
+}
+
+
+.vrDates #vertical-container .repeated-item:hover {
+  cursor:pointer;
+  background-color: #ffd200;
+}
+
+
+.selected {
+    font-weight: bold;
+    background-color: #ffd200
+;}
+
+.vrDates #vertical-container .repeated-item.header {
+  background-color: #00448c;
+  color: white;
+  text-align: center;
+  font-weight: bold; 
+  margin:0px;
+  padding-bottom: 0px;
+}
+
+
+.vrDates .md-virtual-repeat-container 
+.md-virtual-repeat-offsetter div:not(.header) {
+  padding-left: 16px; 
+}
+
+
+md-dialog md-toolbar._md-toolbar-transitions{
+  background-color: #ffd200;
+  color: black;
+} 

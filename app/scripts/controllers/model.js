@@ -8,9 +8,9 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelCtrl',['$scope','$stateParams','$state', '$q', '$timeout', 'modelService', 'typeService', 'kindService', 
+  .controller('ModelCtrl',['$scope','$stateParams','$state', '$q', '$timeout', '$uibModal', 'modelService', 'typeService', 'kindService', 
       'risksData', 'riskService', 'areasData', 'areaService', 
-  		function($scope, $stateParams, $state, $q, $timeout, modelService, typeService, kindService, risksData, 
+  		function($scope, $stateParams, $state, $q, $timeout, $uibModal, modelService, typeService, kindService, risksData, 
               riskService, areasData, areaService){
   	
     var self = this;
@@ -29,6 +29,22 @@ angular.module('modelsstockApp')
     $scope.$on('btnSaveModelClickEvent', function(){
       modelService.saveModel(self.currentModel).then(function(result){
         self.disabled = true;  
+      });
+    });
+
+    $scope.$on('btnCloneModelClickEvent', function(){
+      modelService.saveModel(self.currentModel).then(function(result){
+        self.disabled = true;  
+
+
+        var modalInstance = $uibModal.open({
+              animation: true,
+              controller: 'ModelModalCloneCtrl',
+              templateUrl: 'views/model/modal/clone.html',
+              resolve: {
+                
+              }
+          });
       });
     });
 

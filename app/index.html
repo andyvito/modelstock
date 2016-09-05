@@ -35,9 +35,6 @@
             Modelos
           </md-button>
           <md-button ng-click="toggleLeft()">
-            Backtesting
-          </md-button>
-          <md-button ng-click="toggleLeft()">
             Reporte
           </md-button>
         </md-content>
@@ -51,18 +48,21 @@
               <md-button data-ng-click="toggleLeft()">
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
               </md-button>
-              <h2 class="md-flex">Modelo</h2>
+              <h2 class="md-flex">ModelsStock</h2>
               <div flex data-ng-show="$state.includes('model')">
                 <fds-model-header></fds-model-header>
+              </div>
+              <div flex data-ng-show="$state.includes('models')">
+                <fds-models-header></fds-models-header>
               </div>
               
           </div>
         </md-toolbar>
 
-        <md-content layout-padding>
+        <div layout="column" flex layout-fill 
           <!-- Main Content -->
-          <div ui-view></div>
-        </md-content>
+          <div ui-view flex layout-fill>></div>
+        </div>
     </div>
   
   </div><!-- End Page Wrapper -->
@@ -120,6 +120,10 @@
         <script src="scripts/controllers/model/modal/clone.js"></script>
         <script src="scripts/directives/model/menu/fdsmodelheader.js"></script>
         <script src="scripts/services/kindservice.js"></script>
+        <script src="scripts/controllers/models/cards/background.js"></script>
+        <script src="scripts/directives/components/yearmonthpicker.js"></script>
+        <script src="scripts/services/backtestService.js"></script>
+        <script src="scripts/directives/models/menu/fdsmodelsheader.js"></script>
         <!-- endbuild -->
 </body>
 </html>

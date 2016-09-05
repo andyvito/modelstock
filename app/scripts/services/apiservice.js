@@ -84,7 +84,12 @@ angular.module('modelsstockApp').
                                                                         final_dates:model.final_dates, final_author:model.final_author,risk_id:model.risk.id, 
                                                                         area_id:model.area.id});  
             },
-
+            saveBacktesting: function(backtesting){
+                console.log('Se fue');
+                console.log(backtesting);
+                return makeAPICall('api/v1/backtest', 'POST', {}, {modelid:backtesting.modelid, result:backtesting.result, 
+                                                                yearResult:backtesting.yearRelease, monthResult:backtesting.monthRelease,
+                                                                comments:backtesting.comments});  
+            },
         };
-    })
-;
+    });

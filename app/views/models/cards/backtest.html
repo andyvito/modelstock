@@ -1,0 +1,95 @@
+<md-dialog style="width:600px;">
+  	<form>
+		<md-toolbar>
+		<div class="md-toolbar-tools">
+		  <h2>Validar Backtesting: {{ model.name }}</h2>
+		  <span flex></span>
+		</div>
+		</md-toolbar>
+	  	<md-dialog-content layout="column" >
+		  	<div layout="column" layout-padding  data-ng-show="currentStep == 1">
+		  		<div layout=row layout-align="center center">
+		  			<h3>1. Validación de resultado</h3>
+		  		</div>
+		  		<div flex>
+		  			<p>Por favor, indica cómo fue el resultado del backtesting.</p>
+		  			<div layout=row layout-padding layout-align="center center">
+						<span>¿Cumplió resultado del backtesting?</span>
+						<md-radio-group data-ng-model="backtesting.result" layout="row" layout-align="center center">
+							<md-radio-button value="1" class="md-primary">Sí</md-radio-button>
+						    <md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+		  	</div>
+		  	<div layout=column layout-padding data-ng-show="currentStep == 2">
+		  		<div layout=row layout-align="center center">
+		  			<h3>2. Entrega de resultado</h3>
+		  		</div>
+		  		<div flex >
+		  			<p>El modelo se encuentra con retraso en la entrega de los resultados.</p>
+		  			<div layout=column layout-padding layout-align="center center">
+		  				<span>Por favor, indique en que mes se entreg&#243; el backtesting de este modelo:</span>
+		  				<md-radio-group data-ng-model="selectedMonth" layout="row" layout-align="center center">
+							<md-radio-button value="{{lastMonth}}">{{lastMonth.n}}</md-radio-button>
+							<md-radio-button value="{{currentMonth}}" class="md-primary">{{currentMonth.n}}</md-radio-button>
+						</md-radio-group>
+		  			</div>
+		  		</div>			  		
+		  	</div>
+		  	<div layout="column" layout-padding  data-ng-show="currentStep == 3">
+		  		<div layout=row layout-align="center center">
+		  			<h3>{{stepNumber}}. Agregar información adicional.</h3>
+		  		</div>
+		  		<div flex layout-padding>
+		  			<p>Gusta incluir algún comentario adicional sobre el resultado ó la entrega del backtesting</p>
+					<md-input-container class="md-block">
+			        	<label>Comentarios</label>
+			          	<textarea data-ng-model="backtesting.comments" md-maxlength="250" rows="4" max-rows="6"></textarea>
+			        </md-input-container>
+				</div>
+		  	</div>
+		  	<div layout="column" layout-padding  data-ng-show="currentStep == 4">
+		  		<div layout=row layout-align="center center">
+		  			<h3>{{stepNumber + 1}}. Verificar información.</h3>
+		  		</div>
+		  		<div flex>
+		  			<p><b>Nombre de modelo</b>: {{model.name}} </p>
+		  			<p><b>Resultado del backtesting</b>: {{ backtesting.result == true ? 'Sí' : 'No'}} </p>
+		  			<p><b>Mes de entrega del resultado</b>: {{ backtesting.curMonth.n}} </p>
+		  			<p><b>Comentarios</b>: {{backtesting.comments}} </p>
+				</div>
+		  	</div>
+
+		</md-dialog-content>
+		<md-dialog-actions data-ng-show="currentStep==1">
+			<md-button data-ng-click="setNextStep(2)" data-ng-disabled="backtesting.result == null" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==2" >
+			<md-button data-ng-click="setPreviousStep(1)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="setNextStep(3)" data-ng-disabled="backtesting.curMonth == null" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==3">
+			<md-button data-ng-click="setPreviousStep(2)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="setNextStep(4)" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==4">
+			<md-button data-ng-click="setPreviousStep(3)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="saveBacktesting()" class="md-primary">
+				Guardar
+			</md-button>
+		</md-dialog-actions>
+  	</form>
+</md-dialog>
