@@ -351,3 +351,7 @@ md-dialog md-toolbar._md-toolbar-transitions{
   background-color: #ffd200;
   color: black;
 } 
+
+.verify-info span.long-data{
+  word-wrap: break-word;
+}

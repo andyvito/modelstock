@@ -1,4 +1,4 @@
-<md-dialog style="width:600px;">
+<md-dialog>
   	<form>
 		<md-toolbar>
 		<div class="md-toolbar-tools">
@@ -38,15 +38,17 @@
 		  		</div>			  		
 		  	</div>
 		  	<div layout="column" layout-padding  data-ng-show="currentStep == 3">
-		  		<div layout=row layout-align="center center">
+		  		<div layout="row" layout-align="center center">
 		  			<h3>{{stepNumber}}. Agregar información adicional.</h3>
 		  		</div>
-		  		<div flex layout-padding>
+		  		<div layout="column">
 		  			<p>Gusta incluir algún comentario adicional sobre el resultado ó la entrega del backtesting</p>
-					<md-input-container class="md-block">
-			        	<label>Comentarios</label>
-			          	<textarea data-ng-model="backtesting.comments" md-maxlength="250" rows="4" max-rows="6"></textarea>
-			        </md-input-container>
+		  			<div layout="row">
+						<md-input-container class="md-block" flex="100">
+				        	<label>Comentarios</label>
+				          	<textarea data-ng-model="backtesting.comments" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+				        </md-input-container>
+					</div>
 				</div>
 		  	</div>
 		  	<div layout="column" layout-padding  data-ng-show="currentStep == 4">

@@ -13,12 +13,7 @@ angular.module('modelsstockApp')
     function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData, areasData,risksData,$interval) {
       var self = this;
 
-
-      riskService.getAllRisks().then(function(result){
-        risksData.setRisks(result.data.risks);
-    	});
-
-
+    
       this.toggleForm = function() {
             self.showform = !self.showform;
          };

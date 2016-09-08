@@ -8,14 +8,13 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelCtrl',['$scope','$stateParams','$state', '$q', '$timeout', '$uibModal', 'modelService', 'typeService', 'kindService', 
-      'risksData', 'riskService', 'areasData', 'areaService', 
-  		function($scope, $stateParams, $state, $q, $timeout, $uibModal, modelService, typeService, kindService, risksData, 
-              riskService, areasData, areaService){
+  .controller('ModelCtrl',['$rootScope','$scope','$mdToast','$stateParams','$state', '$q', '$timeout', '$uibModal', 'modelService', 'typeService', 'typesData', 
+      'kindService', 'risksData', 'riskService', 'areasData', 'areaService', 'lensData', 'kindsData',
+  		function($rootScope, $scope, $mdToast, $stateParams, $state, $q, $timeout, $uibModal, modelService, typeService, typesData, kindService, risksData, 
+              riskService, areasData, areaService, lensData, kindsData){
   	
     var self = this;
     
- 
     $scope.$on('btnEditModelClickEvent', function () {
       self.disabled = false;
     });
@@ -27,9 +26,34 @@ angular.module('modelsstockApp')
     });
 
     $scope.$on('btnSaveModelClickEvent', function(){
-      modelService.saveModel(self.currentModel).then(function(result){
-        self.disabled = true;  
-      });
+      if($scope.modelForm.$invalid){
+            $mdToast.show(
+                          $mdToast.simple()
+                                  .textContent('Hay campos que son necesarios y tienen errors. Por favor, verifique e intente nuevamente!')                       
+                                  .hideDelay(3000)
+                                  .position('top left')
+                        );
+              return;
+      }else{
+        modelService.updateModel(self.currentModel).then(function(result){
+          self.disabled = true;  
+          $rootScope.$broadcast('modelUpdateEvent'); 
+
+          $mdToast.show(
+                        $mdToast.simple()
+                                .textContent('El modelo '+ self.currentModel.name + ' ha sido actualizado con satisfaccion.')                       
+                                .hideDelay(3000)
+                                .position('top left')
+                      );
+
+
+        });
+      }
+
+
+      
+
+
     });
 
     $scope.$on('btnCloneModelClickEvent', function(){
@@ -52,6 +76,7 @@ angular.module('modelsstockApp')
     var modelId = $stateParams.id;
     self.disabled = true;
     self.allRisks = risksData.getRisks();
+          
     self.selectedTypeItem  = null;
     self.searchTypeText    = null;
     self.queryTypeSearch   = queryTypeSearch;
@@ -59,6 +84,10 @@ angular.module('modelsstockApp')
     self.selectedKindItem  = null;
     self.searchKindText    = null;
     self.queryKindSearch   = queryKindSearch;
+
+    self.selectedLenItem  = null;
+    self.searchLenText    = null;
+    self.queryLenSearch   = queryLenSearch;
     
 
 
@@ -76,30 +105,15 @@ angular.module('modelsstockApp')
 
    	modelService.getModelById(modelId).then(function(result){
    			  self.currentModel = result.data.model;
-          console.log(self.currentModel);
           //Copy the model because the user could cancel edit action, so restore to initial model state
           self.currentModelInitial = angular.copy(self.currentModel);
           riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
             self.allAreasByRisk = result.data.areas;
           }); 
-          typeService.getAllTypes().then(function(result){
-            self.types = result.data.types.map( function (type) {
-              return {
-                value: type.toLowerCase(),
-                display: type
-              }
-            });
-             self.selectedTypeItem = self.currentModel.cat;
-          });
-          kindService.getAllKinds().then(function(result){
-            self.kinds = result.data.kinds.map( function (kind) {
-              return {
-                value: kind.toLowerCase(),
-                display: kind
-              }
-            });
-            self.selectedKindItem = self.currentModel.kind;
-          });
+
+          self.selectedTypeItem = self.currentModel.cat;
+          self.selectedKindItem = self.currentModel.kind;
+          self.selectedLenItem = self.currentModel.len;
     });  
 
 
@@ -113,8 +127,6 @@ angular.module('modelsstockApp')
       riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
         self.allAreasByRisk = result.data.areas;
       }); 
-
-
     };
 
 
@@ -133,7 +145,35 @@ angular.module('modelsstockApp')
           if (self.currentModel != null){
             self.currentModel.kind = newValue;  
           }
-      });    
+      });  
+
+    $scope.$watch(function(){
+      return self.searchLenText;
+      },function(newValue,oldValue){
+          if (self.currentModel != null){
+            self.currentModel.len = newValue;  
+          }
+      });   
+
+
+
+    $scope.$watch(function(){
+      return lensData.lens;
+      },function(newValue,oldValue){
+        self.lens = newValue;            
+    });    
+
+    $scope.$watch(function(){
+      return typesData.types;
+      },function(newValue,oldValue){
+        self.types = newValue;            
+    });  
+
+    $scope.$watch(function(){
+      return kindsData.kinds;
+      },function(newValue,oldValue){
+        self.kinds = newValue;            
+    });    
 
     // ******************************
     // Internal methods
@@ -176,6 +216,31 @@ angular.module('modelsstockApp')
         return (kinds.value.indexOf(lowercaseQuery) === 0);
       };
     };
+
+
+
+   function queryLenSearch (query) {     
+      //var results = query ? self.lens.filter( createFilterForLen(query) ) : self.lens;
+      var results = self.lens;
+      results = self.lens.filter( createFilterForLen(query) );
+      if (results.length <= 0) {
+       results = self.lens; 
+      }
+      var deferred = $q.defer();
+      $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+      return deferred.promise;
+    };
+
+    /**
+     * Create filter function for a query string
+     */
+    function createFilterForLen(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(lens) {
+        return (lens.value.indexOf(lowercaseQuery) === 0);
+      };
+    };
+
 
 
   }]);

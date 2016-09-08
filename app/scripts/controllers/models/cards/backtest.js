@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name modelsstockApp.controller:ModelsCardsBackgroundCtrl
+ * @name modelsstockApp.controller:ModelsCardsBacktestCtrl
  * @description
- * # ModelsCardsBackgroundCtrl
+ * # ModelsCardsBacktestCtrl
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelsCardsBackgroundCtrl', ['$scope', '$mdToast', '$mdDialog', 'backtestService', 'model',
+  .controller('ModelsCardsBacktestCtrl', ['$scope', '$mdToast', '$mdDialog', 'backtestService', 'model',
     function ($scope, $mdToast, $mdDialog, backtestService, model) {
      
     self = this;

@@ -17,20 +17,21 @@ angular.module('modelsstockApp')
       controller: function($scope,$rootScope, $mdDialog){
       	    $scope.clickNewModel = function(){
       	    	$mdDialog.show({
-                      controller: 'ModelsCardsBackgroundCtrl',
-                      templateUrl: 'views/models/cards/backtest.html',
+                      controller: 'ModelsNewmodelCtrl',
+                      controllerAs: 'modelCtrl',
+                      templateUrl: 'views/models/newmodel.html',
                       bindToController: true,
                       //parent: angular.element(document.body),
                       //targetEvent: evt,
-                      clickOutsideToClose:false,
+                      //clickOutsideToClose:false,
                       focusOnOpen: true,
                       locals: {
-                          model: {id:1}
+                      
                       }
                     })
                     .then(function(newBacktest) {
                       if (newBacktest){
-                        self.models = modelsData.updateBacktesting(newBacktest);
+                        
                       }
                     });
 		    };

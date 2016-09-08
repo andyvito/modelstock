@@ -18,6 +18,11 @@ angular.module('modelsstockApp')
       		$scope.editMode = false;
 
 
+      		$scope.$on('modelUpdateEvent', function(){
+		    	$scope.editMode = false;
+      		});
+
+
       	    $scope.clickEdit = function(){
 			  $scope.editMode = true;
 		      $rootScope.$broadcast('btnEditModelClickEvent');  
@@ -29,7 +34,6 @@ angular.module('modelsstockApp')
 		    };
 
 		    $scope.clickSave = function(){
-		    	$scope.editMode = false;
 		    	$rootScope.$broadcast('btnSaveModelClickEvent');
 		    };
 

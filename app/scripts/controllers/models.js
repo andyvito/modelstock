@@ -18,13 +18,23 @@ angular.module('modelsstockApp')
         this.filterModels = '';     // set the default search/filter term
         this.showInactive = modelsData.showInactive; 
         this.showCurBacktesting = modelsData.showCurBacktesting;
-
-
         this.titleTable = "Modelos";
+
+
+        $scope.$on('newModelCreatedEvent', function (event,newModel) {
+          modelsData.setNewModel(newModel);
+          $mdToast.show(
+                        $mdToast.simple()
+                                .textContent('El modelo '+ newModel.name + ' ha sido creado satisfactoriamente y se encuentra en implementación.')                       
+                                .hideDelay(3000)
+                                .position('top left')
+                      );
+        });
+
 
         this.selectModel = function(model, evt){
           	//$state.go('model',{'id':model.id});
-            console.log(model);
+
             if (model.active==false) {
                 $mdToast.show(
                           $mdToast.simple()
@@ -45,12 +55,9 @@ angular.module('modelsstockApp')
               return;
             }
 
-
-
             if (model.active == true && model.current_backtest.val_backtest_cur_month == true){
-
                    $mdDialog.show({
-                      controller: 'ModelsCardsBackgroundCtrl',
+                      controller: 'ModelsCardsBacktestCtrl',
                       templateUrl: 'views/models/cards/backtest.html',
                       bindToController: true,
                       //parent: angular.element(document.body),
@@ -66,22 +73,16 @@ angular.module('modelsstockApp')
                         self.models = modelsData.updateBacktesting(newBacktest);
                       }
                     });
-
               }
         };
-
-
-
 
         if (modelsData.getFilterModelsByRiskAndArea() == null){
           modelService.getAllModels().then(function(result){
               modelsData.setModels(result.data.models); 
-
           });  
         }
         else{
           self.models = modelsData.getFilterModelsByRiskAndArea();
-          console.log(self.models[0]);
         }
 
 
@@ -120,10 +121,6 @@ angular.module('modelsstockApp')
           },function(newValue,oldValue){
             modelsData.setShowCurBacktesting(newValue);
           });
-
-
-
-
 
 
   }]);

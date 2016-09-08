@@ -39,6 +39,9 @@ angular.module('modelsstockApp').
             getAllDistinctKinds: function(){
                 return makeAPICall('api/v1/kind_distinct', 'GET', {}, {}); 
             },
+            getAllDistinctLens: function(){
+                return makeAPICall('api/v1/len_distinct', 'GET', {}, {}); 
+            },  
             getAllRisks: function(){
                 return makeAPICall('api/v1/risk_model_data', 'GET', {}, {});   
             },
@@ -73,23 +76,27 @@ angular.module('modelsstockApp').
             getModelById: function(modelId){
                 return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});  
             },
-            saveModel: function(model){
-                console.log(model.kind);
+            updateModel: function(model){
                 return makeAPICall('api/v1/model/'+model.id, 'PUT', {}, {code:model.code, name:model.name, description:model.description, len:model.len, cat:model.cat,
-                                                                        kind:model.kind, frecuency:model.frecuency, met_validation:model.met_validation, 
-                                                                        met_hours_man:model.met_hours_man, qua_hours_man:model.qua_hours_man, cap_area:model.cap_area,
-                                                                        cap_qua:model.cap_qua, cap_total:model.cap_total, comments:model.comments, more_info:model.more_info,
+                                                                        kind:model.kind, comments:model.comments, more_info:model.more_info,
                                                                         curriculum:model.curriculum, file_doc:model.file_doc, active:model.active, is_qua:model.is_qua,
                                                                         version:model.version, initial_dates:model.initial_dates, original_author:model.original_author,
                                                                         final_dates:model.final_dates, final_author:model.final_author,risk_id:model.risk.id, 
                                                                         area_id:model.area.id});  
+
+            },
+            createModel: function(model){
+                return makeAPICall('api/v1/model', 'POST', {code:model.code, name:model.name, description:model.description, len:model.len.display, cat:model.type.display,
+                                                                        kind:model.kind.display, initial_dates:model.initial_dates, original_author:model.original_author,
+                                                                        final_dates:model.final_dates, final_author:model.final_author, more_info:model.more_info,
+                                                                        comments:model.comments, curriculum:model.curriculum, file_doc:model.file_doc, is_qua:model.is_qua,
+                                                                        risk_id:model.risk.id, area_id:model.area.id},{});
             },
             saveBacktesting: function(backtesting){
-                console.log('Se fue');
-                console.log(backtesting);
                 return makeAPICall('api/v1/backtest', 'POST', {}, {modelid:backtesting.modelid, result:backtesting.result, 
                                                                 yearResult:backtesting.yearRelease, monthResult:backtesting.monthRelease,
                                                                 comments:backtesting.comments});  
             },
+
         };
     });

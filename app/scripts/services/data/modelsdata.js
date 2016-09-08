@@ -58,8 +58,6 @@ angular.module('modelsstockApp')
         factory.filterModelsByRiskAndArea = factory.models.filter(function (el) {
                                               return el.active == true;
                                             });
-        console.log(typeof(factory.models));
-        console.log(factory.models[0]);
       },
       getFilterModelsByRiskAndArea: function(){
         return factory.filterModelsByRiskAndArea;
@@ -89,8 +87,6 @@ angular.module('modelsstockApp')
             
       },
       updateBacktesting: function(newBacktesting){
-        console.log('Llego a updateBacktesting');
-        console.log(newBacktesting);
         for (var i in factory.models) {
           if ( factory.models[i].id == newBacktesting.modelid ) {
             factory.models[i].last_backtest.commentaries = newBacktesting.last_backtest.commentaries;
@@ -106,14 +102,16 @@ angular.module('modelsstockApp')
             factory.models[i].current_backtest.next_month = newBacktesting.current_backtest.next_month;
             factory.models[i].current_backtest.next_year = newBacktesting.current_backtest.next_year;
             factory.models[i].current_backtest.val_backtest_cur_month = newBacktesting.current_backtest.val_backtest_cur_month;
-
-            console.log(factory.models[i]);
             break; 
           }
         }
         factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
         return factory.filterModelsByRiskAndArea;
       },
+      setNewModel: function(newModel){
+        factory.models.push(newModel);
+        factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+      }
     };
     
     // Public API here
