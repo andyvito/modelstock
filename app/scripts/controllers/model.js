@@ -8,9 +8,9 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelCtrl',['$rootScope','$scope','$mdToast','$stateParams','$state', '$q', '$timeout', '$uibModal', 'modelService', 'typeService', 'typesData', 
+  .controller('ModelCtrl',['$rootScope','$scope','$mdToast','$mdDialog', '$stateParams','$state', '$q', '$timeout', '$uibModal', 'modelService', 'typeService', 'typesData', 
       'kindService', 'risksData', 'riskService', 'areasData', 'areaService', 'lensData', 'kindsData',
-  		function($rootScope, $scope, $mdToast, $stateParams, $state, $q, $timeout, $uibModal, modelService, typeService, typesData, kindService, risksData, 
+  		function($rootScope, $scope, $mdToast, $mdDialog, $stateParams, $state, $q, $timeout, $uibModal, modelService, typeService, typesData, kindService, risksData, 
               riskService, areasData, areaService, lensData, kindsData){
   	
     var self = this;
@@ -45,21 +45,13 @@ angular.module('modelsstockApp')
                                 .hideDelay(3000)
                                 .position('top left')
                       );
-
-
         });
       }
-
-
-      
-
-
     });
 
     $scope.$on('btnCloneModelClickEvent', function(){
       modelService.saveModel(self.currentModel).then(function(result){
         self.disabled = true;  
-
 
         var modalInstance = $uibModal.open({
               animation: true,
@@ -105,6 +97,8 @@ angular.module('modelsstockApp')
 
    	modelService.getModelById(modelId).then(function(result){
    			  self.currentModel = result.data.model;
+          console.log(self.currentModel);
+
           //Copy the model because the user could cancel edit action, so restore to initial model state
           self.currentModelInitial = angular.copy(self.currentModel);
           riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
@@ -117,16 +111,30 @@ angular.module('modelsstockApp')
     });  
 
 
-    this.recalculateCapacity = function(){
-      self.currentModel.cap_area = (12/self.currentModel.frecuency) * self.currentModel.met_hours_man;
-      self.currentModel.cap_qua = (12/self.currentModel.frecuency) * self.currentModel.qua_hours_man;
-      self.currentModel.cap_total = self.currentModel.cap_area + self.currentModel.cap_qua;
-    };
-
     this.changeRisk = function(){
       riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
         self.allAreasByRisk = result.data.areas;
       }); 
+    };
+
+    this.implementModel = function(){
+      $mdDialog.show({
+                      controller: 'ModelModalImplementCtrl',
+                      controllerAs: 'modelCtrl',
+                      templateUrl: 'views/model/modal/implement.html',
+                      bindToController: true,
+                      //parent: angular.element(document.body),
+                      //targetEvent: evt,
+                      //clickOutsideToClose:false,
+                      focusOnOpen: true,
+                      locals: {
+                        model: self.currentModel
+                      }
+                    })
+                    .then(function(modelUpdate) {
+                      self.currentModel = modelUpdate;
+                      self.currentModelInitial = angular.copy(self.currentModel);
+                    });
     };
 
 

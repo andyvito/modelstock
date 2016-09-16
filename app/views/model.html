@@ -141,23 +141,24 @@
 		      				<div layout="row" class="md-padding">
 			      				<md-input-container class="md-block" flex=20>
 						            <label>Frecuencia</label>
-						            <md-select ng-model="model.currentModel.frecuency" 
-						            		data-ng-change="model.recalculateCapacity()" disabled>
+						            <md-select ng-model="model.currentModel.frecuency" disabled>
 						              <md-option ng-repeat="f in model.frecuency" value="{{f.v}}">
 						                {{f.n}}
 						              </md-option>
 						            </md-select>
 						        </md-input-container>
-						       	<md-input-container class="md-block" flex=80>
+						       	<md-input-container  class="md-block"  flex=70>
 						        	<label>Metodolog&#237;a de Validaci&#243;n</label>
 						        	<input data-ng-model="model.currentModel.met_validation" disabled>
 						    	</md-input-container>
+						    	<div layout=row flex=10 layout-align="center start">
+									<md-button class="md-primary md-raised" data-ng-click="model.implementModel()">Implementar</md-button>
+								</div>
 							</div>
 							<div layout="row" class="md-padding" disabled>
 								<md-input-container class="md-block" flex=20>
 						        	<label>H/H Metodología</label>
-						        	<input data-ng-model="model.currentModel.met_hours_man"
-						        		 data-ng-change="model.recalculateCapacity()" disabled>
+						        	<input data-ng-model="model.currentModel.met_hours_man" disabled>
 						        	<div class="hint">Horas/Hombre</div>
 						    	</md-input-container>
 								<md-input-container class="md-block" flex=20>
@@ -166,8 +167,7 @@
 						    	</md-input-container>
 								<md-input-container class="md-block" flex=20>
 						        	<label>H/H Cuantificación</label>
-						        	<input data-ng-model="model.currentModel.qua_hours_man" 
-						        		data-ng-change="model.recalculateCapacity()" disabled>
+						        	<input data-ng-model="model.currentModel.qua_hours_man" disabled>
 						        	<div class="hint">Horas/Hombre</div>
 						    	</md-input-container>	
 								<md-input-container class="md-block" flex=25>
@@ -201,13 +201,13 @@
 					                      <td>{{b.last_backtest.validate_year}} - {{b.last_backtest.validate_month | monthName}}</td>
 					                      <td>{{b.last_backtest.real_year}} - {{b.last_backtest.real_month | monthName}}</td>
 					                      <td>{{b.last_backtest.next_year}} - {{b.last_backtest.next_month | monthName}}</td>
-										  <td>{{b.last_backtest.months_delayed}}</td>
+										  <td>{{b.last_backtest.months_delayed ? b.last_backtest.months_delayed : '-' }}</td>
 					                      <td>
 					                      	<span data-ng-if="b.result == true" class="text-success"><i class="fa fa-check"></i></span>
 					                      	<span data-ng-if="b.result == false" class="text-danger"><i class="fa fa-warning"></i></span>
-					                      	&#32;{{b.result | resultBacktest}}
+					                      	&#32;{{b.last_backtest.result | resultBacktest}}
 					                      </td>
-					                      <td>{{b.comentaries}}</td>
+					                      <td>{{b.last_backtest.comentaries}}</td>
 					                    </tr>
 					              </tbody>
 					            </table>

@@ -25,5 +25,10 @@ angular.module('modelsstockApp')
     this.createModel = function(model){
       return ApiService.createModel(model);  
     };
+
+
+    this.updateFrecuency = function(model){
+        return ApiService.updateFrecuency(model);
+    };
     
   });

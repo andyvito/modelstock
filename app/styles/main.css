@@ -355,3 +355,56 @@ md-dialog md-toolbar._md-toolbar-transitions{
 .verify-info span.long-data{
   word-wrap: break-word;
 }
+
+
+.vr-years #vertical-container {
+  height: 150px;
+  width: 100%;
+}
+
+
+.vr-years #vertical-container .repeated-item:not(.header) {
+  border-bottom: 1px solid #ddd;
+}
+
+
+.vr-years #vertical-container .repeated-item {
+  box-sizing: border-box;
+  height: 35px;
+  padding-top: 5px; 
+  min-width: 100%;
+}
+
+
+.vr-years #vertical-container .repeated-item.header {
+  background-color: #106CC8;
+  color: white;
+  text-align: center;
+  font-weight: bold; 
+  min-width: 100%;
+  margin-bottom: 0px;
+}
+
+.vr-years #vertical-container md-content {
+  margin: 16px; }
+
+.vr-years md-virtual-repeat-container {
+  border: solid 1px grey; 
+  max-height: 100%;
+}
+
+.vr-years .md-virtual-repeat-container .md-virtual-repeat-offsetter div:not(.header) {
+  padding-left: 16px; 
+}
+
+.vertical-separator{
+  border-left:1px solid #000;
+  height:100%
+}
+
+
+.text-area-static-height > textarea.md-input {
+    max-height:72px;
+    overflow: auto;
+  }
+

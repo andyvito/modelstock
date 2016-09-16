@@ -64,7 +64,7 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/areasByRisk/'+riskid, 'DELETE', {}, {areaid:areaid});   
             },
             updateAreaByRisk: function(updateArea){
-                return makeAPICall('api/v1/areasByRisk/'+updateArea.riskid, 'PUT', {}, {areaid:updateArea.id, name:updateArea.name, lead:updateArea.lead});   
+                return makeAPICall('api/v1/areasByRisk/'+updateArea.riskid, 'PUT', {}, {areaid:updateArea.id, name:updateArea.name, lead:updateArea.lead});
             },
             /*getAllModelsByRisks: function(id){
                 return makeAPICall('api/v1/modelsByRisk', 'GET', {}, {riskid:id});     
@@ -96,6 +96,12 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/backtest', 'POST', {}, {modelid:backtesting.modelid, result:backtesting.result, 
                                                                 yearResult:backtesting.yearRelease, monthResult:backtesting.monthRelease,
                                                                 comments:backtesting.comments});  
+            },
+            updateFrecuency: function(model){
+                return makeAPICall('api/v1/model_frecuency/'+model.id, 'PUT', {}, {year_backtesting:model.firstBacktesting.year, month_backtesting:model.firstBacktesting.month,
+                                                                        frecuency:model.frecuency, met_validation:model.met_validation, met_hours_man:model.met_hours_man,
+                                                                        qua_hours_man:model.qua_hours_man,comment:model.comment,cap_area:model.cap_area,cap_qua:model.cap_qua,
+                                                                        cap_total:model.cap_total});   
             },
 
         };
