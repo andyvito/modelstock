@@ -50,18 +50,25 @@ angular.module('modelsstockApp')
     });
 
     $scope.$on('btnCloneModelClickEvent', function(){
-      modelService.saveModel(self.currentModel).then(function(result){
-        self.disabled = true;  
+      $mdDialog.show({
+                      controller: 'ModelModalCloneCtrl',
+                      controllerAs: 'vm',
+                      templateUrl: 'views/model/modal/clone.html',
+                      bindToController: true,
+                      //parent: angular.element(document.body),
+                      //targetEvent: evt,
+                      //clickOutsideToClose:false,
+                      focusOnOpen: true,
+                      locals: {
+                        model: self.currentModel
+                      }
+                    })
+                    .then(function() {
+                      /*self.currentModel = modelUpdate;
+                      self.currentModelInitial = angular.copy(self.currentModel);*/
+                    });
 
-        var modalInstance = $uibModal.open({
-              animation: true,
-              controller: 'ModelModalCloneCtrl',
-              templateUrl: 'views/model/modal/clone.html',
-              resolve: {
-                
-              }
-          });
-      });
+
     });
 
 
@@ -97,8 +104,6 @@ angular.module('modelsstockApp')
 
    	modelService.getModelById(modelId).then(function(result){
    			  self.currentModel = result.data.model;
-          console.log(self.currentModel);
-
           //Copy the model because the user could cancel edit action, so restore to initial model state
           self.currentModelInitial = angular.copy(self.currentModel);
           riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){

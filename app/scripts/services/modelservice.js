@@ -31,4 +31,8 @@ angular.module('modelsstockApp')
         return ApiService.updateFrecuency(model);
     };
     
+    this.cloneModel = function(model){
+        return ApiService.cloneModel(model);
+    };
+
   });

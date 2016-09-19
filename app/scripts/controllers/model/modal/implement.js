@@ -48,7 +48,6 @@ angular.module('modelsstockApp')
 
     this.selectFirstDateBacktesting = function(item){
       self.model.firstBacktesting = item;
-      console.log(item);
     }
 
     this.updateFrecuency = function(){
@@ -57,8 +56,5 @@ angular.module('modelsstockApp')
           model = self.model;
           $mdDialog.hide(model);
       });  
-      
-
-
     };
 }]);

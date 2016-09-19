@@ -1,1 +1,47 @@
-<p>This view is not implemented yet</p>
+<md-dialog style="width:750px;">
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+	  <h2>Clonar Modelo</h2>
+	</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<form name="cloneForm">
+		  	<div layout="column" layout-align="space-around top" data-ng-show="vm.currentStep == 1">
+				<p>Se va a realizar una copia exacta del modelo con código <b>{{vm.model.code}}</b> y nombre <b>{{vm.model.name}}</b>.</p>
+				<p>Para continuar, por favor, ingrese el nuevo código y nombre del modelo.</p>
+			    <md-input-container class="md-block">
+		        	<label>C&#243;digo</label>
+		        	<input md-maxlength="20" required name="newCode"
+		        		data-ng-model="vm.model.newCode" >
+		        	<div ng-messages="cloneForm.newCode.$error">
+			          <div ng-message="required">El código es necesario</div>
+			        </div>
+		      	</md-input-container>
+		   		<md-input-container class="md-block">
+		        	<label>Nombre</label>
+		        	<input md-maxlength="100" required name="newName"
+		        		data-ng-model="vm.model.newName">
+		        	<div ng-messages="cloneForm.newName.$error">
+			          <div ng-message="required">El nombre del modelo es necesario</div>
+			        </div>
+		    	</md-input-container>
+		  	</div>
+		</form>
+	  	<div layout="column" data-ng-show="vm.currentStep == 2">
+	  		<p>Se ha creado el modelo <b>{{vm.modelCloned.name}}</b> satisfactoriamente a partir del modelo <b>{{vm.model.name}}</b></p>
+	  	</div>
+	</md-dialog-content>
+	<md-dialog-actions data-ng-show="vm.currentStep == 1">
+		<md-button data-ng-click="vm.cloneModel()" class="md-primary" data-ng-disabled="cloneForm.$invalid">
+			Clonar
+		</md-button>
+	</md-dialog-actions>
+	<md-dialog-actions data-ng-show="vm.currentStep == 2">
+		<md-button data-ng-click="vm.closeDialog()" class="md-primary">
+			Cerrar 
+		</md-button>	
+		<md-button data-ng-click="vm.goToCloneModel()" class="md-primary">
+			Ir al detalle del nuevo modelo
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

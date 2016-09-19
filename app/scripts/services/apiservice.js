@@ -103,6 +103,9 @@ angular.module('modelsstockApp').
                                                                         qua_hours_man:model.qua_hours_man,comment:model.comment,cap_area:model.cap_area,cap_qua:model.cap_qua,
                                                                         cap_total:model.cap_total});   
             },
+            cloneModel: function(model){
+                return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_code:model.newCode, new_name:model.newName}, {});   
+            },
 
         };
     });
