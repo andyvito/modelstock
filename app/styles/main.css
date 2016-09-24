@@ -114,12 +114,11 @@ body {
 
 .models-table .model {
   border-radius: 5px;
-  text-align: center;
   background-color: #f3f3f3;
   -moz-box-shadow: 0 0 6px 2px #b0b2ab;
   -webkit-box-shadow: 0 0 6px 2px #b0b2ab;
   box-shadow: 0 0 6px 2px #b0b2ab;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 .models-table .len{
@@ -146,24 +145,25 @@ body {
   -moz-border-radius: 5px 5px 0 0;
   -webkit-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
-  height: 370px;
-  max-height: 370px;
+  //height: 370px;
+  //max-height: 370px;
 }
   
 
 .model-name {
-	padding: 15px 5px 15px 5px;
+	//padding: 15px 5px 15px 5px;
 	color: #fff;
 	-moz-border-radius: 5px 5px 0 0;
 	-webkit-border-radius: 5px 5px 0 0;
 	border-radius: 5px 5px 0 0;
-	height: 90px;
+	//height: 90px;
+  text-align: center;
 	position: relative;
-  	padding: 0;
-  	border-radius: 5px 5px 0px 0px;
-    border-style: solid solid none solid;
-    border-width: 1px;
-    border-color: #c5c8c0;
+	padding: 0;
+	border-radius: 5px 5px 0px 0px;
+  border-style: solid solid none solid;
+  border-width: 1px;
+  border-color: #c5c8c0;
  }
 
 .model-name.model-name-active {
@@ -212,7 +212,7 @@ body {
  	font-size: 25px;
 }
 
-.model-implementation,
+//.model-implementation,
 .model-delayed{
 	position: absolute;
     bottom: 0;

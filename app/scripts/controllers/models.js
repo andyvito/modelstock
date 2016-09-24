@@ -31,49 +31,51 @@ angular.module('modelsstockApp')
                       );
         });
 
+        this.validateBacktesting = function(model, evt){
+          if (model.active==false) {
+              $mdToast.show(
+                        $mdToast.simple()
+                                .textContent('El modelo se encuentra inactivo. Por favor, activelo e intente nuevamente.!')                       
+                                .hideDelay(3000)
+                                .position('top left')
+                      );
+            return;
+          }
 
-        this.selectModel = function(model, evt){
-          	//$state.go('model',{'id':model.id});
+          if (model.current_backtest.val_backtest_cur_month == false) {
+              $mdToast.show(
+                        $mdToast.simple()
+                                .textContent('Este modelo no tiene backtesting en el mes actual o se encuentra en implementación.!')                       
+                                .hideDelay(3000)
+                                .position('top left')
+                      );
+            return;
+          }
 
-            if (model.active==false) {
-                $mdToast.show(
-                          $mdToast.simple()
-                                  .textContent('El modelo se encuentra inactivo. Por favor, activelo e intente nuevamente.!')                       
-                                  .hideDelay(3000)
-                                  .position('top left')
-                        );
-              return;
+          if (model.active == true && model.current_backtest.val_backtest_cur_month == true){
+                 $mdDialog.show({
+                    controller: 'ModelsCardsBacktestCtrl',
+                    templateUrl: 'views/models/cards/backtest.html',
+                    bindToController: true,
+                    //parent: angular.element(document.body),
+                    targetEvent: evt,
+                    clickOutsideToClose:false,
+                    focusOnOpen: true,
+                    locals: {
+                        model: model
+                    }
+                  })
+                  .then(function(newBacktest) {
+                    if (newBacktest){
+                      self.models = modelsData.updateBacktesting(newBacktest);
+                    }
+                  });
             }
+        }
 
-            if (model.current_backtest.val_backtest_cur_month == false) {
-                $mdToast.show(
-                          $mdToast.simple()
-                                  .textContent('Este modelo no tiene backtesting en el mes actual o se encuentra en implementación.!')                       
-                                  .hideDelay(3000)
-                                  .position('top left')
-                        );
-              return;
-            }
 
-            if (model.active == true && model.current_backtest.val_backtest_cur_month == true){
-                   $mdDialog.show({
-                      controller: 'ModelsCardsBacktestCtrl',
-                      templateUrl: 'views/models/cards/backtest.html',
-                      bindToController: true,
-                      //parent: angular.element(document.body),
-                      targetEvent: evt,
-                      clickOutsideToClose:false,
-                      focusOnOpen: true,
-                      locals: {
-                          model: model
-                      }
-                    })
-                    .then(function(newBacktest) {
-                      if (newBacktest){
-                        self.models = modelsData.updateBacktesting(newBacktest);
-                      }
-                    });
-              }
+        this.selectModel = function(model){
+          $state.go('model',{'id':model.id});
         };
 
         if (modelsData.getFilterModelsByRiskAndArea() == null){
