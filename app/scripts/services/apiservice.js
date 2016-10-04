@@ -14,7 +14,7 @@ angular.module('modelsstockApp').
             var deferred = $q.defer();
             $http({
                 method: method || 'GET',
-                url: 'http://192.168.33.10:3000/' + urlSuffix, //TODO: put the url in app.config
+                url: 'http://192.168.0.150:3000/' + urlSuffix, //TODO: put the url in app.config
                 data: data || {},
                 timeout: 120000,
                 params: params,

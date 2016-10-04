@@ -118,6 +118,7 @@ body {
   -moz-box-shadow: 0 0 6px 2px #b0b2ab;
   -webkit-box-shadow: 0 0 6px 2px #b0b2ab;
   box-shadow: 0 0 6px 2px #b0b2ab;
+  height: 400px;
   //overflow: hidden;
 }
 
@@ -127,7 +128,7 @@ body {
 
 
 .models-table .container{
-  padding: 15px 10px 10px 10px;
+  //padding: 15px 10px 10px 10px;
 }
  
  .model:hover {
