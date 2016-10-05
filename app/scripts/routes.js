@@ -29,6 +29,12 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: 'views/model.html',
                 controller: 'ModelCtrl',
                 controllerAs: "model"
+            })
+            .state('reports', {
+                url: '/reports',
+                templateUrl: 'views/reports.html',
+                controller: 'ReportCtrl',
+                controllerAS: 'report'
             });
     }
 ]);

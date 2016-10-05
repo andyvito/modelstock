@@ -34,7 +34,7 @@
           <md-button ng-click="main.optionSelect('models')">
             Modelos
           </md-button>
-          <md-button ng-click="toggleLeft()">
+          <md-button ng-click="main.optionSelect('reports')">
             Reporte
           </md-button>
         </md-content>
@@ -61,7 +61,7 @@
 
         <div layout="column" flex layout-fill 
           <!-- Main Content -->
-          <div ui-view flex layout-fill>></div>
+          <div ui-view flex layout-fill></div>
         </div>
     </div>
   
@@ -130,6 +130,7 @@
         <script src="scripts/services/data/typesdata.js"></script>
         <script src="scripts/services/data/kindsdata.js"></script>
         <script src="scripts/controllers/model/modal/implement.js"></script>
+        <script src="scripts/controllers/report.js"></script>
         <!-- endbuild -->
 </body>
 </html>
