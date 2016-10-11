@@ -74,7 +74,7 @@ angular.module('modelsstockApp').
             },
 
             getModelById: function(modelId){
-                return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});  
+                return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});
             },
             updateModel: function(model){
                 return makeAPICall('api/v1/model/'+model.id, 'PUT', {}, {code:model.code, name:model.name, description:model.description, len:model.len, cat:model.cat,
@@ -93,9 +93,7 @@ angular.module('modelsstockApp').
                                                                         risk_id:model.risk.id, area_id:model.area.id},{});
             },
             saveBacktesting: function(backtesting){
-                return makeAPICall('api/v1/backtest', 'POST', {}, {modelid:backtesting.modelid, result:backtesting.result, 
-                                                                yearResult:backtesting.yearRelease, monthResult:backtesting.monthRelease,
-                                                                comments:backtesting.comments});  
+                return makeAPICall('api/v1/backtest', 'POST', {}, {modelid:backtesting.modelid, result:backtesting.result, comments:backtesting.comments});  
             },
             updateFrecuency: function(model){
                 return makeAPICall('api/v1/model_frecuency/'+model.id, 'PUT', {}, {year_backtesting:model.firstBacktesting.year, month_backtesting:model.firstBacktesting.month,
@@ -105,6 +103,15 @@ angular.module('modelsstockApp').
             },
             cloneModel: function(model){
                 return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_code:model.newCode, new_name:model.newName}, {});   
+            },
+            loadCurrentDate: function(){
+                return makeAPICall('api/v1/config', 'GET', {}, {'names[]':['current_year','current_month']});    
+            },
+            closeMonth: function(){
+              return makeAPICall('api/v1/close_month', 'POST', {}, {});
+            },
+            getAllIndicators: function(){
+                return makeAPICall('api/v1/indicators', 'GET', {}, {});
             },
 
         };

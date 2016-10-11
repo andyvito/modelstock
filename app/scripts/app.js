@@ -12,13 +12,18 @@ angular
   .module('modelsstockApp', [
     'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages', 'ngMdIcons'
   ])
-  .run(['riskService', 'risksData', 'lenService',  'lensData', 'typeService', 'typesData', 
-    'kindService', 'kindsData',
-    function(riskService,risksData,lenService,lensData,typeService,typesData,kindService,kindsData){
+  .run(['riskService', 'risksData', 'lenService', 'lensData', 'typeService', 'typesData', 
+    'kindService', 'kindsData', 'configService', 'utilsData',
+    function(riskService,risksData,lenService,lensData,typeService,typesData,kindService,kindsData,configService,utilsData){
 
-  	riskService.getAllRisks().then(function(result){
+    configService.loadCurrentDate().then(function(result){
+      utilsData.setCurrentYear(result.data.config[0].value);
+      utilsData.setCurrentMonth(result.data.config[1].value);
+    });
+
+    riskService.getAllRisks().then(function(result){
         risksData.setRisks(result.data.risks);
-    });	
+    });
 
     lenService.getAllLens().then(function(result){
         lensData.setLens(result.data.lens);

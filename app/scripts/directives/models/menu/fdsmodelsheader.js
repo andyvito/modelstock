@@ -15,7 +15,7 @@ angular.module('modelsstockApp')
 
       },
       controller: function($scope,$rootScope, $mdDialog){
-      	    $scope.clickNewModel = function(){
+        $scope.clickNewModel = function(){
       	    	$mdDialog.show({
                       controller: 'ModelsNewmodelCtrl',
                       controllerAs: 'modelCtrl',
@@ -28,13 +28,24 @@ angular.module('modelsstockApp')
                       locals: {
                       
                       }
-                    })
-                    .then(function(newBacktest) {
-                      if (newBacktest){
-                        
-                      }
                     });
 		    };
+
+        $scope.clickCloseMonth = function(){
+              $mdDialog.show({
+                      controller: 'ModelsCloseMonthCtrl',
+                      controllerAs: 'closeCtrl',
+                      templateUrl: 'views/models/closemonth.html',
+                      bindToController: true,
+                      //parent: angular.element(document.body),
+                      //targetEvent: evt,
+                      //clickOutsideToClose:false,
+                      focusOnOpen: true,
+                      locals: {
+                      }
+                    });
+        };
+
       }
     };
   });

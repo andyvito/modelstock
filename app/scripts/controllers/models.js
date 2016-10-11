@@ -8,17 +8,20 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelsCtrl', ['$scope', '$mdToast', '$state', '$uibModal', '$mdDialog', 'modelsData','modelService', 'risksData', 'areasData', 
-      function ($scope, $mdToast, $state, $uibModal, $mdDialog, modelsData, modelService, risksData, areasData) {
+  .controller('ModelsCtrl', ['$scope', '$mdToast', '$state', '$uibModal', '$mdDialog', 'modelsData','modelService', 'risksData', 'areasData', 'reportService',
+      function ($scope, $mdToast, $state, $uibModal, $mdDialog, modelsData, modelService, risksData, areasData, reportService) {
     
       	var self = this;
 
-        this.sortType     = 'name'; // set the default sort type
-        this.sortReverse  = false;  // set the default sort order
-        this.filterModels = '';     // set the default search/filter term
-        this.showInactive = modelsData.showInactive; 
-        this.showCurBacktesting = modelsData.showCurBacktesting;
-        this.titleTable = "Modelos";
+        self.sortType     = 'name'; // set the default sort type
+        self.sortReverse  = false;  // set the default sort order
+        self.filterModels = '';     // set the default search/filter term
+        self.showInactive = modelsData.showInactive;
+        self.showCurBacktesting = modelsData.showCurBacktesting;
+        self.showUncalibrated =  modelsData.showUncalibrated;
+        self.titleTable = "Modelos";
+        self.indicators = {};
+        self.indicators.totalModels = 0;
 
 
         $scope.$on('newModelCreatedEvent', function (event,newModel) {
@@ -78,6 +81,19 @@ angular.module('modelsstockApp')
           $state.go('model',{'id':model.id});
         };
 
+        reportService.getAllIndicators().then(function(result){
+          console.log(result.data);
+
+          self.indicators.totalModels = result.data.total_models;
+          self.indicators.totalInactive = result.data.total_inactive;
+          self.indicators.totalBacktest = result.data.total_backtest
+          self.indicators.totalUnvalidated = result.data.total_unvalidated;
+          self.indicators.totalValidated = result.data.total_validated;
+          self.indicators.totalValidatedFullfil = result.data.total_validated_fullfil;
+          self.indicators.totalValidatedNoFullfil = result.data.total_validated_no_fullfil;
+        });
+
+
         if (modelsData.getFilterModelsByRiskAndArea() == null){
           modelService.getAllModels().then(function(result){
               modelsData.setModels(result.data.models); 
@@ -86,6 +102,18 @@ angular.module('modelsstockApp')
         else{
           self.models = modelsData.getFilterModelsByRiskAndArea();
         }
+
+
+
+
+
+        $scope.$on('updateCurrentDateEvent', function(){
+          modelService.getAllModels().then(function(result){
+              modelsData.setModels(result.data.models);
+          });
+          self.showCurBacktesting = false;
+          self.showInactive = false;
+        });
 
 
         $scope.$watch(function(){
@@ -108,21 +136,23 @@ angular.module('modelsstockApp')
               }
           });
 
-
         $scope.$watch(function(){
           return self.showInactive;
           },function(newValue,oldValue){
             modelsData.setShowInactive(newValue);
 
-          });
-
-
+        });
 
         $scope.$watch(function(){
           return self.showCurBacktesting;
           },function(newValue,oldValue){
             modelsData.setShowCurBacktesting(newValue);
-          });
+        });
 
+        $scope.$watch(function(){
+          return self.showUncalibrated;
+          },function(newValue,oldValue){
+            modelsData.setShowUncalibrate(newValue);
+        });
 
   }]);

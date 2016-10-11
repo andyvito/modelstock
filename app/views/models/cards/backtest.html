@@ -22,24 +22,9 @@
 					</div>
 				</div>
 		  	</div>
-		  	<div layout=column layout-padding data-ng-show="currentStep == 2">
-		  		<div layout=row layout-align="center center">
-		  			<h3>2. Entrega de resultado</h3>
-		  		</div>
-		  		<div flex >
-		  			<p>El modelo se encuentra con retraso en la entrega de los resultados.</p>
-		  			<div layout=column layout-padding layout-align="center center">
-		  				<span>Por favor, indique en que mes se entreg&#243; el backtesting de este modelo:</span>
-		  				<md-radio-group data-ng-model="selectedMonth" layout="row" layout-align="center center">
-							<md-radio-button value="{{lastMonth}}">{{lastMonth.n}}</md-radio-button>
-							<md-radio-button value="{{currentMonth}}" class="md-primary">{{currentMonth.n}}</md-radio-button>
-						</md-radio-group>
-		  			</div>
-		  		</div>			  		
-		  	</div>
-		  	<div layout="column" layout-padding  data-ng-show="currentStep == 3">
+			<div layout="column" layout-padding  data-ng-show="currentStep == 2">
 		  		<div layout="row" layout-align="center center">
-		  			<h3>{{stepNumber}}. Agregar información adicional.</h3>
+					<h3>2. Agregar información adicional.</h3>
 		  		</div>
 		  		<div layout="column">
 		  			<p>Incluya algún comentario adicional sobre el resultado ó la entrega del backtesting</p>
@@ -51,14 +36,13 @@
 					</div>
 				</div>
 		  	</div>
-		  	<div layout="column" layout-padding  data-ng-show="currentStep == 4">
+			<div layout="column" layout-padding  data-ng-show="currentStep == 3">
 		  		<div layout=row layout-align="center center">
-		  			<h3>{{stepNumber + 1}}. Verificar información.</h3>
+					<h3>3. Verificar información.</h3>
 		  		</div>
 		  		<div flex>
 		  			<p><b>Nombre de modelo</b>: {{model.name}} </p>
 		  			<p><b>Cumplió del backtesting</b>: {{ backtesting.result == true ? 'Sí' : 'No'}} </p>
-		  			<p><b>Mes de entrega del resultado</b>: {{ backtesting.curMonth.n}} </p>
 		  			<p><b>Comentarios</b>: {{backtesting.comments}} </p>
 				</div>
 		  	</div>
@@ -73,20 +57,12 @@
 			<md-button data-ng-click="setPreviousStep(1)" >
 		      	Anterior
 		    </md-button>	
-			<md-button data-ng-click="setNextStep(3)" data-ng-disabled="backtesting.curMonth == null" class="md-primary">
+			<md-button data-ng-click="setNextStep(3)" class="md-primary">
 				Siguiente
 			</md-button>
 		</md-dialog-actions>
 		<md-dialog-actions data-ng-show="currentStep==3">
 			<md-button data-ng-click="setPreviousStep(2)" >
-		      	Anterior
-		    </md-button>	
-			<md-button data-ng-click="setNextStep(4)" class="md-primary">
-				Siguiente
-			</md-button>
-		</md-dialog-actions>
-		<md-dialog-actions data-ng-show="currentStep==4">
-			<md-button data-ng-click="setPreviousStep(3)" >
 		      	Anterior
 		    </md-button>	
 			<md-button data-ng-click="saveBacktesting()" class="md-primary">

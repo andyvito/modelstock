@@ -1,3 +1,6 @@
+<div>{{modelsCtrl.name}}</div>
+ACA
+
 <div layout="row">
   <div flex="15">
     <rd-widget>
@@ -5,7 +8,7 @@
         <div class="header-icon blue pull-left">
           <span><b>M</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalModels}}</div>
+        <div class="title">80</div>
         <div class="comment">Total Modelos</div>
       </rd-widget-body>
     </rd-widget>
@@ -16,7 +19,7 @@
         <div class="header-icon blue pull-left">
           <span><b>I</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalInactive}}&#32;(<span>{{modelsCtrl.indicators.totalInactive/modelsCtrl.indicators.totalModels * 100| number :1 }}%</span>)</div>
+        <div class="title">225&#32;(<span>15%</span>)</div>
         <div class="comment">Inactivos</div>
       </rd-widget-body>
     </rd-widget>
@@ -27,7 +30,7 @@
         <div class="header-icon blue pull-left">
           <span><b>B</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalBacktest}}&#32;(<span>{{modelsCtrl.indicators.totalBacktest/(modelsCtrl.indicators.totalModels -modelsCtrl.indicators.totalInactive) * 100| number :1 }}%</span>)</div>
+        <div class="title">80&#32;(<span>15%</span>)</div>
         <div class="comment">Backtesting</div>
       </rd-widget-body>
     </rd-widget>
@@ -38,7 +41,7 @@
         <div class="header-icon red pull-left">
           <span><b>N</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalUnvalidated}}&#32;(<span>{{modelsCtrl.indicators.totalUnvalidated/modelsCtrl.indicators.totalBacktest * 100| number :1 }}%</span>)</div>
+        <div class="title">16&#32;(<span>15%</span>)</div>
         <div class="comment">No Validados</div>
       </rd-widget-body>
     </rd-widget>
@@ -49,7 +52,7 @@
         <div class="header-icon blue pull-left">
           <span><b>V</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidated}}&#32;(<span>{{modelsCtrl.indicators.totalValidated/modelsCtrl.indicators.totalBacktest * 100| number :1 }}%</span>)</div>
+        <div class="title">225&#32;(<span>15%</span>)</div>
         <div class="comment">Validados</div>
       </rd-widget-body>
     </rd-widget>
@@ -60,7 +63,7 @@
         <div class="header-icon green pull-left">
           <span><b>C</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidatedFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedFullfil/modelsCtrl.indicators.totalValidated * 100| number :1 }}%</span>)</div>
+        <div class="title">62&#32;(<span>15%</span>)</div>
         <div class="comment">Cumple</div>
       </rd-widget-body>
     </rd-widget>
@@ -71,7 +74,7 @@
         <div class="header-icon red pull-left">
           <span><b>X</b></span>
         </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidatedNoFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedNoFullfil/modelsCtrl.indicators.totalValidated * 100| number :1 }}%</span>)</div>
+        <div class="title">62&#32;(<span>15%</span>)</div>
         <div class="comment">No Cumple</div>
       </rd-widget-body>
     </rd-widget>
@@ -173,29 +176,29 @@
 
   <div layout="column" layout-fill flex>
     <rd-widget>
-      <rd-widget-header icon="fa-object-group" title="{{modelsCtrl.titleTable}}">
-        <md-checkbox md-no-ink data-ng-model="modelsCtrl.showCurBacktesting" class="md-primary">
+      <rd-widget-header icon="fa-object-group" title="{{modelCtrl.titleTable}}">
+        <md-checkbox md-no-ink data-ng-model="modelCtrl.showCurBacktesting" class="md-primary">
             Backtesting del actual mes
         </md-checkbox>
 
-        <md-checkbox md-no-ink data-ng-model="modelsCtrl.showInactive" class="md-primary">
+        <md-checkbox md-no-ink data-ng-model="modelCtrl.showInactive" class="md-primary">
             Mostrar Inactivos
         </md-checkbox>
-        <md-checkbox md-no-ink data-ng-model="modelsCtrl.showUncalibrated" class="md-primary">
+        <md-checkbox md-no-ink data-ng-model="modelCtrl.showUncalibrated" class="md-primary">
             Mostrar Descalibrados
-        </md-checkbox>
+        </md-checkbox>        
         <form>
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-search"></i></div>
-              <input type="text" placeholder="Search" data-ng-model="modelsCtrl.filterModels" class="form-control input-sm" />
+              <input type="text" placeholder="Search" data-ng-model="modelCtrl.filterModels" class="form-control input-sm" />
             </div>      
           </div>
         </form>
       </rd-widget-header>
     </rd-widget>
     <md-content layout="row" layout-wrap layout-align="center none">
-      <div class="models-table" flex="30" data-ng-repeat="m in modelsCtrl.models | orderBy:modelsCtrl.sortType:modelsCtrl.sortReverse | filter:modelsCtrl.filterModels">
+      <div class="models-table" flex="30" data-ng-repeat="m in modelCtrl.models | orderBy:modelCtrl.sortType:modelCtrl.sortReverse | filter:modelCtrl.filterModels">
           <md-card class="model" data-ng-class="{'model-inactive':m.active != true}">
             <md-card-title layout-align="center center" data-ng-class="{'inactive':m.active != true}">
               <md-card-title-text class="model-name model-name-active" data-ng-class="{'model-name-inactive':m.active != true}">
@@ -234,8 +237,8 @@
               </div>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-              <md-button data-ng-show="m.current_backtest.val_backtest_cur_month == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
-              <md-button data-ng-click="modelsCtrl.selectModel(m)">Detalle</md-button>
+              <md-button data-ng-show="m.current_backtest.val_backtest_cur_month == true" data-ng-click="modelCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
+              <md-button data-ng-click="modelCtrl.selectModel(m)">Detalle</md-button>
             </md-card-actions>
           </md-card>
       </div>

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-<body ng-controller="MasterCtrl as main">
+<body ng-controller="MasterCtrl as main" ng-cloak>
   <div layout=column layout-fill>
     <section layout="row">
       <md-sidenav class="md-sidenav-left" md-component-id="left"  md-whiteframe="4">
@@ -48,7 +48,7 @@
               <md-button data-ng-click="toggleLeft()">
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
               </md-button>
-              <h2 class="md-flex">ModelsStock</h2>
+              <h2 class="md-flex">ModelsStock | {{ main.currentMonthName}} - {{main.currentYear}}</h2>
               <div flex data-ng-show="$state.includes('model')">
                 <fds-model-header></fds-model-header>
               </div>
@@ -131,6 +131,11 @@
         <script src="scripts/services/data/kindsdata.js"></script>
         <script src="scripts/controllers/model/modal/implement.js"></script>
         <script src="scripts/controllers/report.js"></script>
+        <script src="scripts/services/configservice.js"></script>
+        <script src="scripts/services/data/utilsdata.js"></script>
+        <script src="scripts/controllers/models/closemonth.js"></script>
+        <script src="scripts/services/closemonthservice.js"></script>
+        <script src="scripts/services/reportservice.js"></script>
         <!-- endbuild -->
 </body>
 </html>

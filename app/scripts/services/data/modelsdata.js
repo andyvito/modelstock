@@ -19,9 +19,8 @@ angular.module('modelsstockApp')
                                   el.area.id == areaid &&
                                   (el.current_backtest.val_backtest_cur_month == true || 
                                   el.current_backtest.val_backtest_cur_month == curMonth) &&
-                                  (el.active == true || el.active == !isActive) 
+                                  (el.active == true || el.active == !isActive);
 
-                                  ;
                       }else if (factory.riskid){
                           return el.risk.id == factory.riskid &&
                                   (el.current_backtest.val_backtest_cur_month == true || 
@@ -37,7 +36,17 @@ angular.module('modelsstockApp')
                         return el &&
                                   (el.current_backtest.val_backtest_cur_month == true || 
                                   el.current_backtest.val_backtest_cur_month == curMonth) &&
-                                  (el.active == true || el.active == !isActive) ;
+                                  (el.active == true || el.active == !isActive);
+                      }
+              });
+    };
+
+    this.showOnlyUncalibrated = function(models){
+      return models.filter(function (el) {
+                      if (el.last_backtest != null){
+                        if (el.last_backtest.next_year == null){
+                            return el;
+                        }
                       }
               });
     };
@@ -48,6 +57,7 @@ angular.module('modelsstockApp')
       filterModelsByRiskAndArea: null,
       isActive: false,
       showCurBacktesting: false,
+      showUncalibrated: false,
       riskid:null,
       areaid:null,
       getModels: function () {
@@ -65,7 +75,8 @@ angular.module('modelsstockApp')
       setFilterModelsByRiskAndArea: function(riskid,areaid){
         factory.riskid = riskid;
         factory.areaid = areaid;
-        factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+        var tempModels = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+        factory.filterModelsByRiskAndArea = (factory.showUncalibrated == true) ? self.showOnlyUncalibrated(tempModels) : tempModels;
       },
       getShowInactive: function(){
         return factory.isActive;
@@ -73,7 +84,8 @@ angular.module('modelsstockApp')
       setShowInactive: function(value){
         factory.isActive = value;
         if (factory.models)     {
-          factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+          var tempModels = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+          factory.filterModelsByRiskAndArea = (factory.showUncalibrated == true) ? self.showOnlyUncalibrated(tempModels) : tempModels;
         }
       },
       getShowCurBacktesting: function(){
@@ -82,10 +94,22 @@ angular.module('modelsstockApp')
       setShowCurBacktesting: function(value){
           factory.showCurBacktesting = value;
           if (factory.models) {
-              factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+            var tempModels = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+            factory.filterModelsByRiskAndArea = (factory.showUncalibrated == true) ? self.showOnlyUncalibrated(tempModels) : tempModels;              
           }
             
       },
+      getShowUncalibrate: function(){
+        return factory.showUncalibrated;
+      },
+      setShowUncalibrate: function(value){
+        factory.showUncalibrated = value;
+        if (factory.models){
+          var tempModels = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+          factory.filterModelsByRiskAndArea = (factory.showUncalibrated == true) ? self.showOnlyUncalibrated(tempModels) : tempModels;
+        }
+      },
+
       updateBacktesting: function(newBacktesting){
         for (var i in factory.models) {
           if ( factory.models[i].id == newBacktesting.modelid ) {
@@ -105,7 +129,8 @@ angular.module('modelsstockApp')
             break; 
           }
         }
-        factory.filterModelsByRiskAndArea = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+        var tempModels = self.modelFilter(factory.models,factory.riskid, factory.areaid,factory.isActive, factory.showCurBacktesting);
+        factory.filterModelsByRiskAndArea = (factory.showUncalibrated == true) ? self.showOnlyUncalibrated(tempModels) : tempModels;
         return factory.filterModelsByRiskAndArea;
       },
       setNewModel: function(newModel){

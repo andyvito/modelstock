@@ -1,0 +1,29 @@
+<md-dialog>
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+	  <h2>Cerrar mes de backtesting</h2>
+	</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<form name="closeForm">
+		  	<div layout="column" layout-padding>
+		  		<div layout=row layout-align="center center">
+		  			<p>¿Desea cerrar el mes <b>{{closeCtrl.current_month}}</b> del año <b>{{closeCtrl.current_year}}</b>?</p>
+		  		</div>
+		  		<div flex>
+		  			<div layout=row layout-padding layout-align="center center">
+						<md-radio-group data-ng-model="closeCtrl.result" layout="row" layout-align="center center">
+							<md-radio-button value="1" class="md-primary">Sí</md-radio-button>
+						    <md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+		  	</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button data-ng-click="closeCtrl.closeMonth()" class="md-primary" data-ng-disabled="closeForm.$invalid || !closeCtrl.result">
+			Cerrar Mes
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

@@ -22,7 +22,9 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
             })
             .state('models', {
                 url: '/models',
-                templateUrl: 'views/models.html'
+                templateUrl: 'views/models.html',
+                controller: 'ModelsCtrl',
+                controllerAs: 'modelsCtrl'
             })
             .state('model', {
                 url: '/model/:id',
@@ -34,7 +36,7 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 url: '/reports',
                 templateUrl: 'views/reports.html',
                 controller: 'ReportCtrl',
-                controllerAS: 'report'
+                controllerAs: 'report'
             });
     }
 ]);
