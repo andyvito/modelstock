@@ -11,8 +11,8 @@ angular.module('modelsstockApp')
   .service('configService', function (ApiService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-    this.loadCurrentDate = function(){
-    	return ApiService.loadCurrentDate();
+    this.loadCurrentDateBacktesting = function(){
+    	return ApiService.loadCurrentDateBacktesting();
     }
 
   });

@@ -104,14 +104,20 @@ angular.module('modelsstockApp').
             cloneModel: function(model){
                 return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_code:model.newCode, new_name:model.newName}, {});   
             },
-            loadCurrentDate: function(){
-                return makeAPICall('api/v1/config', 'GET', {}, {'names[]':['current_year','current_month']});    
+            loadCurrentDateBacktesting: function(){
+                return makeAPICall('api/v1/get_current_date_backtesting', 'GET', {}, {});    
             },
             closeMonth: function(){
               return makeAPICall('api/v1/close_month', 'POST', {}, {});
             },
             getAllIndicators: function(){
                 return makeAPICall('api/v1/indicators', 'GET', {}, {});
+            },
+            getReportByMonthAndYear: function(year,month){
+                return makeAPICall('api/v1/report', 'GET', {}, {year:year,month:month});
+            },
+            getReportModelsByMonthAndYear: function(year,month){
+                return makeAPICall('api/v1/report_models', 'GET', {}, {year:year,month:month});
             },
 
         };

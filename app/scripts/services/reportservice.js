@@ -15,5 +15,13 @@ angular.module('modelsstockApp')
 		return ApiService.getAllIndicators();
 	};
 
+	this.getReportByMonthAndYear = function(year,month){
+		return ApiService.getReportByMonthAndYear(year,month);
+	};
+
+	this.getReportModelsByMonthAndYear = function(year,month){
+		return ApiService.getReportModelsByMonthAndYear(year,month);
+	};
+
 
   });

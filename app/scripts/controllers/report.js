@@ -8,8 +8,62 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ReportCtrl', [function () {
+  .controller('ReportCtrl', ['$scope', 'reportService', 'reportsData', 'utilsData', 
+      function ($scope, reportService,reportsData, utilsData) {
+
+  	var self = this;
+  	self.indicators = {};
+    self.report = {};
+    self.reportModels = {};
+    self.datepicker = {};
+    self.dateBacktest = {};
+    var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 
+    this.changeDate = function(newValue){
+      self.updateDateQuery(newValue);
+    };
+
+    self.updateDateQuery = function(dateQuery){
+      self.report = null;
+      self.reportModels = null;
+      var dateSelected = dateQuery.split("-");
+      var dateBacktest = self.dateBacktest.split("-");
+      self.datepicker.dateDisplay = monthNames[dateSelected[1]-1] + ' de ' + dateSelected[0];
+      if(!$scope.$$phase) $scope.$apply();
+      if (dateSelected <= dateBacktest) self.loadReport(dateSelected[0],dateSelected[1]);
+    };
+
+    self.loadReport = function(year,month){
+      reportService.getReportByMonthAndYear(year,month).then(function(result){
+        self.report = result.data.report;
+      });
+
+      reportService.getReportModelsByMonthAndYear(year,month).then(function(result){
+        self.reportModels = result.data.report_models;
+      });      
+    };
+    
+    reportService.getAllIndicators().then(function(result){
+      reportsData.setIndicators(result.data);
+    });
+
+    $scope.$watch(function(){
+      return reportsData.indicators;
+      },function(newValue,oldValue){
+        self.indicators = reportsData.indicators;
+    });
+
+
+    $scope.$watch(function(){
+      return utilsData.currentDate;
+      },function(newValue,oldValue){
+        if (newValue){
+          self.datepicker.date = utilsData.getCurrentDateBacktest();
+          self.dateBacktest = angular.copy(self.datepicker.date);
+          self.updateDateQuery(self.datepicker.date);
+        }
+    });
 
   }]);

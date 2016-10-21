@@ -21,14 +21,16 @@ angular.module('modelsstockApp')
       getCurrentYear: function () {
           return factory.currentYear;
       },
-      setCurrentYear: function (year){
-        factory.currentYear = year;
-      },
       getCurrentMonth: function () {
           return factory.currentMonth;
       },
-      setCurrentMonth: function (month){
-        factory.currentMonth = month;
+      setCurrentDate: function(dateServer){
+        factory.currentYear = dateServer.year;
+        factory.currentMonth = dateServer.month;
+        factory.currentDate = dateServer.date;
+      },
+      getCurrentDateBacktest:function(){
+        return factory.currentYear+'-'+factory.currentMonth;
       },
       getCurrentMonthName: function(){
       	if (factory.currentMonth)

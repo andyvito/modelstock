@@ -8,8 +8,9 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelsCtrl', ['$scope', '$mdToast', '$state', '$uibModal', '$mdDialog', 'modelsData','modelService', 'risksData', 'areasData', 'reportService',
-      function ($scope, $mdToast, $state, $uibModal, $mdDialog, modelsData, modelService, risksData, areasData, reportService) {
+  .controller('ModelsCtrl', ['$scope', '$mdToast', '$state', '$uibModal', '$mdDialog', 'modelsData','modelService', 'risksData', 
+              'areasData', 'reportService', 'reportsData',
+      function ($scope, $mdToast, $state, $uibModal, $mdDialog, modelsData, modelService, risksData, areasData, reportService, reportsData) {
     
       	var self = this;
 
@@ -21,7 +22,6 @@ angular.module('modelsstockApp')
         self.showUncalibrated =  modelsData.showUncalibrated;
         self.titleTable = "Modelos";
         self.indicators = {};
-        self.indicators.totalModels = 0;
 
 
         $scope.$on('newModelCreatedEvent', function (event,newModel) {
@@ -81,9 +81,7 @@ angular.module('modelsstockApp')
           $state.go('model',{'id':model.id});
         };
 
-        reportService.getAllIndicators().then(function(result){
-          console.log(result.data);
-
+       /* reportService.getAllIndicators().then(function(result){
           self.indicators.totalModels = result.data.total_models;
           self.indicators.totalInactive = result.data.total_inactive;
           self.indicators.totalBacktest = result.data.total_backtest
@@ -91,6 +89,10 @@ angular.module('modelsstockApp')
           self.indicators.totalValidated = result.data.total_validated;
           self.indicators.totalValidatedFullfil = result.data.total_validated_fullfil;
           self.indicators.totalValidatedNoFullfil = result.data.total_validated_no_fullfil;
+        });*/
+
+        reportService.getAllIndicators().then(function(result){
+          reportsData.setIndicators(result.data);
         });
 
 
@@ -102,8 +104,6 @@ angular.module('modelsstockApp')
         else{
           self.models = modelsData.getFilterModelsByRiskAndArea();
         }
-
-
 
 
 
@@ -140,7 +140,6 @@ angular.module('modelsstockApp')
           return self.showInactive;
           },function(newValue,oldValue){
             modelsData.setShowInactive(newValue);
-
         });
 
         $scope.$watch(function(){
@@ -153,6 +152,12 @@ angular.module('modelsstockApp')
           return self.showUncalibrated;
           },function(newValue,oldValue){
             modelsData.setShowUncalibrate(newValue);
+        });
+
+        $scope.$watch(function(){
+          return reportsData.indicators;
+          },function(newValue,oldValue){
+            self.indicators = reportsData.indicators;
         });
 
   }]);

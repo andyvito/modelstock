@@ -10,15 +10,15 @@
  */
 angular
   .module('modelsstockApp', [
-    'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages', 'ngMdIcons'
+    'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages', 'ngMdIcons', 'moment-picker'
   ])
   .run(['riskService', 'risksData', 'lenService', 'lensData', 'typeService', 'typesData', 
     'kindService', 'kindsData', 'configService', 'utilsData',
     function(riskService,risksData,lenService,lensData,typeService,typesData,kindService,kindsData,configService,utilsData){
+  
 
-    configService.loadCurrentDate().then(function(result){
-      utilsData.setCurrentYear(result.data.config[0].value);
-      utilsData.setCurrentMonth(result.data.config[1].value);
+    configService.loadCurrentDateBacktesting().then(function(result){
+      utilsData.setCurrentDate(result.data.date);
     });
 
     riskService.getAllRisks().then(function(result){

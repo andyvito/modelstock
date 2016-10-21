@@ -36,7 +36,7 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 url: '/reports',
                 templateUrl: 'views/reports.html',
                 controller: 'ReportCtrl',
-                controllerAs: 'report'
+                controllerAs: 'reportCtrl'
             });
     }
 ]);
