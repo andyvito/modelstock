@@ -82,7 +82,7 @@
 
 <div layout="column" layout-align="center center">
   <h2>Reporte de Modelos</h2>
-  <span moment-picker="reportCtrl.datepicker.date" locale="es" 
+  <span class="subheader-moment-picker" moment-picker="reportCtrl.datepicker.date" locale="es" 
         format="YYYY-MM" change="reportCtrl.changeDate(newValue)"
         today="True" max-view="month">
         {{ reportCtrl.datepicker.dateDisplay || 'Seleccione una fecha' }}
@@ -93,15 +93,15 @@
 <div layout="column" data-ng-show="reportCtrl.report != null">
   <div layout="column">
     <div flex>
-      <table class="table table-striped">
-      <caption>Resumen de Modelos</caption>
+      <table class="table table-striped own-table table-hover">
+      <caption class="caption">Resumen de Modelos</caption>
       <thead class="thead-default">
         <tr>
           <th colspan="1" rowspan="2">Riesgo Asociado</th>  
           <th colspan="1" rowspan="2">Total</th>
           <th colspan="1" rowspan="2">No validados</th>  
-          <th colspan="3">Validados</th> 
-          <th colspan="2">% Validaciones</th>
+          <th colspan="3" rowspan="1">Validados</th> 
+          <th colspan="2" rowspan="1">% Validaciones</th>
         </tr>
         <tr>
           <th>Total</th> 
@@ -111,8 +111,8 @@
           <th>cumplen/validados</th> 
         </tr>
       </thead>
-      <tbody class="table-hover" data-ng-repeat="r in reportCtrl.report.risks">
-        <tr style="font-weight: bold">
+      <tbody data-ng-repeat="r in reportCtrl.report.risks">
+        <tr class="risk-header">
           <td><bold>{{r.risk}}</bold></td>
           <td>{{r.total}}</td>
           <td>{{r.unvalidated.value}}</td>
@@ -122,25 +122,19 @@
           <td>{{r.validated.percentage * 100| number :2 }}%</td>
           <td>{{r.validatedFullfil.percentage * 100| number :2 }}%</td>
         </tr>
-        <tr>
-          <td colspan="8">
-            <table class="table table-striped">
-              <tr data-ng-repeat="a in r.areas">
-                <td colspan="1">{{a.area}}</td>
-                <td colspan="1">{{a.total}}</td>
-                <td colspan="1">{{a.unvalidated.value}}</td>
-                <td colspan="1">{{a.validated.value}}</td>
-                <td colspan="1">{{a.validatedFullfil.value}}</td>
-                <td colspan="1">{{a.validatedNotFullfil.value}}</td>
-                <td colspan="1">{{a.validated.percentage * 100| number :2 }}%</td>
-                <td colspan="1">{{a.validatedFullfil.percentage * 100| number :2 }}%</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+        <tr class="area-header" data-ng-repeat="a in r.areas">
+          <td colspan="1">{{a.area}}</td>
+          <td colspan="1">{{a.total}}</td>
+          <td colspan="1">{{a.unvalidated.value}}</td>
+          <td colspan="1">{{a.validated.value}}</td>
+          <td colspan="1">{{a.validatedFullfil.value}}</td>
+          <td colspan="1">{{a.validatedNotFullfil.value}}</td>
+          <td colspan="1">{{a.validated.percentage * 100| number :2 }}%</td>
+          <td colspan="1">{{a.validatedFullfil.percentage * 100| number :2 }}%</td>
+        </tr>  
         </tbody>
         <tbody>
-          <tr  style="font-weight: bold">
+          <tr  class="total-footer">
             <td>Total Modelos</td>
             <td>{{reportCtrl.report.total}}</td>
             <td>{{reportCtrl.report.unvalidated.value}}</td>
@@ -158,8 +152,8 @@
 
   <div layout="column">
     <div flex>
-      <table class="table table-striped">
-        <caption>Modelos</caption>
+      <table class="table table-striped own-table table-hover">
+        <caption class="caption">Modelos</caption>
         <thead>
           <tr>
             <th colspan="1" rowspan="2">Riesgo</th>
@@ -181,8 +175,8 @@
             <td>{{m.lead}}</td>
             <td>{{m.code}}</td>
             <td>{{m.name}}</td>
-            <td>{{m.is_qua}}</td>
-            <td>{{m.result}}</td>
+            <td>{{(m.is_qua == null) ? 'Por Definir' : (m.is_qua == 1) ? 'Sí' : 'No'}}</td>
+            <td>{{ (m.result == null) ? 'Sin Entregar' : (m.result == 1) ? 'Cumplió' : 'No Cumplió'}}</td>
           </tr>
         </tbody>
       </table>

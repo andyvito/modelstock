@@ -51,6 +51,7 @@ angular.module('modelsstockApp')
     }
 
     this.updateFrecuency = function(){
+      self.model.firstBacktesting.month += 1;
       modelService.updateFrecuency(self.model).then(function(result){
           self.model.backtest_historial.unshift(result.data.newBacktesting);
           model = self.model;

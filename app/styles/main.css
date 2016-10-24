@@ -488,3 +488,42 @@ md-dialog md-toolbar._md-toolbar-transitions{
     overflow: auto;
   }
 
+.subheader-moment-picker{
+  text-decoration: underline;
+  font-size: 25px;
+  color:#2361B2;
+  outline: 0;
+}
+
+.own-table .caption{
+  font-size: 25px;
+  color:black;
+}
+
+.own-table th, 
+.own-table tr {
+  text-align: center;
+}
+
+
+.own-table tr.risk-header{
+  font-weight: bold;
+  background-color: #fcf8e3!important;
+}
+
+.own-table tr.risk-header td:first-child{
+  text-align: left;
+}
+
+.own-table tr.area-header td:first-child{
+  text-align: left;
+  padding-left:35px;
+}
+
+.own-table .total-footer{
+  font-weight: bold;
+  background-color:#d9edf7!important;
+}
+
+
+

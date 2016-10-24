@@ -19,8 +19,11 @@ angular.module('modelsstockApp')
   		console.log(self.result);
   		if (self.result == 1){
 			closeMonthService.closeMonth().then(function(result){
-				utilsData.setCurrentYear(result.data.current_date[0].value);
-      	utilsData.setCurrentMonth(result.data.current_date[1].value);
+				utilsData.setCurrentDate(result.data.date);
+        //utilsData.setCurrentYear(result.data.current_date[0].value);
+      	///utilsData.setCurrentMonth(result.data.current_date[1].value);
+
+
   			$mdDialog.hide();
         $rootScope.$broadcast('updateCurrentDateEvent');  
 
