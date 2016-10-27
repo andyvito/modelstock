@@ -106,6 +106,9 @@ angular.module('modelsstockApp')
    			  self.currentModel = result.data.model;
           //Copy the model because the user could cancel edit action, so restore to initial model state
           self.currentModelInitial = angular.copy(self.currentModel);
+
+          console.log(self.currentModel);
+
           riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
             self.allAreasByRisk = result.data.areas;
           }); 

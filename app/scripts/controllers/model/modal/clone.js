@@ -11,23 +11,22 @@ angular.module('modelsstockApp')
   .controller('ModelModalCloneCtrl', ['$mdDialog', '$state', 'model', 'modelService', function ($mdDialog, $state, model, modelService) {
     var self = this;
     self.model = angular.copy(model);
-	self.currentStep = 1; 
+    self.currentStep = 1; 
 
     self.cloneModel = function(){
-		modelService.cloneModel(self.model).then(function(result){
-			self.currentStep = 2;
-			self.modelCloned = result.data.model;
+  		modelService.cloneModel(self.model).then(function(result){
+  			self.currentStep = 2;
+  			self.modelCloned = result.data.model;
+        console.log(result.data);
       });  
     };
 
     self.closeDialog = function(){
-		$mdDialog.hide();
+		  $mdDialog.hide();
     };
-
 
     self.goToCloneModel = function(){
     	$state.go('model',{'id':self.modelCloned.id});
-		$mdDialog.hide();
+		  $mdDialog.hide();
     };
-
   }]);

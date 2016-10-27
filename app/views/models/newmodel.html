@@ -12,15 +12,7 @@
 		  		<div layout="column">
 	  	  			<form name="stepOneForm">
 						<div layout="row">
-						    <md-input-container class="md-block" flex="25">
-					        	<label>C&#243;digo</label>
-					        	<input md-maxlength="20" required name="code"
-					        		data-ng-model="modelCtrl.model.code" >
-					        	<div ng-messages="stepOneForm.code.$error">
-						          <div ng-message="required">El código es necesario</div>
-						        </div>
-					      	</md-input-container>
-						    <md-input-container class="md-block" flex="75">
+							<md-input-container class="md-block" flex>
 					        	<label>Nombre</label>
 					        	<input md-maxlength="100" required name="name"
 					        		data-ng-model="modelCtrl.model.name">

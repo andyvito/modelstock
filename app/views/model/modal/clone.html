@@ -8,15 +8,7 @@
   		<form name="cloneForm">
 		  	<div layout="column" layout-align="space-around top" data-ng-show="vm.currentStep == 1">
 				<p>Se va a realizar una copia exacta del modelo con código <b>{{vm.model.code}}</b> y nombre <b>{{vm.model.name}}</b>.</p>
-				<p>Para continuar, por favor, ingrese el nuevo código y nombre del modelo.</p>
-			    <md-input-container class="md-block">
-		        	<label>C&#243;digo</label>
-		        	<input md-maxlength="20" required name="newCode"
-		        		data-ng-model="vm.model.newCode" >
-		        	<div ng-messages="cloneForm.newCode.$error">
-			          <div ng-message="required">El código es necesario</div>
-			        </div>
-		      	</md-input-container>
+				<p>Para continuar, por favor, ingrese el nuevo nombre del modelo.</p>
 		   		<md-input-container class="md-block">
 		        	<label>Nombre</label>
 		        	<input md-maxlength="100" required name="newName"

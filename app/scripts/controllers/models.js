@@ -81,16 +81,6 @@ angular.module('modelsstockApp')
           $state.go('model',{'id':model.id});
         };
 
-       /* reportService.getAllIndicators().then(function(result){
-          self.indicators.totalModels = result.data.total_models;
-          self.indicators.totalInactive = result.data.total_inactive;
-          self.indicators.totalBacktest = result.data.total_backtest
-          self.indicators.totalUnvalidated = result.data.total_unvalidated;
-          self.indicators.totalValidated = result.data.total_validated;
-          self.indicators.totalValidatedFullfil = result.data.total_validated_fullfil;
-          self.indicators.totalValidatedNoFullfil = result.data.total_validated_no_fullfil;
-        });*/
-
         reportService.getAllIndicators().then(function(result){
           reportsData.setIndicators(result.data);
         });

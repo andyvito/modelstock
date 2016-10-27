@@ -77,7 +77,7 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});
             },
             updateModel: function(model){
-                return makeAPICall('api/v1/model/'+model.id, 'PUT', {}, {code:model.code, name:model.name, description:model.description, len:model.len, cat:model.cat,
+                return makeAPICall('api/v1/model/'+model.id, 'PUT', {}, {name:model.name, description:model.description, len:model.len, cat:model.cat,
                                                                         kind:model.kind, comments:model.comments, more_info:model.more_info,
                                                                         curriculum:model.curriculum, file_doc:model.file_doc, active:model.active, is_qua:model.is_qua,
                                                                         version:model.version, initial_dates:model.initial_dates, original_author:model.original_author,
@@ -86,7 +86,7 @@ angular.module('modelsstockApp').
 
             },
             createModel: function(model){
-                return makeAPICall('api/v1/model', 'POST', {code:model.code, name:model.name, description:model.description, len:model.len.display, cat:model.type.display,
+                return makeAPICall('api/v1/model', 'POST', {name:model.name, description:model.description, len:model.len.display, cat:model.type.display,
                                                                         kind:model.kind.display, initial_dates:model.initial_dates, original_author:model.original_author,
                                                                         final_dates:model.final_dates, final_author:model.final_author, more_info:model.more_info,
                                                                         comments:model.comments, curriculum:model.curriculum, file_doc:model.file_doc, is_qua:model.is_qua,
@@ -102,7 +102,7 @@ angular.module('modelsstockApp').
                                                                         cap_total:model.cap_total});   
             },
             cloneModel: function(model){
-                return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_code:model.newCode, new_name:model.newName}, {});   
+                return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_name:model.newName}, {});   
             },
             loadCurrentDateBacktesting: function(){
                 return makeAPICall('api/v1/get_current_date_backtesting', 'GET', {}, {});    
