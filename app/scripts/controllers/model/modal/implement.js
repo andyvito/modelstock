@@ -8,25 +8,34 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelModalImplementCtrl', ['$scope', '$mdDialog', 'model', 'modelService', function ($scope, $mdDialog, model, modelService) {
+  .controller('ModelModalImplementCtrl', ['$scope', '$mdDialog', 'model', 'modelService', 'utilsData', 
+    function ($scope, $mdDialog, model, modelService,utilsData) {
     var self = this;
     self.frecuency = [{n:'Mensual', v:1}, {n:'Bimensual', v:2}, {n:'Trimestral', v:3},
 					{n:'Cuatrimestral', v:4}, {n:'Semestral', v:6}, {n:'Anual', v:12}, {n:'Bianual', v:24}];
-    self.model = angular.copy(model);
 
+
+    self.model = angular.copy(model);
+    self.model.firstBacktesting = {};
+    self.model.calibrated = {};
+
+/*
     var currentYear = new Date().getFullYear();
     var currentMonth = new Date().getMonth();
-    var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+*/
+
+
+   // var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    //  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     //Default year and month to updown
-    var finalYear = currentYear + 1;
+    /*var finalYear = currentYear + 1;
     var finalMonth = currentMonth;
     self.years = [];
     self.items = [];
-
+    */
   	// Build a list of months up to initial year
-  	for (var y = finalYear; y >= currentYear; y--) {
+  	/*for (var y = finalYear; y >= currentYear; y--) {
   			self.years.push(y);
   			self.items.push({year: y, text: y, header: true});
 
@@ -35,7 +44,7 @@ angular.module('modelsstockApp')
           self.items.push({year: y, month: m, text: monthNames[m]});
   				if (y === currentYear && m === currentMonth) break;	    	
   			}
-  	}
+  	}*/
 
 
     this.recalculateCapacity = function(){
@@ -46,16 +55,33 @@ angular.module('modelsstockApp')
       self.model.cap_total = self.model.cap_area + self.model.cap_qua;
     }
 
-    this.selectFirstDateBacktesting = function(item){
+    /*this.selectFirstDateBacktesting = function(item){
       self.model.firstBacktesting = item;
-    }
+    }*/
 
     this.updateFrecuency = function(){
-      self.model.firstBacktesting.month += 1;
+      //self.model.firstBacktesting.month += 1;
+
       modelService.updateFrecuency(self.model).then(function(result){
           self.model.backtest_historial.unshift(result.data.newBacktesting);
           model = self.model;
           $mdDialog.hide(model);
-      });  
+      }); 
     };
+
+    
+    $scope.$watch(function(){
+      return utilsData.currentDate;
+      },function(newValue,oldValue){
+        if (newValue){
+          var year = utilsData.getCurrentYear();
+          var month = utilsData.getCurrentMonth()-1;
+          self.model.firstBacktesting.date = new Date(year, month,1); 
+          self.model.firstBacktesting.maxDate = new Date().setFullYear(new Date(self.model.firstBacktesting.date).getFullYear() + 1); 
+          self.model.calibrated.date = new Date(year, month,1); 
+          self.model.calibrated.minDate = new Date().setMonth(self.model.calibrated.date.getMonth() - 3); 
+        }
+    });
+
+
 }]);

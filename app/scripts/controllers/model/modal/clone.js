@@ -17,7 +17,6 @@ angular.module('modelsstockApp')
   		modelService.cloneModel(self.model).then(function(result){
   			self.currentStep = 2;
   			self.modelCloned = result.data.model;
-        console.log(result.data);
       });  
     };
 

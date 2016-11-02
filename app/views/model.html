@@ -6,14 +6,10 @@
 	        	<label>C&#243;digo</label>
 	        	<input md-maxlength="20" required data-ng-disabled="true" data-ng-model="model.currentModel.code" >
 	      	</md-input-container>
-		    <md-input-container class="md-block" flex=60>
+		    <md-input-container class="md-block" flex=70>
 	        	<label>Nombre</label>
 	        	<input md-maxlength="100" required data-ng-disabled="model.disabled"  data-ng-model="model.currentModel.name">
 	    	</md-input-container>
-		    <md-input-container class="md-block" flex=10>
-		       	<label>Versi&#243;n</label>
-		       	<input md-maxlength="4" required data-ng-disabled="model.disabled" data-ng-model="model.currentModel.version">
-		    </md-input-container>
 	    	<md-switch data-ng-disabled="model.disabled" data-ng-model="model.currentModel.active"
 	    		aria-label="Estado" class="md-block" flex=10 data-ng-true-value="true" data-ng-false-value="false">
 	    		Estado: {{ model.currentModel.active ? 'Activo' : 'Inactivo'  }}
@@ -218,42 +214,6 @@
 		      		<md-tab id="tab4">
 				        <md-tab-label>Varios</md-tab-label>
 				        <md-tab-body>
-				        	<div layout="row" class="md-padding">
-				        		<div flex="50">
-								<md-input-container class="md-block">
-						        	<label>Fecha Inicial</label>
-						          	<textarea required data-ng-disabled="model.disabled" 
-						          			  ng-model="model.currentModel.initial_dates" md-maxlength="550" 
-						          			  rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-						        </div>
-						        <div flex="50">
-						        <md-input-container class="md-block">
-						        	<label>Autor Original</label>
-						          	<textarea required data-ng-disabled="model.disabled" 
-						          			  ng-model="model.currentModel.original_author" md-maxlength="550" 
-						          			  rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-						        </div>
-							</div>
-				        	<div layout="row" class="md-padding">
-				        		<div flex="50">
-								<md-input-container class="md-block">
-						        	<label>Fecha Final</label>
-						          	<textarea data-ng-disabled="model.disabled" 
-						          			  ng-model="model.currentModel.final_dates" md-maxlength="550"
-						          			  rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-						        </div>
-						        <div flex="50">
-						        <md-input-container class="md-block">
-						        	<label>Autor Final</label>
-						          	<textarea data-ng-disabled="model.disabled" 
-						          			  ng-model="model.currentModel.final_author" md-maxlength="550" 
-						          			  rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-						        </div>
-							</div>		
 							<div flex class="md-padding">      		
 								<md-input-container class="md-block"> 
 						        	<label>M&#225;s informaci&#243;n:</label>

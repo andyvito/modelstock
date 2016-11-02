@@ -133,44 +133,9 @@
 				    	</md-input-container>
 		  			</div>			  		
 		  		</div>
-				<div layout="column" data-ng-show="currentStep == 3">
+			  	<div layout="column" data-ng-show="currentStep == 3">
 			  		<div layout=row layout-align="center center">
-			  			<h3>3. Versionamiento.</h3>
-			  		</div>
-			  		<div layout="column">
-			  			<form name="stepThreeForm">
-				  			<div layout="row">
-								<md-input-container class="md-block" flex=50>
-						        	<label>Fecha Inicial</label>
-						          	<textarea required data-ng-model="modelCtrl.model.initial_dates" md-maxlength="300" rows="4" md-select-on-focus></textarea>
-						          	<div ng-messages="stepOneForm.description.$error">
-								    	<div ng-message="required">La fecha inicial del modelo es necesario</div>
-								    </div>
-						        </md-input-container>
-						        <md-input-container class="md-block" flex=50>
-						        	<label>Autor Original</label>
-						          	<textarea required data-ng-model="modelCtrl.model.original_author" md-maxlength="300" rows="4" md-select-on-focus></textarea>
-						          	<div ng-messages="stepOneForm.description.$error">
-								    	<div ng-message="required">El autor incial del modelo es necesario</div>
-								    </div>
-						        </md-input-container>
-							</div>
-							<div layout="row">
-								<md-input-container class="md-block" flex=50>
-						        	<label>Fecha Final</label>
-						          	<textarea data-ng-model="modelCtrl.model.final_dates" md-maxlength="300" rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-						        <md-input-container class="md-block" flex=50>
-						        	<label>Autor Final</label>
-						          	<textarea data-ng-model="modelCtrl.model.final_author" md-maxlength="300" rows="4" md-select-on-focus></textarea>
-						        </md-input-container>
-							</div>
-						</form>
-					</div>
-			  	</div>
-			  	<div layout="column" data-ng-show="currentStep == 4">
-			  		<div layout=row layout-align="center center">
-			  			<h3>4. Comentarios y Notas.</h3>
+			  			<h3>3. Comentarios y Notas.</h3>
 			  		</div>
 			  		<div layout="column">
 						<md-input-container class="md-block" flex=50>
@@ -184,9 +149,9 @@
 					</div>
 			  	</div>
 
-		  	<div layout="column" data-ng-show="currentStep == 5">
+		  	<div layout="column" data-ng-show="currentStep == 4">
 		  		<div layout=row layout-align="center center">
-		  			<h3>5. Verificar información.</h3>
+		  			<h3>4. Verificar información.</h3>
 		  		</div>
 		  		<div layout="column" class="verify-info">
 		  			<p><b>Nombre de modelo</b>: {{ modelCtrl.model.name }} </p>
@@ -199,10 +164,6 @@
 		  			<p><b>Hoja de vida</b>: {{ modelCtrl.model.curriculum == true ? 'Sí' : 'No'}} </p>
 		  			<p><b>Participa cuantificación</b>: {{ modelCtrl.model.is_qua == true ? 'Sí' : 'No'}} </p>
 		  			<p><span class="long-data"><b>Documentación</b>: {{ modelCtrl.model.file_doc | limitTo: 80 }}<span data-ng-if="modelCtrl.model.file_doc.length > 80">...</span></span></p>
-		  			<p><span class="long-data"><b>Fecha inicial</b>: {{ modelCtrl.model.initial_dates }}<span data-ng-if="modelCtrl.model.initial_dates.length > 150">...</span></span></p>
-		  			<p><span class="long-data"><b>Autor inicial</b>: {{ modelCtrl.model.original_author }}<span data-ng-if="modelCtrl.model.original_author.length > 150">...</span></span></p>
-		  			<p><span class="long-data"><b>Fecha final</b>: {{ modelCtrl.model.final_dates }}<span data-ng-if="modelCtrl.model.final_dates.length > 150">...</span></span></p>
-		  			<p><span class="long-data"><b>Autor final</b>: {{ modelCtrl.model.final_author }}<span data-ng-if="modelCtrl.model.final_author.length > 150">...</span></span></p>
 		  			<p><span class="long-data"><b>Comentarios</b>: {{ modelCtrl.model.comments | limitTo: 150 }}<span data-ng-if="modelCtrl.model.comments.length > 150">...</span></span></p>
 		  			<p><span class="long-data"><b>Más información</b>: {{ modelCtrl.model.more_info | limitTo: 150 }}<span data-ng-if="modelCtrl.model.more_info.length > 150">...</span></span></p>
 				</div>
@@ -231,14 +192,6 @@
 		</md-dialog-actions>
 		<md-dialog-actions data-ng-show="currentStep==4">
 			<md-button data-ng-click="modelCtrl.setPreviousStep(3)" >
-		      	Anterior
-		    </md-button>	
-			<md-button data-ng-click="modelCtrl.setNextStep(5)" class="md-primary">
-				Siguiente
-			</md-button>
-		</md-dialog-actions>
-		<md-dialog-actions data-ng-show="currentStep==5">
-			<md-button data-ng-click="modelCtrl.setPreviousStep(4)" >
 		      	Anterior
 		    </md-button>	
 			<md-button data-ng-click="modelCtrl.createModel()" class="md-primary">

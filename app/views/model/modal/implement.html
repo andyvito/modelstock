@@ -4,94 +4,72 @@
 	  <h2>Implementar Backtesting: {{modelCtrl.model.name}}</h2>
 	</div>
 	</md-toolbar>
-  	<md-dialog-content layout="column" layout-padding>
+  	<md-dialog-content layout="column">
   		<form name="frecuencyForm">
-		  	<div layout="row" layout-align="space-around top">
-		  		<div layout="column" flex=45>
-		  			<div layout=row layout-align="space-around top" >
-		  				<div flex="45">
-			  				<p><b>1.</b>&#32;Por favor, seleccione el mes del primer backtesting.</p>
-			  			</div>
-			  			<div flex="45">
-				    		<div class="vr-years">
-						        <md-virtual-repeat-container id="vertical-container" md-top-index="modelCtrl.years">
-							        <div md-virtual-repeat="item in modelCtrl.items" class="repeated-item" 
-							        	data-ng-class="{header: item.header, selected: modelCtrl.model.firstBacktesting == item}" 
-							        	data-ng-click="modelCtrl.selectFirstDateBacktesting(item)">
-							         	 {{item.text}}
-							        </div>
-							    </md-virtual-repeat-container>
-						    </div>
-					    </div>
-					</div>
-					<div layout=column layout-align="space-around center" class="layout-padding">
-		  				<p><b>2.</b>&#32;Por favor, seleccione la frecuencia con que se validará el modelo.</p>
-		  				<md-input-container class="md-block">
-				            <label>Frecuencia</label>
-				            <md-select required ng-model="modelCtrl.model.frecuency" 
-				            		data-ng-change="modelCtrl.recalculateCapacity()">
-				              <md-option ng-repeat="f in modelCtrl.frecuency" value="{{f.v}}">
-				                {{f.n}}
-				              </md-option>
-				            </md-select>
-					    </md-input-container>
-			  		</div>
+  			<div layout=column  layout-padding>
+  				<p>Por favor, ingrese los siguientes datos:</p>	
+	  			<div layout="row">
+					<md-input-container class="md-block" flex=40>
+						<label>Autor</label>
+						<input type="text"  data-ng-model="modelCtrl.model.author" required md-maxlength="100">
+					</md-input-container>	
+					<md-input-container class="md-block" flex="30">
+				        <label>Fecha de creación</label>
+			          	<input type="month" data-ng-model="modelCtrl.model.calibrated.date"
+									placeholder="yyyy-MM" min="{{modelCtrl.model.calibrated.minDate | date:'yyyy-MM'}}" max="{{modelCtrl.model.calibrated.date | date:'yyyy-MM'}}" required />
+			        </md-input-container> 
+					<md-input-container class="md-block" flex="30">
+				        <label>Fecha del primer backtesting</label>
+			          	<input  type="month" data-ng-model="modelCtrl.model.firstBacktesting.date"
+									placeholder="yyyy-MM" min="{{modelCtrl.model.firstBacktesting.date | date:'yyyy-MM'}}" max="{{modelCtrl.model.firstBacktesting.maxDate | date:'yyyy-MM'}}" required />
+			        </md-input-container> 
+	  			</div>
+				<div layout="row">
+					<md-input-container class="md-block" flex=40>
+			            <label>Frecuencia Validación del Modelo</label>
+			            <md-select required ng-model="modelCtrl.model.frecuency" 
+			            		data-ng-change="modelCtrl.recalculateCapacity()">
+			              <md-option ng-repeat="f in modelCtrl.frecuency" value="{{f.v}}">
+			                {{f.n}}
+			              </md-option>
+			            </md-select>
+				    </md-input-container> 	
+
+					<md-input-container class="md-block" flex=30>
+						<label>H/H Metodología</label>
+						<input type="number" data-ng-model="modelCtrl.model.met_hours_man" required step="0.01"
+								data-ng-change="modelCtrl.recalculateCapacity()" min="0" max="999">
+					</md-input-container>
+					<md-input-container class="md-block" flex=30>
+						<label>H/H Cuantificación</label>
+						<input type="number"  data-ng-model="modelCtrl.model.qua_hours_man" required step="0.01"
+							data-ng-change="modelCtrl.recalculateCapacity()" min="0" max="999">
+					</md-input-container>	
 				</div>
-				<div  layout="row" flex="5" layout-align="center center">
-					<div flex=5 class="vertical-separator"></div>
-			  	</div>
-				<div layout="column" flex=50>
-	  				<p><b>3.</b>&#32;Por favor, indique la metodolog&#237;a.</p>
-					<div layout=row layout-align="center top">
-						<div flex>
-							<md-input-container class="md-block text-area-static-height">
-						        <label>Metodolog&#237;a de Validaci&#243;n</label>
-					          	<textarea required data-ng-model="modelCtrl.model.met_validation"
-					          			  md-maxlength="250" minlength=5 rows="4" md-select-on-focus></textarea>
-					        </md-input-container>
-						</div>
-				    </div>
-				    <div layout=column>
-		  				<p><b>4.</b>&#32;Por favor, indique las <b>Horas/Hombre (H/H)</b> necesarias en Metodología y en Cuantificación.</p>
-					    <div layout="row" layout-align="space-around center">
-					    	<div flex=45>
-								<md-input-container class="md-block">
-									<label>H/H Metodología</label>
-									<input type="number" data-ng-model="modelCtrl.model.met_hours_man" required step="0.01"
-											data-ng-change="modelCtrl.recalculateCapacity()" min="0" max="999">
-								</md-input-container>
-							</div>
-							<div flex=45>
-								<md-input-container class="md-block">
-									<label>H/H Cuantificación</label>
-									<input type="number"  data-ng-model="modelCtrl.model.qua_hours_man" required step="0.01"
-										data-ng-change="modelCtrl.recalculateCapacity()" min="0" max="999">
-								</md-input-container>	
-							</div>
-						</div>
-					</div>
-		  		</div>
-		  	</div>
-		  	<div layout="column" layout-padding>
-				<div flex>
-					<md-input-container class="md-block">
+				<div layout="row">
+					<md-input-container class="md-block text-area-static-height" flex=50>
+				        <label>Metodolog&#237;a de Validaci&#243;n</label>
+			          	<textarea required data-ng-model="modelCtrl.model.met_validation"
+			          			  md-maxlength="250" minlength=5 rows="4" md-select-on-focus></textarea>
+			        </md-input-container>
+					<md-input-container class="md-block text-area-static-height" flex=50>
 				        <label>Comentarios</label>
 			          	<textarea required data-ng-model="modelCtrl.model.comment"
 			          			  md-maxlength="250" minlength=5 rows="3" md-select-on-focus></textarea>
 			        </md-input-container>
+
 				</div>
-				<div layout="column">
-					<div flex>
-						<p><b>Resumen</b></p>	
-						<span data-ng-show="!modelCtrl.model.firstBacktesting.month && !(modelCtrl.model.frecuency && modelCtrl.model.met_hours_man && modelCtrl.model.qua_hours_man)">Por favor, ingresa los datos solicitados con anterioridad.</span>
-						<span data-ng-show="modelCtrl.model.firstBacktesting.month">El próximo backtesting es el mes <b>{{modelCtrl.model.firstBacktesting.text}}</b> del año <b>{{modelCtrl.model.firstBacktesting.year}}</b>.</span>&#32;<span data-ng-show="modelCtrl.model.firstBacktesting.month && modelCtrl.model.frecuency">A partir de esta fecha, el backtesting se hará cada&#32;<b><ng-pluralize count="modelCtrl.model.frecuency" when="{'0': 'meses', 'one': '1 mes', 'other': '{} meses'}"></ng-pluralize></b>.</span>&#32;<span data-ng-show="modelCtrl.model.frecuency && modelCtrl.model.met_hours_man && modelCtrl.model.qua_hours_man">La capacidad total del área es <b>{{modelCtrl.model.cap_area}}</b> horas. La capacidad total de cuantificación es <b>{{modelCtrl.model.cap_qua}}</b> horas. La capacidad total es <b>{{modelCtrl.model.cap_total}}</b> horas.</span>
-					</div>
+				<div flex>
+					<p><b>Resumen</b></p>	
+					<span data-ng-show="modelCtrl.model.firstBacktesting">El próximo backtesting es <b>{{modelCtrl.model.firstBacktesting.date | date:'MM/yyyy'}}</b>.</span>&#32;<span data-ng-show="modelCtrl.model.frecuency">A partir de esta fecha, el backtesting se hará cada&#32;<b><ng-pluralize count="modelCtrl.model.frecuency" when="{'0': 'meses', 'one': '1 mes', 'other': '{} meses'}"></ng-pluralize></b>.</span>&#32;<span data-ng-show="modelCtrl.model.frecuency && modelCtrl.model.met_hours_man && modelCtrl.model.qua_hours_man">La capacidad total del área es <b>{{modelCtrl.model.cap_area}}</b> horas. La capacidad total de cuantificación es <b>{{modelCtrl.model.cap_qua}}</b> horas. La capacidad total es <b>{{modelCtrl.model.cap_total}}</b> horas.</span>
 				</div>
-		  	</div>
+  			</div>
+
+
 		</form>
 	</md-dialog-content>
 	<md-dialog-actions>
-		<md-button data-ng-click="modelCtrl.updateFrecuency()" class="md-primary" data-ng-disabled="frecuencyForm.$invalid || !modelCtrl.model.firstBacktesting">
+		<md-button data-ng-click="modelCtrl.updateFrecuency()" class="md-primary" data-ng-disabled="frecuencyForm.$invalid">
 			Guardar
 		</md-button>
 	</md-dialog-actions>

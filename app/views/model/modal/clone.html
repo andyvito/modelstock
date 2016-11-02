@@ -5,8 +5,8 @@
 	</div>
 	</md-toolbar>
   	<md-dialog-content layout="column" layout-padding>
-  		<form name="cloneForm">
-		  	<div layout="column" layout-align="space-around top" data-ng-show="vm.currentStep == 1">
+  		<form name="cloneForm" data-ng-show="vm.currentStep == 1">
+		  	<div layout="column" layout-align="space-around top">
 				<p>Se va a realizar una copia exacta del modelo con código <b>{{vm.model.code}}</b> y nombre <b>{{vm.model.name}}</b>.</p>
 				<p>Para continuar, por favor, ingrese el nuevo nombre del modelo.</p>
 		   		<md-input-container class="md-block">
@@ -18,6 +18,25 @@
 			        </div>
 		    	</md-input-container>
 		  	</div>
+		  	<p>Por favor indica la fecha de creación y el autor del modelo</p>
+			<div layout="row">
+				<md-input-container class="md-block" flex=50>
+		        	<label>Fecha</label>
+		          	<textarea required data-ng-model="vm.model.date" md-maxlength="300" rows="4" md-select-on-focus></textarea>
+				  </input>
+		          	<div ng-messages="stepOneForm.description.$error">
+				    	<div ng-message="required">La fecha inicial del modelo es necesario</div>
+				    </div>
+		        </md-input-container>
+		        <md-input-container class="md-block" flex=50>
+		        	<label>Autor</label>
+		          	<textarea required data-ng-model="vm.model.author" md-maxlength="300" rows="4" md-select-on-focus></textarea>
+		          	<div ng-messages="stepOneForm.description.$error">
+				    	<div ng-message="required">El autor incial del modelo es necesario</div>
+				    </div>
+		        </md-input-container>
+			</div>
+
 		</form>
 	  	<div layout="column" data-ng-show="vm.currentStep == 2">
 	  		<p>Se ha creado el modelo <b>{{vm.modelCloned.name}}</b> satisfactoriamente a partir del modelo <b>{{vm.model.name}}</b></p>

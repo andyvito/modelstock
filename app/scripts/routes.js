@@ -18,7 +18,9 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'views/dashboard.html'
+                templateUrl: 'views/models.html',
+                controller: 'ModelsCtrl',
+                controllerAs: 'modelsCtrl'
             })
             .state('models', {
                 url: '/models',
