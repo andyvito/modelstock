@@ -1,0 +1,30 @@
+<md-dialog style="width:750px;">
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+	  <h2>Crear un riesgo nuevo</h2>
+	</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<form name="riskForm">
+			<p>Por favor, ingrese a continuación ĺos datos del nuevo riesgo.</p>
+			<div layout="row">
+			    <md-input-container class="md-block" flex=30>
+		        	<label>C&#243;digo</label>
+		        	<input md-maxlength="20" required data-ng-model="vm.risk.code" >
+		      	</md-input-container>
+			    <md-input-container class="md-block" flex=70>
+		        	<label>Nombre</label>
+		        	<input md-maxlength="100" required data-ng-model="vm.risk.name">
+		    	</md-input-container>
+		    </div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button data-ng-click="vm.closeDialog()" class="md-primary">
+			Cerrar 
+		</md-button>	
+		<md-button data-ng-click="vm.createRisk()" class="md-primary" data-ng-disabled="riskForm.$invalid">
+			Crear
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

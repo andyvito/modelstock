@@ -13,7 +13,7 @@ angular.module('modelsstockApp')
 
     this.saveNewArea = function(newArea){
     	   return ApiService.saveNewArea(newArea);
-        };
+      };
 
     this.updateArea = function(updateArea){
     		return ApiService.updateAreaByRisk(updateArea);
@@ -21,6 +21,10 @@ angular.module('modelsstockApp')
 
     this.deleteAreaByRisk = function(riskid, areaid){
           return ApiService.deleteAreaByRisk(riskid, areaid);
-        };
+      };
+
+    this.canRemoveArea = function(riskid, areaid){
+        return ApiService.canRemoveArea(riskid, areaid);    
+      };
 
   });

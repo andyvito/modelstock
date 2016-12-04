@@ -1,0 +1,23 @@
+<md-dialog style="width:750px;">
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+	  <h2>Modelo Transferido</h2>
+	</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+		<div layout="column">
+	  		<p>Se ha transferido el modelo a un nuevo riesgo o a una nueva área.</p>
+	  		<p>Modelo Anterior:<b>{{vm.modelOld.code}}-{{vm.modelOld.name}}</b> </p>
+	  		<p>Modelo Nuevo: <b>{{vm.modelTransfer.code}}-{{vm.modelTransfer.name}}</b> </p>
+	  	</div>
+
+	</md-dialog-content>
+	<md-dialog-actions>
+	  	<md-button data-ng-click="vm.goToModels()" class="md-primary">
+			Regresar a modelos
+		</md-button>
+	  	<md-button data-ng-click="vm.goToModelTransfer()" class="md-primary">
+			Ir al detalle del modelo clonado
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

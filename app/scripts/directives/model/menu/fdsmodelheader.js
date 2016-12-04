@@ -14,8 +14,13 @@ angular.module('modelsstockApp')
       link: function postLink(scope, element, attrs) {
         //element.text('this is the model/menu/fdsModelHeader directive');
       },
-      controller: function($scope,$rootScope,$uibModal){
+      controller: function($scope,$rootScope){
       		$scope.editMode = false;
+
+
+      		$scope.$on('modelUpdateEvent', function(){
+		    	$scope.editMode = false;
+      		});
 
 
       	    $scope.clickEdit = function(){
@@ -29,23 +34,14 @@ angular.module('modelsstockApp')
 		    };
 
 		    $scope.clickSave = function(){
-		    	$scope.editMode = false;
 		    	$rootScope.$broadcast('btnSaveModelClickEvent');
 		    };
 
 
-
 		    $scope.openCloneModal = function($event, item) {
-		        if ($event.stopPropagation) $event.stopPropagation();
-		        if ($event.preventDefault) $event.preventDefault();
-		        var modalInstance = $uibModal.open({
-		          animation: true,
-		          controller: 'ModelModalCloneCtrl',
-		          templateUrl: 'views/model/modal/clone.html',
-		          resolve: {
-		            
-		          }
-		    })};
+			  $scope.editMode = false;
+		      $rootScope.$broadcast('btnCloneModelClickEvent');  
+		    };
       }
     };
 

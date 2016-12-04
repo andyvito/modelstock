@@ -8,102 +8,126 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('AreaCtrl', ['$scope','$location', '$anchorScroll','$controller','$uibModal','areaService',
-  		'modelsData', 'areasData','risksData',
-  		function ($scope,$location, $anchorScroll,$controller,$uibModal,areaService,modelsData,areasData,risksData) {
+  .controller('AreaCtrl', ['$scope','$location', '$anchorScroll','$controller','$uibModal','$mdDialog','$mdToast',
+  		'areaService','modelsData', 'areasData','risksData',
+  		function ($scope,$location, $anchorScroll,$controller,$uibModal,$mdDialog,$mdToast,areaService,modelsData,areasData,risksData) {
 	
-	var self = this;
+	var vm = this;
 
-  	this.toggleForm = function(isSelectedRisk) {
-  		if (isSelectedRisk != null){
-  			self.showform = !self.showform;	
+    vm.createArea = function(risk){
+     	if (risk != null){
+
+             $mdDialog.show({
+                controller: 'ModelsAreaDialogCtrl',
+                templateUrl: 'views/models/areadialog.html',
+                controllerAs: 'vm',
+                //bindToController: true,
+                //parent: angular.element(document.body),
+                //targetEvent: evt,
+                clickOutsideToClose:false,
+                focusOnOpen: true,
+                locals:{
+                	risk:risk
+                }
+              })
+              .then(function(area) {                
+                if (area == null) return;	
+                  vm.areas.push(area);
+		              areasData.setAreas(vm.areas);
+                  $mdToast.show(
+                      $mdToast.simple()
+                              .textContent('La nueva área se ha registrado satisfactoriamente.')                       
+                              .hideDelay(3000)
+                              .position('top left')
+                  );   
+                
+              });
+
   		}
-     };
+     }
 
-	this.saveArea = function(riskid) {
-		if(!self.form) return;
 
-		self.form.riskid = riskid;
-		areaService.saveNewArea(self.form).then(function(result){
-		        self.areas.push(result.data.new_area);
-		        areasData.setAreas(self.areas)
-		        $location.hash(result.data.new_area.id);
-		        $anchorScroll();
-		      });   
 
-		self.form.name = '';
-		self.form.lead = '';
-		self.showform = false;
-	};
-
-	this.cancelForm = function() {
-		if(self.form) {
-		   self.form.name = '';
-		   self.form.lead = '';
-		}
-		self.showform = false;
-	};
-
+	
 	this.updateArea = function(riskid, areaUpdate){
 		areaUpdate.riskid = riskid;
         areaService.updateArea(areaUpdate).then(function(result){
+                $mdToast.show(
+                      $mdToast.simple()
+                              .textContent('Se ha actualizado el área satisfactoriamente.')
+                              .hideDelay(3000)
+                              .position('top left')
+                  );  
             
-          });
+        },function(error){
+                $mdToast.show(
+                      $mdToast.simple()
+                              .textContent('Se ha presentado un error actualizado el área. Por favor, verifique e intente nuevamente.')
+                              .hideDelay(3000)
+                              .position('top left')
+                  );  
+        });
 	};
 
+
 	this.selectArea = function(area){
-        self.parentRisk = risksData.getCurrentRisk();
-        if (self.currentArea == null || self.currentArea.id != area.id){
-              self.currentArea = area;
+        vm.parentRisk = risksData.getCurrentRisk();
+        if (vm.currentArea == null || vm.currentArea.id != area.id){
+              vm.currentArea = area;
               areasData.setCurrentArea(area);
-              modelsData.setFilterModelsByRiskAndArea(self.parentRisk.id, self.currentArea.id);
+              modelsData.setFilterModelsByRiskAndArea(vm.parentRisk.id, vm.currentArea.id);
           }else{
-            self.currentArea = null;
+            vm.currentArea = null;
             areasData.setCurrentArea(null);
-            modelsData.setFilterModelsByRiskAndArea(self.parentRisk.id, null);
+            modelsData.setFilterModelsByRiskAndArea(vm.parentRisk.id, null);
           }   
 	};
 
 	this.removeArea = function(index,$event) {
 		if ($event.stopPropagation) $event.stopPropagation();
         if ($event.preventDefault) $event.preventDefault();
-		var modalInstance = $uibModal.open({
-		  animation: true,
-		  controller: 'AreaModelMontrollerCtrl',
-		  templateUrl: 'views/components/types/modalremovearea.html',
-		  resolve: {
-		    numberModels: function() {
-		      return 'XXXXXXX';
-		    },
-		    nameArea: function(){
-		      return self.areas[index].name;
-		    }
-		  }
-		});
 
-		modalInstance.result.then(function () {
-		    self.selectedAreaId = self.areas[index].id;
-		    areaService.deleteAreaByRisk(self.parentRisk.id, self.selectedAreaId).then(function(result){
-		      self.areas.splice(index, 1);
-		      areasData.setAreas(self.areas)
-		    });   
-		}, function () {
-		  //TODO: what makes when a user cancel modal?
-		});
+
+        $mdDialog.show({
+            controller: 'AreaModelControllerCtrl',
+            templateUrl: 'views/components/areas/modalremovearea.html',
+            controllerAs: 'vm',
+            //bindToController: true,
+            //parent: angular.element(document.body),
+            //targetEvent: evt,
+            focusOnOpen: true,
+            locals:{
+              risk: vm.parentRisk, 
+              areaid: vm.currentArea.id
+            }
+          })
+          .then(function(area) {
+            if (area == null) return;
+
+            vm.areas.splice(index, 1);
+		      
+            $mdToast.show(
+                $mdToast.simple()
+                        .textContent('El área se ha eliminado satisfactoriamente.')                       
+                        .hideDelay(3000)
+                        .position('top left')
+            );   
+            
+        });
 	};
 
 
 	$scope.$watch(function(){
 		return areasData.areas;
 	},function(newValue,oldValue){
-	    self.areas = newValue;
+	    vm.areas = newValue;
 	});
 
 
     $scope.$watch(function () { 
        return areasData.currentArea;
     }, function(newValue,oldValue){
-    	self.currentArea = newValue;
+    	vm.currentArea = newValue;
     });
 
 

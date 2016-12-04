@@ -18,9 +18,21 @@ angular.module('modelsstockApp')
     		return ApiService.getModelById(modelId);
     	};
 
-    this.saveModel = function(model){
-    	return ApiService.saveModel(model);
+    this.updateModel = function(model){
+    	return ApiService.updateModel(model);
     };
 
+    this.createModel = function(model){
+      return ApiService.createModel(model);  
+    };
+
+
+    this.updateFrecuency = function(model){
+        return ApiService.updateFrecuency(model);
+    };
     
+    this.cloneModel = function(model){
+        return ApiService.cloneModel(model);
+    };
+
   });

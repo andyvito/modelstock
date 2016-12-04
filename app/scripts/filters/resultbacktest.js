@@ -11,6 +11,7 @@
 angular.module('modelsstockApp')
   .filter('resultBacktest', function () {
     return function (input) {
-      return input ? 'Cumplió' : 'No cumplió';
+    	if (input == null) return '-';
+      	return input ? 'Cumplió' : 'No cumplió';
   	}
   });

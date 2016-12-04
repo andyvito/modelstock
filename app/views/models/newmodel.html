@@ -1,0 +1,201 @@
+<md-dialog style="width:700px;">
+		<md-toolbar>
+		<div class="md-toolbar-tools">
+		  <h2>Nuevo Modelo<span data-ng-if="modelCtrl.model.name != null">: {{modelCtrl.model.name}}</span></h2>
+		</div>
+		</md-toolbar>
+	  	<md-dialog-content layout="column" layout-padding  >
+		  	<div layout="column" data-ng-show="currentStep == 1">
+		  		<div layout=row layout-align="center center">
+		  			<h3>1. Datos básicos</h3>
+		  		</div>
+		  		<div layout="column">
+	  	  			<form name="stepOneForm">
+						<div layout="row">
+							<md-input-container class="md-block" flex>
+					        	<label>Nombre</label>
+					        	<input md-maxlength="100" required name="name"
+					        		data-ng-model="modelCtrl.model.name">
+					        	<div ng-messages="stepOneForm.name.$error">
+						          <div ng-message="required">El nombre del modelo es necesario</div>
+						        </div>
+					    	</md-input-container>
+						</div>
+
+						<div layout="row">
+							<md-input-container class="md-block" flex="40">
+					            <label>Riesgo Asociado</label>
+					            <md-select required name="risk" data-ng-model="modelCtrl.model.risk" data-ng-change="modelCtrl.changeRisk()">
+					              <md-option data-ng-repeat="risk in modelCtrl.allRisks" data-ng-value="{{risk}}">
+					                {{risk.name}}
+					              </md-option>
+					            </md-select>
+					        </md-input-container>
+					        <md-input-container class="md-block" flex="30">
+					            <label>&#193;rea</label>
+					            <md-select required name="area" data-ng-model="modelCtrl.model.area" data-ng-change="modelCtrl.changeArea()">
+					              <md-option ng-repeat="area in modelCtrl.allAreasByRisk" data-ng-value="{{area}}">
+					                {{area.name}}
+					              </md-option>
+					            </md-select>
+					        </md-input-container>
+					        <md-autocomplete required 
+							            md-input-minlength="2"
+							            md-input-maxlength="30"
+							            md-no-cache="modelCtrl.noCache"
+							            md-selected-item="modelCtrl.model.len.value"
+							            md-search-text="modelCtrl.model.len.display"
+							            md-items="item in modelCtrl.queryLenSearch(modelCtrl.model.len.display)"
+							            md-item-text="item.display"
+							            md-floating-label="L&#237;nea de Negocio"
+							            flex="30">
+							          	<md-item-template>
+								            <span md-highlight-text="modelCtrl.searchLenText">{{item.display}}</span>
+								          </md-item-template>
+							        </md-autocomplete>
+
+						</div>
+						<md-input-container class="md-block">
+				        	<label>Descripci&#243;n</label>
+				          	<textarea required data-ng-model="modelCtrl.model.description" name="description"
+				          			  md-maxlength="550" rows="5" md-select-on-focus></textarea>
+				          	<div ng-messages="stepOneForm.description.$error">
+						    	<div ng-message="required">La descripción del modelo es necesario</div>
+						    </div>
+				        </md-input-container>
+		  			</form>
+		  		</div>
+		  	</div>
+		  	<div layout=column data-ng-show="currentStep == 2">
+		  		<div layout=row layout-align="center center">
+		  			<h3>2. Información adicional</h3>
+		  		</div>
+
+		  		<div layout="column">
+		  			<form name="stepTwoForm">
+		  				<div layout="row">
+		  					<form  data-ng-submit="$event.preventDefault()">
+						        <md-autocomplete  md-select-on-focus flex="50" required
+						            md-input-minlength="2"
+						            md-input-maxlength="30"
+						            md-no-cache="modelCtrl.noCache"
+						            md-selected-item="modelCtrl.model.type.value"
+						            md-search-text="modelCtrl.model.type.display"
+						            md-items="item in modelCtrl.queryTypeSearch(modelCtrl.model.type.display)"
+						            md-item-text="item.display"
+						            md-floating-label="Categor&#237;a">
+						          	<md-item-template>
+							            <span md-highlight-text="modelCtrl.searchTypeText">{{item.display}}</span>
+							          </md-item-template>
+						        </md-autocomplete>
+					        </form>
+
+							<form flex="50" data-ng-submit="$event.preventDefault()">
+						        <md-autocomplete  required
+						            md-input-minlength="2"
+						            md-input-maxlength="30"
+						            md-no-cache="modelCtrl.noCache"
+						            md-selected-item="modelCtrl.model.kind.value"
+						            md-search-text="modelCtrl.model.kind.display"
+						            md-items="item in modelCtrl.queryKindSearch(modelCtrl.model.kind.display)"
+						            md-item-text="item.display"
+						            md-floating-label="Clase">
+						          	<md-item-template>
+							            <span md-highlight-text="modelCtrl.searchKindText">{{item.display}}</span>
+							          </md-item-template>
+						        </md-autocomplete>
+					        </form>
+					    </div>
+					    <div layout="row">
+					    	<md-input-container class="md-block" flex="50">
+					            <label>Hoja de Vida</label>
+					            <md-select required data-ng-model="modelCtrl.model.curriculum">
+					              <md-option data-ng-repeat="opt in modelCtrl.yesNovalues" value="{{opt.v}}">
+					                {{opt.n}}
+					              </md-option>
+					            </md-select>
+					        </md-input-container>
+					        <md-input-container class="md-block" flex="50">
+					            <label>¿Participa Cuantificaci&#243;n?</label>
+					            <md-select required data-ng-model="modelCtrl.model.is_qua">
+					              <md-option data-ng-repeat="opt in modelCtrl.yesNovalues" value="{{opt.v}}">
+					                {{opt.n}}
+					              </md-option>
+					            </md-select>
+					        </md-input-container>
+						</div>
+						<md-input-container class="md-block">
+				        	<label>Documentaci&#243;n</label>
+				        	<input required md-maxlength="255" data-ng-model="modelCtrl.model.file_doc">
+				        	<div ng-messages="stepOneForm.description.$error">
+						    	<div ng-message="required">La documentación del modelo es necesario</div>
+						    </div>
+				    	</md-input-container>
+		  			</div>			  		
+		  		</div>
+			  	<div layout="column" data-ng-show="currentStep == 3">
+			  		<div layout=row layout-align="center center">
+			  			<h3>3. Comentarios y Notas.</h3>
+			  		</div>
+			  		<div layout="column">
+						<md-input-container class="md-block" flex=50>
+				        	<label>Comentarios</label>
+				          	<textarea data-ng-model="modelCtrl.model.comments" md-maxlength="300" rows="5" md-select-on-focus></textarea>
+				        </md-input-container>
+				        <md-input-container class="md-block" flex=50>
+				        	<label>Más información</label>
+				          	<textarea data-ng-model="modelCtrl.model.more_info" md-maxlength="300" rows="5" md-select-on-focus></textarea>
+				        </md-input-container>
+					</div>
+			  	</div>
+
+		  	<div layout="column" data-ng-show="currentStep == 4">
+		  		<div layout=row layout-align="center center">
+		  			<h3>4. Verificar información.</h3>
+		  		</div>
+		  		<div layout="column" class="verify-info">
+		  			<p><b>Nombre de modelo</b>: {{ modelCtrl.model.name }} </p>
+		  			<p><b>Riesgo asociado</b>: {{ modelCtrl.model.risk.name }} </p>
+		  			<p><b>Área</b>: {{ modelCtrl.model.area.name }} </p>
+		  			<p><b>Línea de negocio</b>: {{ modelCtrl.model.len.display }} </p>
+		  			<p><span class="long-data"><b>Descripción</b>: {{ modelCtrl.model.description | limitTo: 150 }}<span data-ng-if="modelCtrl.model.description.length > 150">...</span></span></p>
+		  			<p><b>Tipo</b>: {{ modelCtrl.model.type.display }} </p>
+		  			<p><b>Clase</b>: {{ modelCtrl.model.kind.display }} </p>
+		  			<p><b>Hoja de vida</b>: {{ modelCtrl.model.curriculum == true ? 'Sí' : 'No'}} </p>
+		  			<p><b>Participa cuantificación</b>: {{ modelCtrl.model.is_qua == true ? 'Sí' : 'No'}} </p>
+		  			<p><span class="long-data"><b>Documentación</b>: {{ modelCtrl.model.file_doc | limitTo: 80 }}<span data-ng-if="modelCtrl.model.file_doc.length > 80">...</span></span></p>
+		  			<p><span class="long-data"><b>Comentarios</b>: {{ modelCtrl.model.comments | limitTo: 150 }}<span data-ng-if="modelCtrl.model.comments.length > 150">...</span></span></p>
+		  			<p><span class="long-data"><b>Más información</b>: {{ modelCtrl.model.more_info | limitTo: 150 }}<span data-ng-if="modelCtrl.model.more_info.length > 150">...</span></span></p>
+				</div>
+		  	</div>
+		</md-dialog-content>
+		<md-dialog-actions data-ng-show="currentStep==1">
+			<md-button data-ng-click="modelCtrl.setNextStep(2)" data-ng-disabled="stepOneForm.$invalid" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==2" >
+			<md-button data-ng-click="modelCtrl.setPreviousStep(1)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="modelCtrl.setNextStep(3)" data-ng-disabled="stepTwoForm.$invalid" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==3">
+			<md-button data-ng-click="modelCtrl.setPreviousStep(2)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="modelCtrl.setNextStep(4)" data-ng-disabled="stepThreeForm.$invalid" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==4">
+			<md-button data-ng-click="modelCtrl.setPreviousStep(3)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="modelCtrl.createModel()" class="md-primary">
+				Guardar
+			</md-button>
+		</md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,73 @@
+<md-dialog>
+  	<form>
+		<md-toolbar>
+		<div class="md-toolbar-tools">
+		  <h2>Validar Backtesting: {{ model.name }}</h2>
+		  <span flex></span>
+		</div>
+		</md-toolbar>
+	  	<md-dialog-content layout="column" >
+		  	<div layout="column" layout-padding  data-ng-show="currentStep == 1">
+		  		<div layout=row layout-align="center center">
+		  			<h3>1. Validación de resultado</h3>
+		  		</div>
+		  		<div flex>
+		  			<p>Por favor, indica cómo fue el resultado del backtesting.</p>
+		  			<div layout=row layout-padding layout-align="center center">
+						<span>¿Cumplió resultado del backtesting?</span>
+						<md-radio-group data-ng-model="backtesting.result" layout="row" layout-align="center center">
+							<md-radio-button value="1" class="md-primary">Sí</md-radio-button>
+						    <md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+		  	</div>
+			<div layout="column" layout-padding  data-ng-show="currentStep == 2">
+		  		<div layout="row" layout-align="center center">
+					<h3>2. Agregar información adicional.</h3>
+		  		</div>
+		  		<div layout="column">
+		  			<p>Incluya algún comentario adicional sobre el resultado ó la entrega del backtesting</p>
+		  			<div layout="row">
+						<md-input-container class="md-block" flex="100">
+				        	<label>Comentarios</label>
+				          	<textarea data-ng-model="backtesting.comments" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+				        </md-input-container>
+					</div>
+				</div>
+		  	</div>
+			<div layout="column" layout-padding  data-ng-show="currentStep == 3">
+		  		<div layout=row layout-align="center center">
+					<h3>3. Verificar información.</h3>
+		  		</div>
+		  		<div flex>
+		  			<p><b>Nombre de modelo</b>: {{model.name}} </p>
+		  			<p><b>Cumplió del backtesting</b>: {{ backtesting.result == true ? 'Sí' : 'No'}} </p>
+		  			<p><b>Comentarios</b>: {{backtesting.comments}} </p>
+				</div>
+		  	</div>
+
+		</md-dialog-content>
+		<md-dialog-actions data-ng-show="currentStep==1">
+			<md-button data-ng-click="setNextStep(2)" data-ng-disabled="backtesting.result == null" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==2" >
+			<md-button data-ng-click="setPreviousStep(1)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="setNextStep(3)" class="md-primary">
+				Siguiente
+			</md-button>
+		</md-dialog-actions>
+		<md-dialog-actions data-ng-show="currentStep==3">
+			<md-button data-ng-click="setPreviousStep(2)" >
+		      	Anterior
+		    </md-button>	
+			<md-button data-ng-click="saveBacktesting()" class="md-primary">
+				Guardar
+			</md-button>
+		</md-dialog-actions>
+  	</form>
+</md-dialog>
