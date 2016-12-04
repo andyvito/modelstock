@@ -28,7 +28,7 @@ angular.module('modelsstockApp')
     $scope.saveBacktesting = function(){
       backtestService.saveBacktesting($scope.backtesting).then(function(result){
             $mdDialog.hide(result.data.backtest);
-          }, function(){
+          }, function(error){
             $mdDialog.hide();
             $mdToast.show(
                       $mdToast.simple()

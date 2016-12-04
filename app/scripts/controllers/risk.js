@@ -8,40 +8,50 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','riskService', 
+  .controller('RiskCtrl', ['$scope', '$location', '$anchorScroll', '$uibModal','$mdDialog','$mdToast', 'riskService', 
     'modelsData', 'areasData', 'risksData', '$interval',
-    function ($scope, $location, $anchorScroll, $uibModal, riskService, modelsData, areasData,risksData,$interval) {
-      var self = this;
+    function ($scope, $location, $anchorScroll, $uibModal, $mdDialog, $mdToast, riskService, modelsData, areasData,risksData,$interval) {
+      var vm = this;
 
     
-      this.toggleForm = function() {
-            self.showform = !self.showform;
+      vm.createRisk = function() {
+             $mdDialog.show({
+                controller: 'ModelsRisksDialogCtrl',
+                templateUrl: 'views/models/risksdialog.html',
+                controllerAs: 'vm',
+                //bindToController: true,
+                //parent: angular.element(document.body),
+                //targetEvent: evt,
+                clickOutsideToClose:false,
+                focusOnOpen: true
+              })
+              .then(function(risk) {
+                
+                if (risk == null) return;
+
+                vm.listOfRisks.push(risk);
+                $mdToast.show(
+                    $mdToast.simple()
+                            .textContent('El nuevo riesgo se ha registrado satisfactoriamente.')                       
+                            .hideDelay(3000)
+                            .position('top left')
+                );   
+                
+              });
          };
 
-      this.saveRisk = function() {
-            if(!self.form) return;
-            
-            riskService.saveNewRisk(self.form).then(function(result){
-                    self.listOfRisks.push(result.data.risk);
-                    $location.hash(result.data.risk.id);
-                    $anchorScroll();
-                  });   
-      
-            self.form.name = '';
-            self.showform = false;
-        };
 
-      this.selectRisk = function(risk){
-          if (self.currentRisk == null || self.currentRisk.id != risk.id){
-              self.currentRisk = risk;
+      vm.selectRisk = function(risk){
+          if (vm.currentRisk == null || vm.currentRisk.id != risk.id){
+              vm.currentRisk = risk;
               risksData.setCurrentRisk(risk);
-              riskService.getAllAreasByRisks(self.currentRisk.id).then(function(result){
+              riskService.getAllAreasByRisks(vm.currentRisk.id).then(function(result){
                 areasData.setAreas(result.data.areas);
-                self.numberAreas = result.data.areas.length;
+                vm.numberAreas = result.data.areas.length;
               }); 
-              modelsData.setFilterModelsByRiskAndArea(self.currentRisk.id, null);
+              modelsData.setFilterModelsByRiskAndArea(vm.currentRisk.id, null);
           }else{
-            self.currentRisk = null;
+            vm.currentRisk = null;
             risksData.setCurrentRisk(null);
             modelsData.setFilterModelsByRiskAndArea(null, null);
           }       
@@ -51,55 +61,51 @@ angular.module('modelsstockApp')
       this.removeRisk = function(index,$event) {
         if ($event.stopPropagation) $event.stopPropagation();
         if ($event.preventDefault) $event.preventDefault();
-        var modalInstance = $uibModal.open({
-          animation: true,
-          controller: 'RiskModalControllerCtrl',
-          templateUrl: 'views/components/risks/modalremoverisk.html',
-          resolve: {
-            numberAreas: function() {
-              return self.numberAreas;
-            },
-            nameRisk: function(){
-              return self.currentRisk.name;
-            }
-          }
-        });
 
-        modalInstance.result.then(function () {
-            riskService.deleteRisk(self.currentRisk.id).then(function(result){
-              self.listOfRisks.splice(index, 1);
-              //TODO: Show a message fade confirm this action resolves correct?
-            });
-        }, function () {
-          //TODO: what makes when a user cancel modal?
-        });
+        $mdDialog.show({
+            controller: 'RiskModalControllerCtrl',
+            templateUrl: 'views/components/risks/modalremoverisk.html',
+            controllerAs: 'vm',
+            //bindToController: true,
+            //parent: angular.element(document.body),
+            //targetEvent: evt,
+            focusOnOpen: true,
+            locals:{
+              risk: vm.currentRisk
+            }
+          })
+          .then(function(risk) {
+            if (risk == null) return;
+
+            vm.listOfRisks.splice(index, 1);
+            
+            $mdToast.show(
+                $mdToast.simple()
+                        .textContent('El riesgo se ha eliminado satisfactoriamente.')                       
+                        .hideDelay(3000)
+                        .position('top left')
+            );   
+            
+          });
       };
 
 
       this.updateRisk = function (riskUpdate) {
         riskService.updateRisk(riskUpdate).then(function(result){
             //riskUpdate.editing = true; //TODO: what makes when the result is fine
-          });
+        });
       };
-
-
-      this.cancelForm = function() {
-            if(self.form) {
-               self.form.name = '';
-            }
-            self.showform = false;
-         };
 
       $scope.$watch(function(){
         return risksData.risks;
         },function(newValue,oldValue){
-            self.listOfRisks = newValue;
+            vm.listOfRisks = newValue;
       });
 
       $scope.$watch(function(){
         return risksData.currentRisk;
         },function(newValue,oldValue){
-            self.currentRisk = newValue;
+            vm.currentRisk = newValue;
       });
 
 

@@ -30,6 +30,12 @@ angular.module('modelsstockApp')
           return ApiService.updateRisk(riskUpdate);
         };
 
+    this.canRemoveRisk = function(risk){
+          return ApiService.canRemoveRisk(risk);
+        };
+
+
+
     /*this.getAllModelsByRisks = function(riskid){
           return ApiService.getAllModelsByRisks(riskid);
         };*/

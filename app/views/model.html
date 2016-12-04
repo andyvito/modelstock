@@ -1,5 +1,12 @@
-<div  layout="column"  ng-cloak class="contentModel" layout-fill>
-  <form name="modelForm">
+<div layout="column" data-ng-show="model.currentModel == null">
+	<p>El modelo solicitado no existe.</p>
+</div>
+
+<div  layout="column"  ng-cloak class="contentModel" layout-fill data-ng-show="model.currentModel != null">
+  <div data-ng-show="model.currentModel.name == null">
+  	<p>El código <b>{{model.currentModel.code}}</b> se encuentra disponible para el riesgo <b>{{model.currentModel.risk.name}}</b> y el área <b>{{model.currentModel.area.name}}</b>. Este código será asignado de forma automática por el sistema.</p>
+  </div>
+  <form name="modelForm" data-ng-show="model.currentModel.name != null">
   	<md-content flex layout-padding layout-fill>
 	    <div layout="row">
 		    <md-input-container class="md-block" flex=20>
@@ -138,7 +145,7 @@
 			      				<md-input-container class="md-block" flex=20>
 						            <label>Frecuencia</label>
 						            <md-select ng-model="model.currentModel.frecuency" disabled>
-						              <md-option ng-repeat="f in model.frecuency" value="{{f.v}}">
+						              <md-option ng-repeat="f in model.frecuency" data-ng-value="{{f.v}}">
 						                {{f.n}}
 						              </md-option>
 						            </md-select>
@@ -148,7 +155,8 @@
 						        	<input data-ng-model="model.currentModel.met_validation" disabled>
 						    	</md-input-container>
 						    	<div layout=row flex=10 layout-align="center start">
-									<md-button class="md-primary md-raised" data-ng-click="model.implementModel()">Implementar</md-button>
+									<md-button class="md-primary md-raised" data-ng-disabled="model.disabled"
+											data-ng-click="model.implementModel()">Implementar</md-button>
 								</div>
 							</div>
 							<div layout="row" class="md-padding" disabled>

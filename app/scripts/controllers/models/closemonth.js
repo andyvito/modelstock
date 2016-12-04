@@ -16,24 +16,27 @@ angular.module('modelsstockApp')
   	self.current_month = utilsData.getCurrentMonthName();
 
   	this.closeMonth = function(){
-  		console.log(self.result);
   		if (self.result == 1){
-			closeMonthService.closeMonth().then(function(result){
-				utilsData.setCurrentDate(result.data.date);
-        //utilsData.setCurrentYear(result.data.current_date[0].value);
-      	///utilsData.setCurrentMonth(result.data.current_date[1].value);
+     
+      closeMonthService.closeMonth().then(function(result){
+				  utilsData.setCurrentDate(result.data.date);
+          $mdDialog.hide();
+          $rootScope.$broadcast('updateCurrentDateEvent');  
 
-
-  			$mdDialog.hide();
-        $rootScope.$broadcast('updateCurrentDateEvent');  
-
-				$mdToast.show(
-                  $mdToast.simple()
+  				$mdToast.show(
+                    $mdToast.simple()
                           .textContent('El mes ha sido cerrado satisfactoriamente.')                       
                           .hideDelay(3000)
                           .position('top left')
                   );		
-			});
+			},function(error){
+            $mdToast.show(
+                    $mdToast.simple()
+                          .textContent('Hubo un problema cerrando el mes. Por favor, intente verifique e intente más tarde.')                       
+                          .hideDelay(3000)
+                          .position('top left')
+                  );  
+      });
 		}
   		else{
   			$mdDialog.hide();

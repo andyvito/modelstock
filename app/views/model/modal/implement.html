@@ -27,9 +27,9 @@
 				<div layout="row">
 					<md-input-container class="md-block" flex=40>
 			            <label>Frecuencia Validación del Modelo</label>
-			            <md-select required ng-model="modelCtrl.model.frecuency" 
+			            <md-select required data-ng-model="modelCtrl.model.frecuency" 
 			            		data-ng-change="modelCtrl.recalculateCapacity()">
-			              <md-option ng-repeat="f in modelCtrl.frecuency" value="{{f.v}}">
+			              <md-option ng-repeat="f in modelCtrl.frecuency" data-ng-value="{{f.v}}">
 			                {{f.n}}
 			              </md-option>
 			            </md-select>

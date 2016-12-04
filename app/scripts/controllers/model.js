@@ -36,15 +36,42 @@ angular.module('modelsstockApp')
               return;
       }else{
         modelService.updateModel(self.currentModel).then(function(result){
+          var messageToast = '';
           self.disabled = true;  
           $rootScope.$broadcast('modelUpdateEvent'); 
+          
+          if (result.data.modelTransfer){
 
-          $mdToast.show(
-                        $mdToast.simple()
-                                .textContent('El modelo '+ self.currentModel.name + ' ha sido actualizado con satisfaccion.')                       
-                                .hideDelay(3000)
-                                .position('top left')
-                      );
+
+             $mdDialog.show({
+                      controller: 'ModelModalChangeRiskCtrl',
+                      controllerAs: 'vm',
+                      templateUrl: 'views/model/modal/changerisk.html',
+                      bindToController: true,
+                      //parent: angular.element(document.body),
+                      //targetEvent: evt,
+                      //clickOutsideToClose:false,
+                      focusOnOpen: true,
+                      locals: {
+                        modelTransfer: result.data.modelTransfer,
+                        modelOld: angular.copy(self.currentModel)
+                      }
+                    });
+
+             self.currentModel.name = null;
+
+          }
+          else{
+            messageToast = 'El modelo '+ self.currentModel.name + ' ha sido actualizado con satisfaccion.';
+            $mdToast.show(
+                          $mdToast.simple()
+                                  .textContent(messageToast)
+                                  .hideDelay(3000)
+                                  .position('top left')
+                        );
+          }
+
+
         });
       }
     });
@@ -103,19 +130,18 @@ angular.module('modelsstockApp')
     
 
    	modelService.getModelById(modelId).then(function(result){
-   			  self.currentModel = result.data.model;
-          //Copy the model because the user could cancel edit action, so restore to initial model state
-          self.currentModelInitial = angular.copy(self.currentModel);
+          if (result.data.model){
+            self.currentModel = result.data.model;
+            //Copy the model because the user could cancel edit action, so restore to initial model state
+            self.currentModelInitial = angular.copy(self.currentModel);
+            riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
+              self.allAreasByRisk = result.data.areas;
+            }); 
 
-          console.log(self.currentModel);
-
-          riskService.getAllAreasByRisks(self.currentModel.risk.id).then(function(result){
-            self.allAreasByRisk = result.data.areas;
-          }); 
-
-          self.selectedTypeItem = self.currentModel.cat;
-          self.selectedKindItem = self.currentModel.kind;
-          self.selectedLenItem = self.currentModel.len;
+            self.selectedTypeItem = self.currentModel.cat;
+            self.selectedKindItem = self.currentModel.kind;
+            self.selectedLenItem = self.currentModel.len;
+          }
     });  
 
 

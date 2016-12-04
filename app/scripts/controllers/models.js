@@ -71,6 +71,13 @@ angular.module('modelsstockApp')
                   .then(function(newBacktest) {
                     if (newBacktest){
                       self.models = modelsData.updateBacktesting(newBacktest);
+
+                      $mdToast.show(
+                        $mdToast.simple()
+                                .textContent('El modelo '+ model.name + 'ha registrado el backtesting satisfactoriamente.')                       
+                                .hideDelay(3000)
+                                .position('top left')
+                      );   
                     }
                   });
             }
@@ -85,7 +92,7 @@ angular.module('modelsstockApp')
           reportsData.setIndicators(result.data);
         });
 
-
+        /*
         if (modelsData.getFilterModelsByRiskAndArea() == null){
           modelService.getAllModels().then(function(result){
               modelsData.setModels(result.data.models); 
@@ -93,7 +100,11 @@ angular.module('modelsstockApp')
         }
         else{
           self.models = modelsData.getFilterModelsByRiskAndArea();
-        }
+        }*/
+
+        modelService.getAllModels().then(function(result){
+            modelsData.setModels(result.data.models); 
+        });
 
 
 

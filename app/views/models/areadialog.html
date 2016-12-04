@@ -1,0 +1,35 @@
+<md-dialog style="width:750px;">
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+	  <h2>Crear una nueva área</h2>
+	</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<p>Se creará una nueva área para el riesgo asociado <b>{{vm.risk.name}}</b></p>
+  		<form name="areaForm">
+			<p>Por favor, ingrese a continuación ĺos datos de la nueva área.</p>
+			<div layout="row">
+			    <md-input-container class="md-block" flex=20>
+		        	<label>C&#243;digo</label>
+		        	<input md-maxlength="20" required data-ng-model="vm.area.code" >
+		      	</md-input-container>
+			    <md-input-container class="md-block" flex=40>
+		        	<label>Nombre</label>
+		        	<input md-maxlength="100" required data-ng-model="vm.area.name">
+		    	</md-input-container>
+		    	<md-input-container class="md-block" flex=40>
+		        	<label>Líder</label>
+		        	<input md-maxlength="100" required data-ng-model="vm.area.lead">
+		    	</md-input-container>
+		    </div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button data-ng-click="vm.closeDialog()" class="md-primary">
+			Cerrar 
+		</md-button>	
+		<md-button data-ng-click="vm.createArea()" class="md-primary" data-ng-disabled="areaForm.$invalid">
+			Crear
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

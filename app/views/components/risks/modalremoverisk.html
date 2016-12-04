@@ -1,14 +1,42 @@
-<div class="modal-header">
-    <h3 class="modal-title">Eliminar Riesgo Asociado</h3>
-</div>
-<div class="modal-body">
-    <p>¿Desea eliminar el riesgo asociado <b>{{ nameRisk }}</b>?</p>
-    <p>Al eliminar este riesgo asociado, se eliminarán todas las gerencias, es decir, 
-    	<b>{{ numberAreas }}</b> gerencias. </p>
-    <p><b>Nota: Esta acción no se puede deshacer.</b></p>
-    <p>No se puede eliminar este riesgo asociado debido a que tiene relación con <b>XXXXXXXXXX</b> modelos.</p>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-click="delete()">Eliminar</button>
-    <button class="btn btn-default" type="button" ng-click="cancel()">Cancelar</button>
-</div>
+<md-dialog>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+		  <h2>Eliminar Riesgo Asociado</h2>
+		</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<form name="removeRiskForm" data-ng-show="vm.currentRisk.delete == true">
+		  	<div layout="column" layout-padding>
+				<p>¿Desea eliminar el riesgo asociado <b>{{ vm.currentRisk.name }}</b>?</p>
+			    <p><b>Nota: Esta acción no se puede deshacer.</b></p>
+		  		<div flex>
+		  			<div layout=row layout-padding layout-align="center center">
+						<md-radio-group data-ng-model="vm.result" layout="row" layout-align="center center" required>
+							<md-radio-button value="1" class="md-primary">Sí</md-radio-button>
+						    <md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+		  	</div>
+		</form>
+		<div data-ng-show="vm.currentRisk.delete == false">
+			<p>No se puede eliminar el riesgo asociado <b>{{ vm.currentRisk.name }}</b> debido a que tiene <ng-pluralize count="vm.currentRisk.totalAreas" when="{'0': 'áreas', 'one': '1 área', 'other': '{} áreas'}"></ng-pluralize> y <ng-pluralize count="vm.currentRisk.totalModels" when="{'0': 'modelos.', 'one': '1 modelo.', 'other': '{} modelos.'}"></ng-pluralize> </p>
+			<div><p>Intente los siguientes pasos:</p>
+				<ol>
+					<li>transferir los modelos a otros riesgos asociados o áreas</li>
+					<li>eliminar las áreas pertenecientes a este riesgo.</li>
+				</ol>
+			</div>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button data-ng-click="vm.closeDialog()" class="md-primary">
+			<span data-ng-show="vm.currentRisk.delete == false">Aceptar</span>
+			<span data-ng-show="vm.currentRisk.delete == true">Cancelar</span>
+		</md-button>
+
+		<md-button data-ng-click="vm.delete()" class="md-primary" data-ng-disabled="removeRiskForm.$invalid" data-ng-show="vm.currentRisk.delete == true">
+			Eliminar
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,37 @@
+<md-dialog>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+		  <h2>Eliminar Área</h2>
+		</div>
+	</md-toolbar>
+  	<md-dialog-content layout="column" layout-padding>
+  		<form name="removeAreaForm" data-ng-show="vm.currentArea.delete == true">
+		  	<div layout="column" layout-padding>
+				<p>¿Desea eliminar el área <b>{{ vm.currentArea.name }}</b> del riesgo asociado <b>{{vm.risk.name}}</b>?</p>
+			    <p><b>Nota: Esta acción no se puede deshacer.</b></p>
+		  		<div flex>
+		  			<div layout=row layout-padding layout-align="center center">
+						<md-radio-group data-ng-model="vm.result" layout="row" layout-align="center center" required>
+							<md-radio-button value="1" class="md-primary">Sí</md-radio-button>
+						    <md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+		  	</div>
+		</form>
+		<div data-ng-show="vm.currentArea.delete == false">
+			<p>No se puede eliminar el área <b>{{ vm.currentArea.name }}</b> del riesgo asociado <b>{{vm.risk.name}}</b> debido a que tiene <ng-pluralize count="vm.currentArea.totalModels" when="{'0': 'modelos.', 'one': '1 modelo.', 'other': '{} modelos.'}"></ng-pluralize> </p>
+			<div><p>Intente transferir los modelos a otros riesgos asociados o áreas.</p></div>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button data-ng-click="vm.closeDialog()" class="md-primary">
+			<span data-ng-show="vm.currentArea.delete == false">Aceptar</span>
+			<span data-ng-show="vm.currentArea.delete == true">Cancelar</span>
+		</md-button>
+
+		<md-button data-ng-click="vm.delete()" class="md-primary" data-ng-disabled="removeAreaForm.$invalid" data-ng-show="vm.currentArea.delete == true">
+			Eliminar
+		</md-button>
+	</md-dialog-actions>
+</md-dialog>

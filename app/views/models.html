@@ -1,157 +1,128 @@
-<div layout="row">
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon blue pull-left">
-          <span><b>M</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalModels}}</div>
-        <div class="comment">Total Modelos</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon blue pull-left">
-          <span><b>I</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalInactive}}&#32;(<span>{{modelsCtrl.indicators.totalInactivePercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">Inactivos</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon blue pull-left">
-          <span><b>B</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalBacktest}}&#32;(<span>{{modelsCtrl.indicators.totalBacktestPercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">Backtesting</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon red pull-left">
-          <span><b>N</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalUnvalidated}}&#32;(<span>{{modelsCtrl.indicators.totalUnvalidatedPercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">No Validados</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon blue pull-left">
-          <span><b>V</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidated}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedPercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">Validados</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon green pull-left">
-          <span><b>C</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidatedFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedFullfilPercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">Cumple</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-  <div flex="15">
-    <rd-widget>
-      <rd-widget-body>
-        <div class="header-icon red pull-left">
-          <span><b>X</b></span>
-        </div>
-        <div class="title">{{modelsCtrl.indicators.totalValidatedNoFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedNoFullfilPercentage * 100| number :1 }}%</span>)</div>
-        <div class="comment">No Cumple</div>
-      </rd-widget-body>
-    </rd-widget>
-  </div>
-</div>
 
-<div layout="row" layout-fill>
-  <div  layout="column" flex=20 class="contentModel" layout-fill  data-ng-controller="RiskCtrl as risks" >
-    <md-content flex layout-fill>
-        <rd-widget>
-          <rd-widget-header icon="fa-bolt" title="Riesgos Asociados">
-            <a data-ng-click="risks.toggleForm()" class="btn btn-link">Agregar</a>
-          </rd-widget-header>
 
-          <form role="form" data-ng-show="risks.showform" class="form"> 
-            <div class="form-group">
-              <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Riesgo Asociado"
-                         data-ng-model="risks.form.name"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary" data-ng-click="risks.saveRisk()">Guardar</button>
-              <button class="btn btn-default" data-ng-click="risks.cancelForm()">Cancelar</button>
-            </div>
-            <hr />
-          </form>
-          <div layout="column" layout-align="center center">
-            <div layout="row" layout-fill layout-align="center center" data-ng-hide="risks.listOfRisks.length > 0">
-              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
-            <div layout="column" layout-fill class="table-responsive" data-ng-show="risks.listOfRisks.length > 0">
-              <table class="table table-hover">
-                <thead>
-                  <tr><th>Riesgo Asociado</th><th></th></tr>
-                </thead>
-                <tbody>
-                      <tr id="{{r.id}}" data-ng-repeat="r in risks.listOfRisks"
-                          data-ng-class="{riskSelectedItem: r.id == risks.currentRisk.id}">
-                        <td data-ng-click="risks.selectRisk(r)">
-                              <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
-                        </td>
-                        <td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index,$event)" data-ng-show="r.id == risks.currentRisk.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
-                      </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-      </rd-widget>
-    </md-content>
-    <md-content flex layout-fill data-ng-controller="AreaCtrl as areas">
+
+<div layout="column" layout-fill>
+  <div layout="row">
+  <div flex="15">
       <rd-widget>
-        <rd-widget-header icon="fa-users" title="Areas">
-          <a data-ng-click="areas.toggleForm(risks.currentRisk.id)" class="btn btn-link" data-ng-class='{disabled:risks.currentRisk == null}'>Agregar</a>
-        </rd-widget-header>
-        <form role="form" data-ng-show="areas.showform" class="form"> 
-           <div class="form-group">
-              <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Área"
-                     data-ng-model="areas.form.name"/>
+        <rd-widget-body>
+          <div class="header-icon blue pull-left">
+            <span><b>M</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalModels}}</div>
+          <div class="comment">Total Modelos</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon blue pull-left">
+            <span><b>I</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalInactive}}&#32;(<span>{{modelsCtrl.indicators.totalInactivePercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">Inactivos</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon blue pull-left">
+            <span><b>B</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalBacktest}}&#32;(<span>{{modelsCtrl.indicators.totalBacktestPercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">Backtesting</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon red pull-left">
+            <span><b>N</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalUnvalidated}}&#32;(<span>{{modelsCtrl.indicators.totalUnvalidatedPercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">No Validados</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon blue pull-left">
+            <span><b>V</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalValidated}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedPercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">Validados</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon green pull-left">
+            <span><b>C</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalValidatedFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedFullfilPercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">Cumple</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+    <div flex="15">
+      <rd-widget>
+        <rd-widget-body>
+          <div class="header-icon red pull-left">
+            <span><b>X</b></span>
+          </div>
+          <div class="title">{{modelsCtrl.indicators.totalValidatedNoFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedNoFullfilPercentage * 100| number :1 }}%</span>)</div>
+          <div class="comment">No Cumple</div>
+        </rd-widget-body>
+      </rd-widget>
+    </div>
+  </div>
+
+  
+  
+
+
+
+
+  <div layout="row" layout-fill flex>
+
+    <div  layout="column" flex=20 class="contentModel" layout-fill  data-ng-controller="RiskCtrl as risks" >
+      <md-content flex layout-fill class="no-padding">
+          <rd-widget>
+            <div layout="column" layout-align="center center">
+              <div layout="row" layout-fill layout-align="center center" data-ng-hide="risks.listOfRisks.length > 0">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
               </div>
-           </div>
-            <div class="form-group">
-              <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Líder"
-                     data-ng-model="areas.form.lead"/>
+              <div layout="column" layout-fill class="table-responsive" data-ng-show="risks.listOfRisks.length > 0">
+                <table class="table table-hover">
+                  <thead>
+                    <tr><th><i class="fa fa-bolt" ng-class="icon"></i>&#32;Riesgo Asociado&#32;<a data-ng-click="risks.createRisk()" class="btn btn-link">Nuevo</a></th></tr>
+                  </thead>
+                  <tbody>
+                        <tr id="{{r.id}}" data-ng-repeat="r in risks.listOfRisks"
+                            data-ng-class="{riskSelectedItem: r.id == risks.currentRisk.id}">
+                          <td data-ng-click="risks.selectRisk(r)">
+                                <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
+                          </td>
+                          <td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index,$event)" data-ng-show="r.id == risks.currentRisk.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                        </tr>
+                  </tbody>
+                </table>
               </div>
-           </div>
-           <div class="form-group">
-              <button class="btn btn-primary" data-ng-click="areas.saveArea(risks.currentRisk.id)">Guardar</button>
-              <button class="btn btn-default" data-ng-click="areas.cancelForm()">Cancelar</button>
-           </div>
-           <hr />
-        </form>
-        <rd-widget-body classes="medium no-padding">
-          <span data-ng-if="risks.currentRisk == null">Por favor, seleccione un riesgo.</span>
+            </div>
+        </rd-widget>
+      </md-content>
+      <md-content flex layout-fill data-ng-controller="AreaCtrl as areas">
+          <span data-ng-if="risks.currentRisk == null">Para mostrar las áreas, seleccione un riesgo.</span>
           <div class="table-responsive" data-ng-show="risks.currentRisk != null">
+            <a data-ng-click="areas.createArea(risks.currentRisk)" class="btn btn-link" data-ng-class='{disabled:risks.currentRisk == null}'>Nueva área</a>
             <table class="table table-hover">
               <thead>
-                <tr><th>Area</th><th>Líder</th><th></th></tr>
+                <tr><th style="vertical-align:middle;"><i class="fa fa-users" ng-class="icon"></i>&#32;Area</th><th>Líder</th></tr>
               </thead>
               <tbody>
                 <tr id="{{a.id}}" data-ng-repeat="a in areas.areas" data-ng-class="{riskSelectedItem: a.id == areas.currentArea.id}">
@@ -162,16 +133,14 @@
                         <text-input-update value-edit="a.lead" my-blur="areas.updateArea(risks.currentRisk.id,a)"></text-input-update>
                       </td>
                       <td data-ng-click="areas.selectArea(a)"><span class="text-danger" data-ng-click="areas.removeArea($index,$event)" data-ng-show="a.id == areas.currentArea.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
-                    </tr>
+                </tr>
               </tbody>
             </table>
-              </div>
-        </rd-widget-body>
-      <rd-widget>
-    </md-content>
-  </div>
+          </div>
+      </md-content>
+    </div>
 
-  <div layout="column" layout-fill flex>
+    <div layout="column" flex=80>
     <rd-widget>
       <rd-widget-header icon="fa-object-group" title="{{modelsCtrl.titleTable}}">
         <md-checkbox md-no-ink data-ng-model="modelsCtrl.showCurBacktesting" class="md-primary">
@@ -234,11 +203,13 @@
               </div>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-              <md-button data-ng-show="m.current_backtest.val_backtest_cur_month == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
+              <md-button data-ng-show="m.current_backtest.val_backtest_cur_month == true && m.active == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
               <md-button data-ng-click="modelsCtrl.selectModel(m)">Detalle</md-button>
             </md-card-actions>
           </md-card>
       </div>
     </md-content>
   </div>
+  </div>
+
 </div>

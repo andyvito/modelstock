@@ -46,7 +46,7 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/risk_model_data', 'GET', {}, {});   
             },
             saveNewRisk: function(newRisk){
-                return makeAPICall('api/v1/risk_model_data', 'POST', {name:newRisk.name}, {});     
+                return makeAPICall('api/v1/risk_model_data', 'POST', {code:newRisk.code, name:newRisk.name}, {});     
             },
             deleteRisk: function(id){
                 return makeAPICall('api/v1/risk_model_data/'+id, 'DELETE', {}, {});   
@@ -58,7 +58,7 @@ angular.module('modelsstockApp').
                 return makeAPICall('api/v1/areasByRisk', 'GET', {}, {riskid:id});   
             },
             saveNewArea: function(newArea){
-                return makeAPICall('api/v1/areasByRisk', 'POST', {riskid:newArea.riskid, name:newArea.name,lead:newArea.lead}, {});   
+                return makeAPICall('api/v1/areasByRisk', 'POST', {riskid:newArea.riskid, code:newArea.code, name:newArea.name,lead:newArea.lead}, {});   
             },
             deleteAreaByRisk: function(riskid,areaid){
                 return makeAPICall('api/v1/areasByRisk/'+riskid, 'DELETE', {}, {areaid:areaid});   
@@ -115,6 +115,12 @@ angular.module('modelsstockApp').
             getReportModelsByMonthAndYear: function(year,month){
                 return makeAPICall('api/v1/report_models', 'GET', {}, {year:year,month:month});
             },
+            canRemoveRisk: function(risk){
+                return makeAPICall('api/v1/risk_delete', 'GET', {}, {riskid:risk.id});
+            },
+            canRemoveArea: function(riskid,areaid){
+                return makeAPICall('api/v1/area_delete', 'GET', {}, {riskid:riskid,areaid:areaid});
+            }
 
         };
     });
