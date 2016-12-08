@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="modelsstockApp">
+<html lang="en" ng-app="modelsstockApp" > <!-- ng-strict-di -->
   <head>
     <meta charset="utf-8">
     <title>Models Stock</title>
@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="styles/main.css">
   </head>
 <body ng-controller="MasterCtrl as main" ng-cloak>
+
+  <!-- Fixed position loading indicator -->
+  <loading class="loading-indicator"></loading>
+
   <div layout=column layout-fill>
     <section layout="row">
       <md-sidenav class="md-sidenav-left" md-component-id="left"  md-whiteframe="4">
@@ -65,6 +69,8 @@
   </div><!-- End Page Wrapper -->
 
 
+
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -82,11 +88,17 @@
     <script src="bower_components/moment/min/moment-with-locales.js"></script>
     <script src="bower_components/moment-picker/dist/angular-moment-picker.min.js"></script>
     <!-- endbower -->
+
+
+
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/routes.js"></script>
+        
+
+
+        
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/directives/loading.js"></script>
         <script src="scripts/directives/widget-body.js"></script>
@@ -139,5 +151,14 @@
         <script src="scripts/controllers/models/risksdialog.js"></script>
         <script src="scripts/controllers/models/areadialog.js"></script>
         <!-- endbuild -->
+
+        <!-- Public Module -->
+        <script src="scripts/public/public.module.js"></script>
+        <script src="scripts/public/public.routes.js"></script>
+
+        <!-- Common Module -->
+        <script src="scripts/common/common.module.js"></script>
+        <script src="scripts/common/loading/loading.component.js"></script>        
+        <script src="scripts/common/loading/loading.interceptor.js"></script>        
 </body>
 </html>

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name modelsstockApp
@@ -8,33 +6,49 @@
  *
  * Main module of the application.
  */
-angular
-  .module('modelsstockApp', [
-    'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages', 'ngMdIcons', 'moment-picker'
-  ])
-  .run(['riskService', 'risksData', 'lenService', 'lensData', 'typeService', 'typesData', 
-    'kindService', 'kindsData', 'configService', 'utilsData',
-    function(riskService,risksData,lenService,lensData,typeService,typesData,kindService,kindsData,configService,utilsData){
-  
+(function(){
+  'use restrict';
 
-    configService.loadCurrentDateBacktesting().then(function(result){
-      utilsData.setCurrentDate(result.data.date);
-    });
+  angular
+    .module('modelsstockApp', ['public',
+      'ngRoute','ui.bootstrap', 'ui.router', 'ngCookies', 'ngMaterial', 'ngMessages', 'ngMdIcons', 'moment-picker'
+    ])
+    .config(config)
+    .run(run);
 
-    riskService.getAllRisks().then(function(result){
-        risksData.setRisks(result.data.risks);
-    });
+    run.$inject = ['riskService', 'risksData', 'lenService', 'lensData', 'typeService', 'typesData', 
+      'kindService', 'kindsData', 'configService', 'utilsData'];
+    function run(riskService,risksData,lenService,lensData,typeService,typesData,kindService,kindsData,configService,utilsData){
+        configService.loadCurrentDateBacktesting().then(function(result){
+          utilsData.setCurrentDate(result.data.date);
+        });
 
-    lenService.getAllLens().then(function(result){
-        lensData.setLens(result.data.lens);
-    });
+        riskService.getAllRisks().then(function(result){
+            risksData.setRisks(result.data.risks);
+        });
 
-    typeService.getAllTypes().then(function(result){
-      typesData.setTypes(result.data.types);
-    });
+        lenService.getAllLens().then(function(result){
+            lensData.setLens(result.data.lens);
+        });
 
-    kindService.getAllKinds().then(function(result){
-      kindsData.setKinds(result.data.kinds);
-    });
+        typeService.getAllTypes().then(function(result){
+          typesData.setTypes(result.data.types);
+        });
 
-}]);
+        kindService.getAllKinds().then(function(result){
+          kindsData.setKinds(result.data.kinds);
+        });
+    };
+
+
+    config.$inject = ['$urlRouterProvider'];
+    function config($urlRouterProvider){
+        // If user goes to a path that doesn't exist, redirect to public root
+        $urlRouterProvider.otherwise('/');
+    };
+
+
+})();
+
+
+

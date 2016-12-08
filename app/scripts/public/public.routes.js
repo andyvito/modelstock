@@ -1,20 +1,18 @@
-'use strict';
+(function(){
+	"use restrict";
 
- /**
- * @ngdoc overview
- * @name modelsstockApp
- * @description
- * # modelsstockApp
- *
- * Route configuration of the application.
- */
-angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
+	angular.module('public')
+	.config(routeConfig);
 
-        // For unmatched routes
-        $urlRouterProvider.otherwise('/');
+	/**
+	* Configures the router and views
+	**/
+	routeConfig.$inject = ['$stateProvider'];
+	function routeConfig($stateProvider){
 
         // Application routes
+        //TODO: Put abstract true for one state and the other
+        // make public. i.e. public.models, public.model, public.reports
         $stateProvider
             .state('index', {
                 url: '/',
@@ -40,5 +38,9 @@ angular.module('modelsstockApp').config(['$stateProvider', '$urlRouterProvider',
                 controller: 'ReportCtrl',
                 controllerAs: 'reportCtrl'
             });
-    }
-]);
+
+
+	};
+
+
+})();
