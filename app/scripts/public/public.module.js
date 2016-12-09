@@ -1,5 +1,5 @@
 (function(){
-	"use restrict";
+	'use strict';
 
 	/**
 	* Public ModelsStock Application. Includes the common module and ui-router

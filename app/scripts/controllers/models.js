@@ -88,9 +88,11 @@ angular.module('modelsstockApp')
           $state.go('model',{'id':model.id});
         };
 
-        reportService.getAllIndicators().then(function(result){
-          reportsData.setIndicators(result.data);
-        });
+
+
+
+
+
 
         /*
         if (modelsData.getFilterModelsByRiskAndArea() == null){
@@ -102,9 +104,6 @@ angular.module('modelsstockApp')
           self.models = modelsData.getFilterModelsByRiskAndArea();
         }*/
 
-        modelService.getAllModels().then(function(result){
-            modelsData.setModels(result.data.models); 
-        });
 
 
 
@@ -115,6 +114,9 @@ angular.module('modelsstockApp')
           self.showCurBacktesting = false;
           self.showInactive = false;
         });
+
+
+
 
 
         $scope.$watch(function(){
@@ -153,12 +155,6 @@ angular.module('modelsstockApp')
           return self.showUncalibrated;
           },function(newValue,oldValue){
             modelsData.setShowUncalibrate(newValue);
-        });
-
-        $scope.$watch(function(){
-          return reportsData.indicators;
-          },function(newValue,oldValue){
-            self.indicators = reportsData.indicators;
         });
 
   }]);

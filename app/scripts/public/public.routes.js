@@ -1,5 +1,5 @@
 (function(){
-	"use restrict";
+	"use strict";
 
 	angular.module('public')
 	.config(routeConfig);
@@ -14,17 +14,27 @@
         //TODO: Put abstract true for one state and the other
         // make public. i.e. public.models, public.model, public.reports
         $stateProvider
-            .state('index', {
+            /*.state('index', {
                 url: '/',
                 templateUrl: 'views/models.html',
                 controller: 'ModelsCtrl',
                 controllerAs: 'modelsCtrl'
-            })
+            })*/
             .state('models', {
                 url: '/models',
-                templateUrl: 'views/models.html',
-                controller: 'ModelsCtrl',
-                controllerAs: 'modelsCtrl'
+                //templateUrl: 'views/models.html',
+                templateUrl: 'scripts/public/models/models.html',
+                controller: 'ModelsController',
+                controllerAs: 'modelsCtrl',
+                resolve: {
+                    indicators: ['ReportService',function(ReportService){
+                        return ReportService.getIndicators();
+                    }],
+                    models: ['ModelsService', function(ModelsService){
+                        return ModelsService.getAllModels();
+
+                    }]
+                }
             })
             .state('model', {
                 url: '/model/:id',
@@ -36,10 +46,13 @@
                 url: '/reports',
                 templateUrl: 'views/reports.html',
                 controller: 'ReportCtrl',
-                controllerAs: 'reportCtrl'
+                controllerAs: 'reportCtrl',
+                resolve: {
+                    indicators: ['ReportService',function(ReportService){
+                        return ReportService.getIndicators();
+                    }]
+                }
             });
-
-
 	};
 
 

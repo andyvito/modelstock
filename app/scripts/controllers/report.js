@@ -8,11 +8,11 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ReportCtrl', ['$scope', 'reportService', 'reportsData', 'utilsData', 
-      function ($scope, reportService,reportsData, utilsData) {
+  .controller('ReportCtrl', ['$scope', 'reportService', 'utilsData', 'indicators',
+      function ($scope, reportService, utilsData, indicators) {
 
   	var self = this;
-  	self.indicators = {};
+  	self.indicators = indicators;
     self.report = {};
     self.reportModels = {};
     self.datepicker = {};
@@ -45,15 +45,7 @@ angular.module('modelsstockApp')
       });      
     };
     
-    reportService.getAllIndicators().then(function(result){
-      reportsData.setIndicators(result.data);
-    });
 
-    $scope.$watch(function(){
-      return reportsData.indicators;
-      },function(newValue,oldValue){
-        self.indicators = reportsData.indicators;
-    });
 
 
     $scope.$watch(function(){

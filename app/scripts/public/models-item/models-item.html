@@ -1,0 +1,42 @@
+<md-card class="model" data-ng-class="{'model-inactive':$ctrl.model.active != true}">
+  <md-card-title layout-align="center center" data-ng-class="{'inactive':$ctrl.model.active != true}">
+    <md-card-title-text class="model-name model-name-active" data-ng-class="{'model-name-inactive':$ctrl.model.active != true}">
+      <span>{{$ctrl.model.name | limitTo: 40}}<span data-ng-show="$ctrl.model.name.length > 40">...</span></span>
+      <span class="subtitle">{{$ctrl.model.code}}&#32;-&#32;<i class="fa fa-bolt"></i>&#32;{{$ctrl.model.risk.name | limitTo: 40}}<span data-ng-if="$ctrl.model.risk_$ctrl.model.name.length > 40">...</span></span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <div layout="column" layout-align="center center">
+      <div flex class="subtitle" >
+        <i class="fa fa-users"></i>&#32;{{$ctrl.model.area.name | limitTo: 40}}<span data-ng-if="$ctrl.model.area_$ctrl.model.name.length > 40">...</span>
+        &#32;|&#32;<span class="len">{{$ctrl.model.len | limitTo: 40}}<span data-ng-if="$ctrl.model.len.length > 40">...</span></span>
+      </div> 
+
+      <div flex class="content">
+        <p data-ng-show="$ctrl.model.last_backtest == null">
+          <i class="model-warning fa fa-cogs" aria-hidden="true"></i>
+          &#32;En Implementaci&#243;n
+        </p>
+
+        <div flex data-ng-show="$ctrl.model.last_backtest != null" data-ng-class="{'alert-danger':$ctrl.model.current_backtest.is_delayed != null && $ctrl.model.active == true}">
+          <i class="fa fa-calendar-plus-o"></i>&#32;
+          <span data-ng-show="$ctrl.model.last_backtest.next_year == null">Descalibrado</span>
+          <span data-ng-show="$ctrl.model.last_backtest.next_year != null">{{$ctrl.model.last_backtest.next_year}}/{{$ctrl.model.last_backtest.next_month | monthName}}</span>
+        </div>
+        <p class="model-delayed alert-danger" data-ng-if="$ctrl.model.current_backtest.is_delayed != null && $ctrl.model.active == true">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Precauci&#243;n:</span>
+          Actualmente atrasado&#32;
+            <ng-pluralize count="$ctrl.model.current_backtest.is_delayed"
+                          when="{'0': 'ningún mes.',
+                                 'one': '1 mes.',
+                                 'other': '{} meses.'}"></ng-pluralize>
+        </p>
+      </div>
+    </div>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button data-ng-show="$ctrl.model.current_backtest.val_backtest_cur_month == true && $ctrl.model.active == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
+    <md-button data-ng-click="modelsCtrl.selectModel(m)">Detalle</md-button>
+  </md-card-actions>
+</md-card>

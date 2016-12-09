@@ -1,6 +1,3 @@
-
-
-
 <div layout="column" layout-fill>
   <div layout="row">
   <div flex="15">
@@ -9,7 +6,7 @@
           <div class="header-icon blue pull-left">
             <span><b>M</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalModels}}</div>
+          <div class="title">{{modelsCtrl.indicators.total_models}}</div>
           <div class="comment">Total Modelos</div>
         </rd-widget-body>
       </rd-widget>
@@ -20,7 +17,7 @@
           <div class="header-icon blue pull-left">
             <span><b>I</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalInactive}}&#32;(<span>{{modelsCtrl.indicators.totalInactivePercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_inactive.value}}&#32;(<span>{{modelsCtrl.indicators.total_inactive.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">Inactivos</div>
         </rd-widget-body>
       </rd-widget>
@@ -31,7 +28,7 @@
           <div class="header-icon blue pull-left">
             <span><b>B</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalBacktest}}&#32;(<span>{{modelsCtrl.indicators.totalBacktestPercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_backtest.value}}&#32;(<span>{{modelsCtrl.indicators.total_backtest.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">Backtesting</div>
         </rd-widget-body>
       </rd-widget>
@@ -42,7 +39,7 @@
           <div class="header-icon red pull-left">
             <span><b>N</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalUnvalidated}}&#32;(<span>{{modelsCtrl.indicators.totalUnvalidatedPercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_unvalidated.value}}&#32;(<span>{{modelsCtrl.indicators.total_unvalidated.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">No Validados</div>
         </rd-widget-body>
       </rd-widget>
@@ -53,7 +50,7 @@
           <div class="header-icon blue pull-left">
             <span><b>V</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalValidated}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedPercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_validated.value}}&#32;(<span>{{modelsCtrl.indicators.total_validated.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">Validados</div>
         </rd-widget-body>
       </rd-widget>
@@ -64,7 +61,7 @@
           <div class="header-icon green pull-left">
             <span><b>C</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalValidatedFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedFullfilPercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_validated_fullfil.value}}&#32;(<span>{{modelsCtrl.indicators.total_validated_fullfil.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">Cumple</div>
         </rd-widget-body>
       </rd-widget>
@@ -75,7 +72,7 @@
           <div class="header-icon red pull-left">
             <span><b>X</b></span>
           </div>
-          <div class="title">{{modelsCtrl.indicators.totalValidatedNoFullfil}}&#32;(<span>{{modelsCtrl.indicators.totalValidatedNoFullfilPercentage * 100| number :1 }}%</span>)</div>
+          <div class="title">{{modelsCtrl.indicators.total_validated_no_fullfil.value}}&#32;(<span>{{modelsCtrl.indicators.total_validated_no_fullfil.percentage * 100| number :1 }}%</span>)</div>
           <div class="comment">No Cumple</div>
         </rd-widget-body>
       </rd-widget>
@@ -163,52 +160,7 @@
         </form>
       </rd-widget-header>
     </rd-widget>
-    <md-content layout="row" layout-wrap layout-align="center none">
-      <div class="models-table" flex="30" data-ng-repeat="m in modelsCtrl.models | orderBy:modelsCtrl.sortType:modelsCtrl.sortReverse | filter:modelsCtrl.filterModels">
-          <md-card class="model" data-ng-class="{'model-inactive':m.active != true}">
-            <md-card-title layout-align="center center" data-ng-class="{'inactive':m.active != true}">
-              <md-card-title-text class="model-name model-name-active" data-ng-class="{'model-name-inactive':m.active != true}">
-                <span>{{m.name | limitTo: 40}}<span data-ng-show="m.name.length > 40">...</span></span>
-                <span class="subtitle">{{m.code}}&#32;-&#32;<i class="fa fa-bolt"></i>&#32;{{m.risk.name | limitTo: 40}}<span data-ng-if="m.risk_model.name.length > 40">...</span></span>
-              </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-              <div layout="column" layout-align="center center">
-                <div flex class="subtitle" >
-                  <i class="fa fa-users"></i>&#32;{{m.area.name | limitTo: 40}}<span data-ng-if="m.area_model.name.length > 40">...</span>
-                  &#32;|&#32;<span class="len">{{m.len | limitTo: 40}}<span data-ng-if="m.len.length > 40">...</span></span>
-                </div> 
-
-                <div flex class="content">
-                  <p data-ng-show="m.last_backtest == null">
-                    <i class="model-warning fa fa-cogs" aria-hidden="true"></i>
-                    &#32;En Implementaci&#243;n
-                  </p>
-
-                  <div flex data-ng-show="m.last_backtest != null" data-ng-class="{'alert-danger':m.current_backtest.is_delayed != null && m.active == true}">
-                    <i class="fa fa-calendar-plus-o"></i>&#32;
-                    <span data-ng-show="m.last_backtest.next_year == null">Descalibrado</span>
-                    <span data-ng-show="m.last_backtest.next_year != null">{{m.last_backtest.next_year}}/{{m.last_backtest.next_month | monthName}}</span>
-                  </div>
-                  <p class="model-delayed alert-danger" data-ng-if="m.current_backtest.is_delayed != null && m.active == true">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Precauci&#243;n:</span>
-                    Actualmente atrasado&#32;
-                      <ng-pluralize count="m.current_backtest.is_delayed"
-                                    when="{'0': 'ningún mes.',
-                                           'one': '1 mes.',
-                                           'other': '{} meses.'}"></ng-pluralize>
-                  </p>
-                </div>
-              </div>
-            </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-              <md-button data-ng-show="m.current_backtest.val_backtest_cur_month == true && m.active == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
-              <md-button data-ng-click="modelsCtrl.selectModel(m)">Detalle</md-button>
-            </md-card-actions>
-          </md-card>
-      </div>
-    </md-content>
+    
   </div>
   </div>
 

@@ -69,9 +69,11 @@ angular.module('modelsstockApp').
             /*getAllModelsByRisks: function(id){
                 return makeAPICall('api/v1/modelsByRisk', 'GET', {}, {riskid:id});     
             },*/
+
+            /*
             getAllModels: function(){
                 return makeAPICall('api/v1/models_data', 'GET', {}, {});     
-            },
+            },*/
 
             getModelById: function(modelId){
                 return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});
@@ -106,9 +108,9 @@ angular.module('modelsstockApp').
             closeMonth: function(){
               return makeAPICall('api/v1/close_month', 'POST', {}, {});
             },
-            getAllIndicators: function(){
+            /*getAllIndicators: function(){
                 return makeAPICall('api/v1/indicators', 'GET', {}, {});
-            },
+            },*/
             getReportByMonthAndYear: function(year,month){
                 return makeAPICall('api/v1/report', 'GET', {}, {year:year,month:month});
             },

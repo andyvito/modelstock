@@ -5,7 +5,7 @@
         <div class="header-icon blue pull-left">
           <span><b>M</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalModels}}</div>
+        <div class="title">{{reportCtrl.indicators.total_models}}</div>
         <div class="comment">Total Modelos</div>
       </rd-widget-body>
     </rd-widget>
@@ -16,7 +16,7 @@
         <div class="header-icon blue pull-left">
           <span><b>I</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalInactive}}&#32;(<span>{{reportCtrl.indicators.totalInactivePercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_inactive.value}}&#32;(<span>{{reportCtrl.indicators.total_inactive.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">Inactivos</div>
       </rd-widget-body>
     </rd-widget>
@@ -27,7 +27,7 @@
         <div class="header-icon blue pull-left">
           <span><b>B</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalBacktest}}&#32;(<span>{{reportCtrl.indicators.totalBacktestPercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_backtest.value}}&#32;(<span>{{reportCtrl.indicators.total_backtest.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">Backtesting</div>
       </rd-widget-body>
     </rd-widget>
@@ -38,7 +38,7 @@
         <div class="header-icon red pull-left">
           <span><b>N</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalUnvalidated}}&#32;(<span>{{reportCtrl.indicators.totalUnvalidatedPercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_unvalidated.value}}&#32;(<span>{{reportCtrl.indicators.total_unvalidated.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">No Validados</div>
       </rd-widget-body>
     </rd-widget>
@@ -49,7 +49,7 @@
         <div class="header-icon blue pull-left">
           <span><b>V</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalValidated}}&#32;(<span>{{reportCtrl.indicators.totalValidatedPercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_validated.value}}&#32;(<span>{{reportCtrl.indicators.total_validated.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">Validados</div>
       </rd-widget-body>
     </rd-widget>
@@ -60,7 +60,7 @@
         <div class="header-icon green pull-left">
           <span><b>C</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalValidatedFullfil}}&#32;(<span>{{reportCtrl.indicators.totalValidatedFullfilPercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_validated_fullfil.value}}&#32;(<span>{{reportCtrl.indicators.total_validated_fullfil.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">Cumple</div>
       </rd-widget-body>
     </rd-widget>
@@ -71,7 +71,7 @@
         <div class="header-icon red pull-left">
           <span><b>X</b></span>
         </div>
-        <div class="title">{{reportCtrl.indicators.totalValidatedNoFullfil}}&#32;(<span>{{reportCtrl.indicators.totalValidatedNoFullfilPercentage * 100| number :1 }}%</span>)</div>
+        <div class="title">{{reportCtrl.indicators.total_validated_no_fullfil.value}}&#32;(<span>{{reportCtrl.indicators.total_validated_no_fullfil.percentage * 100| number :1 }}%</span>)</div>
         <div class="comment">No Cumple</div>
       </rd-widget-body>
     </rd-widget>

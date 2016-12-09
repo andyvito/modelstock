@@ -7,7 +7,7 @@
  * Main module of the application.
  */
 (function(){
-  'use restrict';
+  'use strict';
 
   angular
     .module('modelsstockApp', ['public',
