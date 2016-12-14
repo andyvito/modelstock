@@ -32,7 +32,7 @@
           <h1 class="md-toolbar-tools">Menú Principal</h1>
         </md-toolbar>
         <md-content layout=column layout-margin>
-          <md-button ng-click="main.optionSelect('models')">
+          <md-button ng-click="main.optionSelect('public.models')">
             Modelos
           </md-button>
           <md-button ng-click="main.optionSelect('reports')">
@@ -105,8 +105,7 @@
         <script src="scripts/directives/widget-footer.js"></script>
         <script src="scripts/directives/widget-header.js"></script>
         <script src="scripts/directives/widget.js"></script>
-        <script src="scripts/services/riskservice.js"></script>
-        <script src="scripts/services/typeservice.js"></script>
+        
         <script src="scripts/services/apiservice.js"></script>
         <script src="scripts/controllers/risk.js"></script>
 
@@ -122,31 +121,23 @@
         <script src="scripts/controllers/model.js"></script>
         <script src="scripts/services/modelservice.js"></script>
         <script src="scripts/services/data/areasdata.js"></script>
-        <script src="scripts/services/data/risksdata.js"></script>
         <script src="scripts/filters/ifnull.js"></script>
         <script src="scripts/filters/monthname.js"></script>
         <script src="scripts/controllers/models.js"></script>
         <script src="scripts/filters/resultbacktest.js"></script>
         <script src="scripts/controllers/model/modal/clone.js"></script>
         <script src="scripts/directives/model/menu/fdsmodelheader.js"></script>
-        <script src="scripts/services/kindservice.js"></script>
         <script src="scripts/controllers/models/cards/backtest.js"></script>
         <script src="scripts/directives/components/yearmonthpicker.js"></script>
         <script src="scripts/services/backtestService.js"></script>
         <script src="scripts/directives/models/menu/fdsmodelsheader.js"></script>
         <script src="scripts/controllers/models/newmodel.js"></script>
-        <script src="scripts/services/lenservice.js"></script>
-        <script src="scripts/services/data/lensdata.js"></script>
-        <script src="scripts/services/data/typesdata.js"></script>
-        <script src="scripts/services/data/kindsdata.js"></script>
+        
         <script src="scripts/controllers/model/modal/implement.js"></script>
         <script src="scripts/controllers/report.js"></script>
-        <script src="scripts/services/configservice.js"></script>
-        <script src="scripts/services/data/utilsdata.js"></script>
         <script src="scripts/controllers/models/closemonth.js"></script>
         <script src="scripts/services/closemonthservice.js"></script>
         <script src="scripts/services/reportservice.js"></script>
-        <!-- script src="scripts/services/data/reportsdata.js"></script -->
         <script src="scripts/controllers/model/modal/changerisk.js"></script>
         <script src="scripts/controllers/models/risksdialog.js"></script>
         <script src="scripts/controllers/models/areadialog.js"></script>
@@ -157,6 +148,10 @@
         <script src="scripts/public/public.routes.js"></script>
         <script src="scripts/public/models/models.controller.js"></script>
         <script src="scripts/public/models-item/models-item.component.js"></script>
+        <script src="scripts/public/indicators/indicators-header.component.js"></script>
+        <script src="scripts/public/indicators/indicator-item.component.js"></script>
+        <script src="scripts/public/risks/risks-list.component.js"></script>
+
 
         <!-- Common Module -->
         <script src="scripts/common/common.module.js"></script>
@@ -164,6 +159,8 @@
         <script src="scripts/common/loading/loading.interceptor.js"></script>    
         <script src="scripts/common/report.service.js"></script>    
         <script src="scripts/common/models.service.js"></script>    
+        <script src="scripts/common/shared-objects.service.js"></script>    
+        <script src="scripts/common/risks.service.js"></script>    
 
 </body>
 </html>

@@ -20,9 +20,12 @@
                 controller: 'ModelsCtrl',
                 controllerAs: 'modelsCtrl'
             })*/
-            .state('models', {
+            .state('public',{
+                absract: true,
+                templateUrl: 'scripts/public/public.html'
+            })
+            .state('public.models', {
                 url: '/models',
-                //templateUrl: 'views/models.html',
                 templateUrl: 'scripts/public/models/models.html',
                 controller: 'ModelsController',
                 controllerAs: 'modelsCtrl',
@@ -33,15 +36,35 @@
                     models: ['ModelsService', function(ModelsService){
                         return ModelsService.getAllModels();
 
+                    }],
+                    risks: ['RisksService', function(RisksService){
+                        
+                        return RisksService.getAllRisks();
                     }]
                 }
             })
+            /*
             .state('model', {
                 url: '/model/:id',
                 templateUrl: 'views/model.html',
                 controller: 'ModelCtrl',
                 controllerAs: "model"
+            })*/
+
+            
+            .state('public.model',{
+                url: '/model/{id}',
+                templateUrl: 'views/model.html', //TODO: fix with the new template
+                controller: 'ModelCtrl',
+                controllerAs: 'model' /*,
+                resolve: {
+                    model: ['$stateParams', 'ModelsService', function($stateParams, ModelsService){
+                            return ModelsService.getModelById($stateParams.id);
+                    }]
+                }
+                */
             })
+            
             .state('reports', {
                 url: '/reports',
                 templateUrl: 'views/reports.html',

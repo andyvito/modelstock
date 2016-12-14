@@ -8,8 +8,8 @@
  * Controller of the modelsstockApp
  */
 angular.module('modelsstockApp')
-  .controller('ModelModalImplementCtrl', ['$scope', '$mdDialog', 'model', 'modelService', 'utilsData', 
-    function ($scope, $mdDialog, model, modelService,utilsData) {
+  .controller('ModelModalImplementCtrl', ['$scope', '$mdDialog', 'model', 'modelService', 'SharedObjectsService', 
+    function ($scope, $mdDialog, model, modelService, SharedObjectsService) {
     var self = this;
     self.frecuency = [{n:'Mensual', v:1}, {n:'Bimensual', v:2}, {n:'Trimestral', v:3},
 					{n:'Cuatrimestral', v:4}, {n:'Semestral', v:6}, {n:'Anual', v:12}, {n:'Bianual', v:24}];
@@ -36,7 +36,7 @@ angular.module('modelsstockApp')
       }); 
     };
 
-    
+    //Change utilsData for SharedObjectsService
     $scope.$watch(function(){
       return utilsData.currentDate;
       },function(newValue,oldValue){

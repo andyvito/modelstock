@@ -1,0 +1,11 @@
+
+  <rd-widget>
+    <rd-widget-body>
+      <div class="header-icon {{$ctrl.indicator.color}} pull-left">
+        <span><b>{{$ctrl.indicator.character}}</b></span>
+      </div>
+      <div class="title">{{$ctrl.indicator.value}}<span data-ng-if="$ctrl.indicator.percentage !== null">&#32;(<span>{{$ctrl.indicator.percentage * 100| number :1 }}%</span>)</span></div>
+      <div class="comment">{{$ctrl.indicator.description}}</div>
+    </rd-widget-body>
+  </rd-widget>
+

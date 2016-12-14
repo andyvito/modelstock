@@ -84,10 +84,12 @@ angular.module('modelsstockApp')
         }
 
 
+
+/*
         this.selectModel = function(model){
           $state.go('model',{'id':model.id});
         };
-
+*/
 
 
 

@@ -9,8 +9,8 @@
  */
 
 angular.module('modelsstockApp')
-    .controller('MasterCtrl', ['$rootScope','$scope', '$cookieStore', '$mdSidenav',  '$state', '$uibModal', 'utilsData', MasterCtrl]);
-function MasterCtrl($rootScope, $scope, $cookieStore, $mdSidenav,  $state, $uibModal, utilsData) {
+    .controller('MasterCtrl', ['$rootScope','$scope', '$cookieStore', '$mdSidenav',  '$state', '$uibModal', 'SharedObjectsService', MasterCtrl]);
+function MasterCtrl($rootScope, $scope, $cookieStore, $mdSidenav,  $state, $uibModal, SharedObjectsService) {
     var self = this;
     self.currentYear = null;
     self.curerntMonthName = null;
@@ -30,22 +30,8 @@ function MasterCtrl($rootScope, $scope, $cookieStore, $mdSidenav,  $state, $uibM
       	$state.go(opt);
     };
 
-    this.currentYear = utilsData.getCurrentYear();
-    this.currentMonthName = utilsData.getCurrentMonthName();
-
-
-    $scope.$watch(function(){
-      return utilsData.currentYear;
-      },function(newValue,oldValue){
-        self.currentYear = newValue;
-      });
-
-    $scope.$watch(function(){
-      return utilsData.currentMonth;
-      },function(newValue,oldValue){
-        self.currentMonthName = utilsData.getCurrentMonthName();
-      });
-
+    this.currentYear = SharedObjectsService.getCurrentYear();
+    this.currentMonthName = SharedObjectsService.getCurrentMonthName();
 
 
     

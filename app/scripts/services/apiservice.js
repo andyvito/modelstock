@@ -33,30 +33,7 @@ angular.module('modelsstockApp').
         };
 
         return {
-            getAllDistinctTypes: function(){
-                return makeAPICall('api/v1/type_distinct', 'GET', {}, {}); 
-            },
-            getAllDistinctKinds: function(){
-                return makeAPICall('api/v1/kind_distinct', 'GET', {}, {}); 
-            },
-            getAllDistinctLens: function(){
-                return makeAPICall('api/v1/len_distinct', 'GET', {}, {}); 
-            },  
-            getAllRisks: function(){
-                return makeAPICall('api/v1/risk_model_data', 'GET', {}, {});   
-            },
-            saveNewRisk: function(newRisk){
-                return makeAPICall('api/v1/risk_model_data', 'POST', {code:newRisk.code, name:newRisk.name}, {});     
-            },
-            deleteRisk: function(id){
-                return makeAPICall('api/v1/risk_model_data/'+id, 'DELETE', {}, {});   
-            },
-            updateRisk: function(updateRisk){
-                return makeAPICall('api/v1/risk_model_data/'+updateRisk.id, 'PUT', {}, {name:updateRisk.name});     
-            },
-            getAllAreasByRisks: function(id){
-                return makeAPICall('api/v1/areasByRisk', 'GET', {}, {riskid:id});   
-            },
+
             saveNewArea: function(newArea){
                 return makeAPICall('api/v1/areasByRisk', 'POST', {riskid:newArea.riskid, code:newArea.code, name:newArea.name,lead:newArea.lead}, {});   
             },
@@ -66,14 +43,6 @@ angular.module('modelsstockApp').
             updateAreaByRisk: function(updateArea){
                 return makeAPICall('api/v1/areasByRisk/'+updateArea.riskid, 'PUT', {}, {areaid:updateArea.id, name:updateArea.name, lead:updateArea.lead});
             },
-            /*getAllModelsByRisks: function(id){
-                return makeAPICall('api/v1/modelsByRisk', 'GET', {}, {riskid:id});     
-            },*/
-
-            /*
-            getAllModels: function(){
-                return makeAPICall('api/v1/models_data', 'GET', {}, {});     
-            },*/
 
             getModelById: function(modelId){
                 return makeAPICall('api/v1/model', 'GET', {}, {id:modelId});
@@ -102,23 +71,14 @@ angular.module('modelsstockApp').
             cloneModel: function(model){
                 return makeAPICall('api/v1/model_clone', 'POST', {modelid:model.id, new_name:model.newName, date:model.date, author:model.author}, {});   
             },
-            loadCurrentDateBacktesting: function(){
-                return makeAPICall('api/v1/get_current_date_backtesting', 'GET', {}, {});    
-            },
             closeMonth: function(){
               return makeAPICall('api/v1/close_month', 'POST', {}, {});
             },
-            /*getAllIndicators: function(){
-                return makeAPICall('api/v1/indicators', 'GET', {}, {});
-            },*/
             getReportByMonthAndYear: function(year,month){
                 return makeAPICall('api/v1/report', 'GET', {}, {year:year,month:month});
             },
             getReportModelsByMonthAndYear: function(year,month){
                 return makeAPICall('api/v1/report_models', 'GET', {}, {year:year,month:month});
-            },
-            canRemoveRisk: function(risk){
-                return makeAPICall('api/v1/risk_delete', 'GET', {}, {riskid:risk.id});
             },
             canRemoveArea: function(riskid,areaid){
                 return makeAPICall('api/v1/area_delete', 'GET', {}, {riskid:riskid,areaid:areaid});

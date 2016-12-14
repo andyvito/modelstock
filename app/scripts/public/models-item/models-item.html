@@ -37,6 +37,6 @@
   </md-card-content>
   <md-card-actions layout="row" layout-align="end center">
     <md-button data-ng-show="$ctrl.model.current_backtest.val_backtest_cur_month == true && $ctrl.model.active == true" data-ng-click="modelsCtrl.validateBacktesting(m,$event)">Backtesting</md-button>
-    <md-button data-ng-click="modelsCtrl.selectModel(m)">Detalle</md-button>
+    <md-button ui-sref="public.model({id:$ctrl.model.id})">Detalle</md-button>
   </md-card-actions>
 </md-card>

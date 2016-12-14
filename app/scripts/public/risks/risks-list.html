@@ -1,0 +1,26 @@
+
+<md-content flex layout-fill class="no-padding">
+    <rd-widget>
+      <div layout="column" layout-align="center center">
+        <!--div layout="row" layout-fill layout-align="center center" data-ng-hide="$ctrl.risks.length > 0">
+          < md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div -->
+        <div layout="column" layout-fill class="table-responsive" data-ng-show="$ctrl.risks.length > 0">
+          <table class="table table-hover">
+            <thead>
+              <tr><th><i class="fa fa-bolt" ng-class="icon"></i>&#32;Riesgo Asociado&#32;<a data-ng-click="$ctrl.risks.createRisk()" class="btn btn-link">Nuevo</a></th></tr>
+            </thead>
+            <tbody>
+                  <tr id="{{r.id}}" data-ng-repeat="r in $ctrl.risks"
+                      data-ng-class="{riskSelectedItem: r.id == risks.currentRisk.id}">
+                    <td data-ng-click="risks.selectRisk(r)">
+                          <text-input-update value-edit="r.name" my-blur="risks.updateRisk(r)"></text-input-update>
+                    </td>
+                    <td data-ng-click="risks.selectRisk(r)"><span class="text-danger" data-ng-click="risks.removeRisk($index,$event)" data-ng-show="r.id == risks.currentRisk.id" cursor-me><i class="fa fa-trash-o"></i></span></td>
+                  </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </rd-widget>
+</md-content>
