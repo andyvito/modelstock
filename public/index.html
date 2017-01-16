@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" ng-app="modelsstockApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Models Stock</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    
+    <link rel="stylesheet" href="libs/css/rdash.css" />
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="libs/css/angular-material.css" />
+    <link rel="stylesheet" href="libs/css/angular-material-icons.css" />
+    <link rel="stylesheet" href="libs/css/angular-moment-picker.min.css" />
+
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+<body ng-controller="MasterCtrl as main" ng-cloak>
+  <div layout=column layout-fill>
+    <section layout="row">
+      <md-sidenav class="md-sidenav-left" md-component-id="left"  md-whiteframe="4">
+        <md-toolbar>
+          <h1 class="md-toolbar-tools">Menú Principal</h1>
+        </md-toolbar>
+        <md-content layout=column layout-margin>
+          <md-button ng-click="main.optionSelect('models')">
+            Modelos
+          </md-button>
+          <md-button ng-click="main.optionSelect('reports')">
+            Reporte
+          </md-button>
+        </md-content>
+        
+
+      </md-sidenav>
+    </section>
+    <div layout=column layout-fill class="fabSpeedDialModel">
+        <md-toolbar class="md-toolbar-model">
+          <div class="md-toolbar-tools" layout="row" >
+              <md-button data-ng-click="toggleLeft()">
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+              </md-button>
+              <h2 class="md-flex">ModelsStock | {{ main.currentMonthName}} - {{main.currentYear}}</h2>
+              <div flex data-ng-show="$state.includes('model')">
+                <fds-model-header></fds-model-header>
+              </div>
+              <div flex data-ng-show="$state.includes('models') || $state.includes('index')">
+                <fds-models-header></fds-models-header>
+              </div>
+              
+          </div>
+        </md-toolbar>
+
+        <div layout="column" flex layout-fill>
+          
+          <div ui-view flex layout-fill></div>
+        </div>
+    </div>
+  
+  </div><!-- End Page Wrapper -->
+
+
+        <script src="libs/angular.js" type="text/javascript"></script>
+        <script src="libs/angular-ui-router.min.js" type="text/javascript"></script>
+        <script src="libs/angular-route.min.js"></script>
+        <script src="libs/ui-bootstrap-tpls.js"></script>
+        <script src="libs/angular-cookies.js"></script>
+        <script src="libs/angular-animate.js"></script>
+        <script src="libs/angular-material.js"></script>
+        <script src="libs/angular-aria.js"></script>
+        <script src="libs/angular-messages.js"></script>
+        <script src="libs/angular-material-icons.min.js"></script>
+        <script src="libs/angular-moment-picker.min.js"></script>
+        <script src="libs/jquery.js"></script>
+        <script src="libs/bootstrap.js"></script>
+        <script src="js/app.js" type="text/javascript"></script>
+
+
+
+</body>
+</html>
